@@ -1,0 +1,14 @@
+{% load static %}
+<nav>
+  <div>
+      <body>
+          <ul class="hr">
+            <li><a href="{% url 'index'%}">Главная</a></li>
+            <li><a href="{% url 'cards:product_list'%}">Список продуктов</a></li>
+            <li><a href="{% url 'cards:product_create'%}">Создать новый продукт</a></li>
+            <li><a href="{% url 'cards:techcard_create'%}">Создать новую техкарту</a></li>
+            <li><a href="{% url 'users:signup'%}">Регистрация</a></li>
+            <li><a href="{% url 'users:login'%}">Войти</a></li>
+          </ul>    
+  </div>
+</nav>  

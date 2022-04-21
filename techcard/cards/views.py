@@ -9,7 +9,7 @@ from .models import Product, TechCard, Ingridient
 
 
 def index(request):
-    return HttpResponse('Главная')
+    return render(request, 'index.html')
 
 
 def product_list(request):

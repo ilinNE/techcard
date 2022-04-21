@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 {% for product in products %}
   <ul>
     <li>
@@ -12,3 +14,4 @@
   </ul>
   {% if not forloop.last %}<hr>{% endif %}
 {% endfor %} 
+{% endblock content %}

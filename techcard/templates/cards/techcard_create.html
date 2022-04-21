@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <h1>Новая карта</h1>
 <form method="post" 
       action= "{% url 'cards:techcard_create' %}"
@@ -20,3 +22,4 @@
             Добавить
         </button>
 </form>
+{% endblock content %}

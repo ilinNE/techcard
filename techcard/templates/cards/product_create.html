@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <h1>Новый продукт</h1>
 <form method="post" 
       action= "{% url 'cards:product_create' %}"
@@ -11,3 +13,4 @@
             Добавить
         </button>
 </form>
+{% endblock content %}
