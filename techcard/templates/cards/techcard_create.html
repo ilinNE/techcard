@@ -1,0 +1,22 @@
+<h1>Новая карта</h1>
+<form method="post" 
+      action= "{% url 'cards:techcard_create' %}"
+      enctype="multipart/form-data">      
+    {% csrf_token %}           
+    {% for field in techcard_form %}
+    <p>{{ field }} {{ field.help_text }}</p>
+    {% endfor %} 
+    <ul>
+        {{ ingridient_formset.management_form }}
+    {% for ingridient_form in ingridient_formset %}   
+        {% for field in ingridient_form %}
+          <li style = "display: inline;">{{ field }}</li> 
+        {% endfor %}
+        </br>
+    {% endfor %} 
+    </ul> 
+    <hr>
+        <button type="submit" class="btn btn-primary">
+            Добавить
+        </button>
+</form>
