@@ -9,7 +9,11 @@ SECRET_KEY = 'django-insecure-8^2x%(&bp((vyz-4xv(kp%6f&n-_mk%bsas=@fb+1i6zx5c5z9
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'www.ilinniks.pythonanywhere.com',
+    'ilinniks.pythonanywhere.com',
+    '127.0.0.1'
+]
 
 
 INSTALLED_APPS = [
@@ -20,7 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cards.apps.CardsConfig',
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    'about.apps.AboutConfig',
 ]
 
 MIDDLEWARE = [

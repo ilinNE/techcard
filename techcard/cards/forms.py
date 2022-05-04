@@ -2,7 +2,7 @@ from django import forms
 
 from .models import Product, TechCard, Ingridient
 
-
+    
 class ProductForm(forms.ModelForm):
 
     class Meta:
@@ -47,3 +47,11 @@ class IngridientForm(forms.ModelForm):
             self.fields['product'].queryset = qs
         except NameError:
             pass
+
+
+IngridientFormSet = forms.modelformset_factory(
+    Ingridient,
+    form=IngridientForm,
+    extra=1,
+    can_delete=True
+)

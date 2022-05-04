@@ -1,25 +1,49 @@
-{% extends 'base.html' %}
+{% extends 'cards/base_cards.html' %}
 {% block content %}
 <h1>Новая карта</h1>
-<form method="post" 
-      action= "{% url 'cards:techcard_create' %}"
+<form method="post" id="form-container"
+      action= {% if is_edit %}
+                 "{% url 'cards:techcard_edit' techcard_id %}"
+              {% else %}
+                 "{% url 'cards:techcard_create' %}"
+              {% endif %}
       enctype="multipart/form-data">      
     {% csrf_token %}           
     {% for field in techcard_form %}
     <p>{{ field }} {{ field.help_text }}</p>
     {% endfor %} 
-    <ul>
         {{ ingridient_formset.management_form }}
-    {% for ingridient_form in ingridient_formset %}   
-        {% for field in ingridient_form %}
-          <li style = "display: inline;">{{ field }}</li> 
-        {% endfor %}
-        </br>
+    {% for ingridient_form in ingridient_formset %}  
+    <div class="ingridient-form">
+        {{ ingridient_form }}
+    </div>
     {% endfor %} 
-    </ul> 
+    <button id="add-form" type="button" class="btn btn-primary">Add Another ingridient</button>
+    <button type="submit" class="btn btn-primary">
+    {% if is_edit %}Сохранить карту{% else %}Создать карту{% endif %}
+    </button>
     <hr>
-        <button type="submit" class="btn btn-primary">
-            Добавить
-        </button>
 </form>
+<script>
+    let birdForm = document.querySelectorAll(".ingridient-form")
+    let container = document.querySelector("#form-container")
+    let addButton = document.querySelector("#add-form")
+    let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+
+    let formNum = birdForm.length-1
+    addButton.addEventListener('click', addForm)
+
+    function addForm(e){
+        e.preventDefault()
+
+        let newForm = birdForm[birdForm.length - 1].cloneNode(true)
+        let formRegex = RegExp(`form-(\\d){1}-`,'g')
+
+        formNum++
+        newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
+        container.insertBefore(newForm, addButton)
+        
+        totalForms.setAttribute('value', `${formNum+1}`)
+    }
+</script>
 {% endblock content %}

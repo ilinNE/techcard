@@ -6,6 +6,7 @@ User = get_user_model()
 
 class TechCard(models.Model):
     name = models.CharField(
+        'Название',
         max_length=30
         )
     owner = models.ForeignKey(
@@ -13,12 +14,16 @@ class TechCard(models.Model):
         on_delete=models.CASCADE,
         related_name='techcards'
         )
-    create_date = models.DateField(auto_now_add=True)
-    weight = models.FloatField()
+    create_date = models.DateField(
+        'Дата создания',
+        auto_now_add=True)
+    weight = models.FloatField('Выход')
     price = models.DecimalField(
+        'Себестоимость',
         max_digits=10,
         decimal_places=2,
         )
+    description = models.TextField('Описание', blank=True)    
     is_semifabricate = models.BooleanField(default=False)
 
     class Meta:

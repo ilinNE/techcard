@@ -1,0 +1,13 @@
+{% extends 'cards/base_cards.html' %}
+{% block content %}
+<h1>Карта №{{ techcard_id }}</h1>
+
+  <br>
+    Техкарта: {{ techcard.name }}</br>
+    Дата создания: {{ techcard.create_date }}</br>
+    Состав: </br> 
+    {% for ingridient in ingridients %}
+      {{ ingridient }}
+      </br>
+    {% endfor %}
+{% endblock content %}

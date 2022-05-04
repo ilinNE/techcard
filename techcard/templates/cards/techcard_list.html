@@ -1,0 +1,10 @@
+{% extends 'cards/base_cards.html' %}
+{% block content %}
+<h1>Мои карты</h1>
+{{ request.user }}
+<br>
+{% for techcard in techcards %}
+  {{ techcard.id }} {{ techcard.name }} {{ techcard.price }}
+</br>
+{% endfor %}
+{% endblock content %}
