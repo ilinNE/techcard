@@ -2,7 +2,11 @@
 {% block content %}
 <h1>Новый продукт</h1>
 <form method="post" 
-      action= "{% url 'cards:product_create' %}"
+      action= {% if is_edit %}
+                 "{% url 'cards:product_edit' product_id %}"
+              {% else %}
+                 "{% url 'cards:product_create' %}"
+              {% endif %}      
       enctype="multipart/form-data">      
     {% csrf_token %}           
     {% for field in form %}
@@ -10,7 +14,7 @@
     {% endfor %} 
     <hr>
         <button type="submit" class="btn btn-primary">
-            Добавить
+            {% if is_edit %}Сохранить{% else %}Добавить новый ингридиент{% endif %}
         </button>
 </form>
 {% endblock content %}

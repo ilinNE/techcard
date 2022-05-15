@@ -30,7 +30,7 @@ def product_create(request):
         new_product.owner = user
         new_product.save()
         return redirect('cards:product_list')
-    return render(request, 'cards/product_create.html', {'form': form})
+    return render(request, 'cards/product_create_edit.html', {'form': form})
 
 
 @login_required
@@ -44,14 +44,56 @@ def techcard_list(request):
 
 
 @login_required
+def product_list(request):
+    user = request.user
+    products = Product.objects.filter(owner=user)
+    context = {
+        'products': products
+    }
+    return render(request, 'cards/product_list.html', context)
+
+
+@login_required
+def product_detail(request, product_id):
+    user = request.user
+    product = get_object_or_404(Product, id=product_id)
+    if product.owner != user:
+        redirect(reverse('index'))
+    context = {
+        'product': product,
+    }
+    return render(request, 'cards/product_detail.html', context)
+
+
+@login_required
+def product_edit(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    form = ProductForm(
+        request.POST or None,
+        files=request.FILES or None,
+        instance=product
+    )
+    if form.is_valid():
+        form.save()
+        return redirect('cards:product_list')
+    context = {
+        'form': form,
+        'is_edit': True,
+        'product_id': product_id
+    }    
+    return render(request, 'cards/product_create_edit.html', context)
+
+
+
+@login_required
 def techcard_detail(request, id):
     user = request.user
-    techcard = get_object_or_404(TechCard, id=id)
-    if techcard.owner != user:
+    product = get_object_or_404(TechCard, id=id)
+    if product.owner != user:
         redirect(reverse('index'))
-    ingridients = techcard.ingridients.all()
+    ingridients = product.ingridients.all()
     context = {
-        'techcard': techcard,
+        'product': product,
         'ingridients': ingridients,
         'techcard_id': id
     }
@@ -77,19 +119,19 @@ def techcard_create(request):
         'techcard_form': techcard_form,
         'ingridient_formset': ingridient_formset
         }      
-    return render(request, 'cards/techcard_create.html', context )
+    return render(request, 'cards/techcard_create_edit.html', context )
 
 
 @login_required
 def techcard_edit(request, techcard_id):
-    techcard = get_object_or_404(TechCard, id=techcard_id)
+    product = get_object_or_404(TechCard, id=techcard_id)
     user = request.user
     techcard_form = TechCardForm(
         request.POST or None,
         files=request.FILES or None,
-        instance=techcard
+        instance=product
     )
-    ingridients = techcard.ingridients.filter(techcard=techcard)
+    ingridients = product.ingridients.filter(product=product)
     ingridient_formset = IngridientFormSet(
         request.POST or None,
         files=request.FILES or None,
@@ -107,6 +149,6 @@ def techcard_edit(request, techcard_id):
         return HttpResponse('OK')
     elif techcard_form.is_valid():
         return HttpResponse(f'{ingridient_formset.errors}')
-    return render(request, 'cards/techcard_create.html', context )
+    return render(request, 'cards/techcard_create_edit.html', context )
     
 

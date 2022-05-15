@@ -36,8 +36,8 @@ class TechCard(models.Model):
 
 class Product(models.Model):
     class Unit(models.TextChoices):
-        PCS = '1', 'Шт'
-        KG = '2', 'Кг'
+        PCS = 'Шт', 'Шт'
+        KG = 'Кг', 'Кг'
     name = models.CharField(max_length=30)
     owner = models.ForeignKey(
         User,

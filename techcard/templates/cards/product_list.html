@@ -1,0 +1,26 @@
+{% extends 'cards/base_cards.html' %}
+{% block content %}
+<h1>Продукты</h1>
+</br>
+<table class="table table-hover table-light">
+  <tr  >
+    <th>ID</th>
+    <th>Название</th>
+    <th>Единица измерения</th>
+    <th>Цена</th>
+    <th></th>
+  </tr>
+  {% for product in products %}
+  <tr>
+    <th>{{ product.id }}</th>
+    <th>{{ product.name }}</th>
+    <th>{{ product.unit }}</th>
+    <th>{{ product.price }}</th>
+    <th><a class="btn btn-primary btn-sm"  
+           href="{% url 'cards:product_detail' product.id %}">Подробнее</a></th>
+  </tr>
+  {% endfor %}
+</table>  
+</br>
+
+{% endblock content %}

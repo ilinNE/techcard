@@ -1,11 +1,16 @@
 <ul class="nav flex-column nav-pills">
+    {% with request.resolver_match.view_name as view_name %}
     <li class="nav-item">
-      <a class="nav-link" href="#">Блюда</a>
+      <a class="nav-link {% if view_name == 'cards:techcard_list' %}active{% endif %}"
+         href="{% url 'cards:techcard_list' %}">Блюда</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link active" href="#">Заготовки</a>
+        <a class="nav-link {% if view_name == 'about:author' %}active{% endif %}"
+           href="#">Заготовки</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Продукты</a>
+        <a class="nav-link {% if view_name == 'cards:product_list' %}active{% endif %}"
+           href="{% url 'cards:product_list' %}">Продукты</a>
     </li>
+    {% endwith %}
 </ul>

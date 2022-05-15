@@ -1,10 +1,27 @@
 {% extends 'cards/base_cards.html' %}
 {% block content %}
 <h1>Мои карты</h1>
-{{ request.user }}
 <br>
+<table class="table table-hover table-light">
+  <tr>
+    <th>ID</th>
+    <th>Название</th>
+    <th>Себестоимость</th>
+    <th>Выход</th>
+    <th></th>
+  </tr>
+  {% for techcard in techcards %}
+  <tr>
+    <th>{{ techcard.id }}</th>
+    <th>{{ techcard.name }}</th>
+    <th>{{ techcard.price }}</th>
+    <th>{{ techcard.weight }}</th>
+    <th><a class="btn btn-primary btn-sm"  
+           href="{% url 'cards:techcard_detail' techcard.id %}">Подробнее</a></th>
+  </tr>
+  {% endfor %}
+</table> 
 {% for techcard in techcards %}
-  {{ techcard.id }} {{ techcard.name }} {{ techcard.price }}
 </br>
 {% endfor %}
 {% endblock content %}
