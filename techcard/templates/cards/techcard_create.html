@@ -15,7 +15,12 @@
         {{ ingridient_formset.management_form }}
     {% for ingridient_form in ingridient_formset %}  
     <div class="ingridient-form">
-        {{ ingridient_form }}
+        <button class="btn btn-primary" onclick="delForm(this)">X</button>
+        {{ ingridient_form.id}}
+        {{ ingridient_form.product }}
+        {{ ingridient_form.ammount }}
+        {{ ingridient_form.cold_waste }}
+        {{ ingridient_form.hot_waste }}
     </div>
     {% endfor %} 
     <button id="add-form" type="button" class="btn btn-primary">Add Another ingridient</button>
@@ -25,18 +30,18 @@
     <hr>
 </form>
 <script>
-    let birdForm = document.querySelectorAll(".ingridient-form")
+    let ingridientForm = document.querySelectorAll(".ingridient-form")
     let container = document.querySelector("#form-container")
     let addButton = document.querySelector("#add-form")
     let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
 
-    let formNum = birdForm.length-1
+    let formNum = ingridientForm.length-1
     addButton.addEventListener('click', addForm)
 
     function addForm(e){
         e.preventDefault()
 
-        let newForm = birdForm[birdForm.length - 1].cloneNode(true)
+        let newForm = ingridientForm[ingridientForm.length - 1].cloneNode(true)
         let formRegex = RegExp(`form-(\\d){1}-`,'g')
 
         formNum++
@@ -45,5 +50,9 @@
         
         totalForms.setAttribute('value', `${formNum+1}`)
     }
+    function delForm(e){
+        e.parentElement.remove();
+        totalForms.setAttribute('value', `${formNum-1}`)
+      }
 </script>
 {% endblock content %}
