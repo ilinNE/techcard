@@ -1,0 +1,58 @@
+{% extends 'cards/base_cards.html' %}
+{% block content %}
+<h1>Новый полуфабрикат</h1>
+<form method="post" id="form-container"
+      action= {% if is_edit %}
+                 "{% url 'cards:semifabricate_edit' semifabricate_id %}"
+              {% else %}
+                 "{% url 'cards:semifabricate_create' %}"
+              {% endif %}
+      enctype="multipart/form-data">      
+    {% csrf_token %}           
+    {% for field in techcard_form %}
+    <p>{{ field }} {{ field.help_text }}</p>
+    {% endfor %} 
+        {{ ingridient_formset.management_form }}
+    {% for ingridient_form in ingridient_formset %}  
+    <div class="ingridient-form">
+        <button class="btn btn-primary" onclick="delForm(this)">X</button>
+        {{ ingridient_form.id}}
+        {{ ingridient_form.product }}
+        {{ ingridient_form.ammount }}
+        {{ ingridient_form.cold_waste }}
+        {{ ingridient_form.hot_waste }}
+    </div>
+    {% endfor %} 
+    <button id="add-form" type="button" class="btn btn-primary">Add Another ingridient</button>
+    <button type="submit" class="btn btn-primary">
+    {% if is_edit %}Сохранить карту{% else %}Создать карту{% endif %}
+    </button>
+    <hr>
+</form>
+<script>
+    let ingridientForm = document.querySelectorAll(".ingridient-form")
+    let container = document.querySelector("#form-container")
+    let addButton = document.querySelector("#add-form")
+    let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+
+    let formNum = ingridientForm.length-1
+    addButton.addEventListener('click', addForm)
+
+    function addForm(e){
+        e.preventDefault()
+
+        let newForm = ingridientForm[ingridientForm.length - 1].cloneNode(true)
+        let formRegex = RegExp(`form-(\\d){1}-`,'g')
+
+        formNum++
+        newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
+        container.insertBefore(newForm, addButton)
+        
+        totalForms.setAttribute('value', `${formNum+1}`)
+    }
+    function delForm(e){
+        e.parentElement.remove();
+        totalForms.setAttribute('value', `${formNum-1}`)
+      }
+</script>
+{% endblock content %}

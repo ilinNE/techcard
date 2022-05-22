@@ -21,11 +21,12 @@ def create_techcard(user, techcard_form, ingridient_formset, is_semifabricate):
         new_techcard.weight += weigth
     if is_semifabricate:
         new_techcard.is_semiffabricate = True
+        semifabricate_name = new_techcard.name + ' п/ф'
+        semifabricate_price = new_techcard.price / Decimal(new_techcard.weight)
         Product.objects.create(
-            name=new_techcard.name + 'п/ф',
+            name=semifabricate_name,
             owner=user,
-            weigth=new_techcard.weigth,
-            price=new_techcard.price,
+            price=semifabricate_price,
             is_semifabricate=True,
             semifabricate=new_techcard 
         )
@@ -34,6 +35,7 @@ def create_techcard(user, techcard_form, ingridient_formset, is_semifabricate):
 
 def edit_techcard(techcard_id, techcard_form, ingridient_formset, is_semifabricate):
     techcard = TechCard.objects.get(id=techcard_id)
+    user = techcard.owner
     techcard.name = techcard_form.cleaned_data['name']
     techcard.weight = 0
     techcard.price = 0
@@ -48,4 +50,11 @@ def edit_techcard(techcard_id, techcard_form, ingridient_formset, is_semifabrica
         new_ingridient.save()
         techcard.price += price
         techcard.weight += weigth
+    if is_semifabricate:
+        semifabricate_name = techcard.name + ' п/ф'
+        semifabricate_price = techcard.price / Decimal(techcard.weight)
+        product = Product.objects.get(semifabricate=techcard)
+        product.name = semifabricate_name
+        product.price = semifabricate_price
+        product.save()
     techcard.save()

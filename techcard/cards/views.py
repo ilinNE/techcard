@@ -12,12 +12,6 @@ def index(request):
     return render(request, 'users/index.html')
 
 
-def product_list(request):
-    products = Product.objects.filter(is_semifabricate=False)
-    context = {'products': products}
-    return render(request, 'cards/products_list.html', context)
-
-
 @login_required
 def product_create(request):
     form = ProductForm(
@@ -36,7 +30,10 @@ def product_create(request):
 @login_required
 def techcard_list(request):
     user = request.user
-    techcards = TechCard.objects.filter(owner=user)
+    techcards = TechCard.objects.filter(
+        owner=user,
+        is_semifabricate=False,
+    )
     context = {
         'techcards': techcards
     }
@@ -131,7 +128,7 @@ def techcard_edit(request, techcard_id):
         files=request.FILES or None,
         instance=product
     )
-    ingridients = product.ingridients.filter(product=product)
+    ingridients = product.ingridients.all()
     ingridient_formset = IngridientFormSet(
         request.POST or None,
         files=request.FILES or None,
@@ -150,5 +147,84 @@ def techcard_edit(request, techcard_id):
     elif techcard_form.is_valid():
         return HttpResponse(f'{ingridient_formset.errors}')
     return render(request, 'cards/techcard_create_edit.html', context )
+
+
+@login_required
+def semifabricate_list(request):
+    user = request.user
+    semifabricates = Product.objects.filter(
+        is_semifabricate=True,
+        owner = user    
+    )
+    context = {'semifabricates': semifabricates}
+    return render(request, 'cards/semifabricate_list.html', context)
+
+
+@login_required
+def semifabricate_detail(request, id):
+    user = request.user
+    semifabricate = get_object_or_404(Product, id=id)
+    if semifabricate.owner != user:
+        redirect(reverse('index'))
+    context = {
+        'semifabricate': semifabricate,
+    }
+    return render(request, 'cards/semifabricate_detail.html', context)
+
+
+
+@login_required
+def semifabricate_create(request):
+    user = request.user
+    ingridient_formset = IngridientFormSet(
+        request.POST or None,
+        files=request.FILES or None,
+        form_kwargs={'user': user},
+        queryset=Ingridient.objects.none()
+    )
+    techcard_form = TechCardForm(
+        request.POST or None,
+        files=request.FILES or None,
+    )
+    if techcard_form.is_valid() and ingridient_formset.is_valid():
+        create_techcard(user, techcard_form, ingridient_formset, True)
+        return redirect(reverse('cards:semifabricate_list'))
+    context = {
+        'techcard_form': techcard_form,
+        'ingridient_formset': ingridient_formset
+        }      
+    return render(request, 'cards/semifabricate_create_edit.html', context )
+
+
+
+@login_required
+def semifabricate_edit(request, id):
+    product = get_object_or_404(Product, id=id).semifabricate
+    user = request.user
+    techcard_form = TechCardForm(
+        request.POST or None,
+        files=request.FILES or None,
+        instance=product
+    )
+    ingridients = product.ingridients.all()
+    ingridient_formset = IngridientFormSet(
+        request.POST or None,
+        files=request.FILES or None,
+        form_kwargs={'user': user},
+        queryset=ingridients
+    )
+    context = {
+        'techcard_form': techcard_form,
+        'ingridient_formset': ingridient_formset,
+        'is_edit': True,
+        'techcard_id': product.id,
+        'semifabricate_id': id
+        }
+    if techcard_form.is_valid() and ingridient_formset.is_valid():
+        edit_techcard(product.id, techcard_form, ingridient_formset, True)
+        return HttpResponse('OK')
+    elif techcard_form.is_valid():
+        return HttpResponse(f'{ingridient_formset.errors}')
+    return render(request, 'cards/semifabricate_create_edit.html', context )
     
 

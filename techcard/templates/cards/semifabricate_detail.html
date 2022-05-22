@@ -1,0 +1,16 @@
+{% extends 'cards/base_cards.html' %}
+{% block content %}
+<h1>Карта №{{ semifabricate_id }}</h1>
+
+  <br>
+    Техкарта: {{ semifabricate.name }}</br>
+    Дата создания: {{ semifabricate.create_date }}</br>
+    Состав: </br> 
+    {% for ingridient in ingridients %}
+      {{ ingridient }}
+      </br>
+    {% endfor %}
+    <a class="btn btn-primary btn-sm" 
+      href="{% url 'cards:semifabricate_edit' semifabricate.id %}">Изменить</a>
+
+{% endblock content %}
