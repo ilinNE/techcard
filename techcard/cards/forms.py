@@ -4,13 +4,17 @@ from .models import Product, TechCard, Ingridient
 
     
 class ProductForm(forms.ModelForm):
-
+    unit_weight = forms.DecimalField(
+        initial=1.000,
+        help_text='Вес одной штуки'
+    )
     class Meta:
         model = Product
-        fields = ['name', 'unit', 'price']
+        fields = ['name', 'unit', 'unit_weight', 'price']
         help_texts = {
             'name': 'Название продукта',
             'unit': 'Еденица измерения',
+            'unit_weight': 'Вес одной еденицы измерения',
             'price': 'Цена за одну еденицу измерения'
         }
 
@@ -19,9 +23,10 @@ class TechCardForm(forms.ModelForm):
 
     class Meta:
         model = TechCard
-        fields = ['name']
+        fields = ['name', 'description']
         help_texts = {
             'name': 'Введите название блюда',
+            'description': 'Технология приготовления'
         }
 
 
@@ -52,6 +57,5 @@ class IngridientForm(forms.ModelForm):
 IngridientFormSet = forms.modelformset_factory(
     Ingridient,
     form=IngridientForm,
-    extra=1,
-    can_delete=True
+    extra=1
 )

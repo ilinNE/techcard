@@ -8,10 +8,8 @@
                  "{% url 'cards:techcard_create' %}"
               {% endif %}
       enctype="multipart/form-data">      
-    {% csrf_token %}           
-    {% for field in techcard_form %}
-    <p>{{ field }} {{ field.help_text }}</p>
-    {% endfor %} 
+    {% csrf_token %}
+    <p>Название: {{ techcard_form.name }}</p> 
         {{ ingridient_formset.management_form }}
     {% for ingridient_form in ingridient_formset %}  
     <div class="ingridient-form">
@@ -27,7 +25,9 @@
     <button type="submit" class="btn btn-primary">
     {% if is_edit %}Сохранить карту{% else %}Создать карту{% endif %}
     </button>
-    <hr>
+    </hr>
+    <p>{{ techcard_form.description.help_text }}</p>
+    <p>{{ techcard_form.description }}</p> 
 </form>
 <script>
     let ingridientForm = document.querySelectorAll(".ingridient-form")

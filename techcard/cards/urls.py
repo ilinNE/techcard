@@ -18,7 +18,7 @@ urlpatterns = [
     path('semifabricate/<int:id>/', semifabricate_detail, name='semifabricate_detail'),
     path('semifabricate/<int:id>/edit/', semifabricate_edit, name='semifabricate_edit'), 
     path('create/', techcard_create, name='techcard_create'),
-    path('<int:techcard_id>/edit/', techcard_edit, name='techcard_edit'),
+    path('<int:id>/edit/', techcard_edit, name='techcard_edit'),
     path('<int:id>/', techcard_detail, name='techcard_detail'),
     path('', techcard_list, name='techcard_list')
 ]
