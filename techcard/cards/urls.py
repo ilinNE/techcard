@@ -4,7 +4,7 @@ from .views import (product_list, product_create, techcard_create,
                     techcard_list, techcard_detail, techcard_edit,
                     product_detail, product_edit, semifabricate_create,
                     semifabricate_edit, semifabricate_list,
-                    semifabricate_detail)
+                    semifabricate_detail, download_file)
 
 app_name = 'cards'
 
@@ -20,5 +20,6 @@ urlpatterns = [
     path('create/', techcard_create, name='techcard_create'),
     path('<int:id>/edit/', techcard_edit, name='techcard_edit'),
     path('<int:id>/', techcard_detail, name='techcard_detail'),
-    path('', techcard_list, name='techcard_list')
+    path('', techcard_list, name='techcard_list'),
+    path('download/', download_file)
 ]

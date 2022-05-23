@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
@@ -209,5 +209,16 @@ def semifabricate_edit(request, id):
         edit_techcard(techcard.id, techcard_form, ingridient_formset, True)
         return redirect(reverse('cards:semifabricate_list'))
     return render(request, 'cards/semifabricate_create_edit.html', context )
+
+
+def download_file(request):
+    file = open('new.txt', 'w')
+    file.write('Hello!')
+    file.close()
+    response = HttpResponse(content_type='application/text charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="new2.txt"'
+    response.write(file)
+    return response
+
     
 
