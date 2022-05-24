@@ -1,7 +1,11 @@
+import io
+
 from django.http import HttpResponse, FileResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
+import openpyxl as exel
+
 
 from .forms import ProductForm, TechCardForm, IngridientForm, IngridientFormSet
 from .models import Product, TechCard, Ingridient
@@ -212,12 +216,18 @@ def semifabricate_edit(request, id):
 
 
 def download_file(request):
-    file = open('new.txt', 'w')
-    file.write('Hello!')
-    file.close()
-    response = HttpResponse(content_type='application/text charset=utf-8')
-    response['Content-Disposition'] = 'attachment; filename="new2.txt"'
-    response.write(file)
+    output = io.BytesIO()
+
+    wb = exel.Workbook()
+    wb.save(output)
+
+    output.seek(0)
+
+    response = HttpResponse(output.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response['Content-Disposition'] = "attachment; filename=test.xlsx"
+
+    output.close()
+
     return response
 
     
