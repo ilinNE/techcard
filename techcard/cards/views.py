@@ -9,7 +9,7 @@ import openpyxl as exel
 
 from .forms import ProductForm, TechCardForm, IngridientForm, IngridientFormSet
 from .models import Product, TechCard, Ingridient
-from .utils import create_techcard, edit_techcard
+from .utils import create_techcard, edit_techcard, make_xlsx
 
 
 def index(request):
@@ -217,17 +217,12 @@ def semifabricate_edit(request, id):
 
 def download_file(request):
     output = io.BytesIO()
-
-    wb = exel.Workbook()
+    wb = make_xlsx()
     wb.save(output)
-
     output.seek(0)
-
     response = HttpResponse(output.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     response['Content-Disposition'] = "attachment; filename=test.xlsx"
-
     output.close()
-
     return response
 
     
