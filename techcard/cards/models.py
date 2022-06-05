@@ -36,8 +36,6 @@ class TechCard(models.Model):
         related_name='techcards'
         )
     create_date = models.DateField(auto_now_add=True)
-    weight = models.DecimalField(max_digits=8, decimal_places=3)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField(blank=True)    
     is_semifabricate = models.BooleanField(default=False)
     semifabricate = models.OneToOneField(
@@ -61,7 +59,6 @@ class Ingridient(models.Model):
     ammount = models.DecimalField(max_digits=8, decimal_places=3)
     cold_waste = models.DecimalField(max_digits=8, decimal_places=3)
     hot_waste = models.DecimalField(max_digits=8, decimal_places=3)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
     techcard = models.ForeignKey(
         TechCard,
         on_delete=models.CASCADE,

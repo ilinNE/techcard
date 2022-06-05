@@ -1,0 +1,34 @@
+<script>
+    let ingridientForm = document.querySelectorAll(".ingridient-form")
+    let container = document.querySelector("#form-container")
+    let addButton = document.querySelector("#add-form")
+    let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+
+    let formNum = ingridientForm.length
+    addButton.addEventListener('click', addForm)
+
+    function addForm(e){
+        e.preventDefault()
+        let newForm = ingridientForm[ingridientForm.length - 1].cloneNode(true)
+        let formRegex = RegExp(`ingridients-(\\d){1}-`,'g')
+        newForm.innerHTML = newForm.innerHTML.replace(formRegex, `ingridients-${formNum}-`)
+        formNum++
+        container.insertBefore(newForm, addButton)
+        totalForms.setAttribute('value', `${formNum}`)
+    }
+    function delForm(e){
+        e.parentElement.remove();
+        formNum--
+        totalForms.setAttribute('value', `${formNum}`)
+        let formRegex = RegExp(`form-(\\d){1}-`,'g')
+        i = 0;
+        let ingridientForm = document.querySelectorAll(".ingridient-form")
+        do
+            {
+            alert(ingridientForm[i].innerHTML);
+            ingridientForm[i].innerHTML = ingridientForm[i].innerHTML.replace(formRegex, `form-${i}-`)
+            i++;
+            }
+        while(i<formNum);
+      }
+</script>

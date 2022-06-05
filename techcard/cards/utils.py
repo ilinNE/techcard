@@ -11,6 +11,8 @@ def create_techcard(user, techcard_form, ingridient_formset, is_semifabricate):
     new_techcard.price = 0
     new_techcard.save()
     for ingridient_form in ingridient_formset:
+        if ingridient_form in ingridient_formset.deleted_forms:
+            continue
         product, ammount, cold_waste, hot_waste = tuple(ingridient_form.cleaned_data.values())[:4]
         weigth = ammount * product.unit_weight * cold_waste * hot_waste
         price = ammount * product.price
@@ -41,6 +43,8 @@ def edit_techcard(techcard_id, techcard_form, ingridient_formset, is_semifabrica
     techcard.price = 0
     techcard.ingridients.all().delete()
     for ingridient_form in ingridient_formset:
+        if ingridient_form in ingridient_formset.deleted_forms:
+            continue
         product = ingridient_form.cleaned_data['product']
         weigth = ingridient_form.cleaned_data['ammount'] * product.unit_weight
         price = weigth * product.price
@@ -58,6 +62,18 @@ def edit_techcard(techcard_id, techcard_form, ingridient_formset, is_semifabrica
         product.price = semifabricate_price
         product.save()
     techcard.save()
+
+
+def calculate_price(ingridient_formset):
+    price = 0
+    weight = 0
+    for form in ingridient_formset:
+        if form in ingridient_formset.deleted_forms:
+            continue
+        product = form.cleaned_data['product']
+        weight += form.cleaned_data['ammount'] * product.unit_weight
+        price += weight * product.price
+    return price / weight
 
 
 def make_xlsx():

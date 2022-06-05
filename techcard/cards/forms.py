@@ -6,7 +6,7 @@ from .models import Product, TechCard, Ingridient
 class ProductForm(forms.ModelForm):
     unit_weight = forms.DecimalField(
         initial=1.000,
-        help_text='Вес одной штуки'
+        help_text='Вес одной еденицы измерения'
     )
     class Meta:
         model = Product
@@ -54,8 +54,6 @@ class IngridientForm(forms.ModelForm):
             pass
 
 
-IngridientFormSet = forms.modelformset_factory(
-    Ingridient,
-    form=IngridientForm,
-    extra=1
+IngridientFormSet = forms.inlineformset_factory(
+    TechCard, Ingridient, form=IngridientForm, extra=1
 )

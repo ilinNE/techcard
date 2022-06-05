@@ -10,4 +10,6 @@
       {{ ingridient }}
       </br>
     {% endfor %}
+    <a class="btn btn-primary btn-sm" 
+      href="{% url 'cards:techcard_edit' techcard_id %}">Изменить</a>
 {% endblock content %}

@@ -1,15 +1,14 @@
 import io
 
-from django.http import HttpResponse, FileResponse
+from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
-import openpyxl as exel
 
 
-from .forms import ProductForm, TechCardForm, IngridientForm, IngridientFormSet
-from .models import Product, TechCard, Ingridient
-from .utils import create_techcard, edit_techcard, make_xlsx
+from .forms import ProductForm, TechCardForm, IngridientFormSet
+from .models import Product, TechCard
+from .utils import calculate_price, make_xlsx
 
 
 def index(request):
@@ -91,20 +90,21 @@ def techcard_detail(request, id):
     return render(request, 'cards/techcard_detail.html', context)
 
 @login_required
-def techcard_create(request):
+def techcard_create(request: HttpRequest):
     user = request.user
     ingridient_formset = IngridientFormSet(
         request.POST or None,
-        files=request.FILES or None,
         form_kwargs={'user': user},
-        queryset=Ingridient.objects.none()
     )
     techcard_form = TechCardForm(
         request.POST or None,
-        files=request.FILES or None,
     )
     if techcard_form.is_valid() and ingridient_formset.is_valid():
-        create_techcard(user, techcard_form, ingridient_formset, False)
+        new_techcard = techcard_form.save(commit=False)
+        new_techcard.owner = user
+        new_techcard.save()
+        ingridient_formset.instance = new_techcard
+        ingridient_formset.save()
         return redirect(reverse('cards:techcard_list'))
     context = {
         'techcard_form': techcard_form,
@@ -121,15 +121,12 @@ def techcard_edit(request, id):
         return redirect(reverse('index'))
     techcard_form = TechCardForm(
         request.POST or None,
-        files=request.FILES or None,
         instance=techcard
     )
-    ingridients = techcard.ingridients.all()
     ingridient_formset = IngridientFormSet(
         request.POST or None,
-        files=request.FILES or None,
         form_kwargs={'user': user},
-        queryset=ingridients
+        instance=techcard,
     )
     context = {
         'techcard_form': techcard_form,
@@ -138,7 +135,8 @@ def techcard_edit(request, id):
         'techcard_id': id
         }
     if techcard_form.is_valid() and ingridient_formset.is_valid():
-        edit_techcard(id, techcard_form, ingridient_formset, False)
+        techcard_form.save()
+        ingridient_formset.save()
         return redirect(reverse('cards:techcard_list'))
     return render(request, 'cards/techcard_create_edit.html', context )
 
@@ -157,7 +155,10 @@ def semifabricate_detail(request, id):
     semifabricate = get_object_or_404(Product, id=id)
     if semifabricate.owner != user:
         redirect(reverse('index'))
-    context = {'semifabricate': semifabricate}
+    context = {
+        'semifabricate': semifabricate,
+        'ingridients': semifabricate.techcard.ingridients.all()
+    }
     return render(request, 'cards/semifabricate_detail.html', context)
 
 
@@ -166,16 +167,24 @@ def semifabricate_create(request):
     user = request.user
     ingridient_formset = IngridientFormSet(
         request.POST or None,
-        files=request.FILES or None,
         form_kwargs={'user': user},
-        queryset=Ingridient.objects.none()
     )
     techcard_form = TechCardForm(
         request.POST or None,
-        files=request.FILES or None,
     )
     if techcard_form.is_valid() and ingridient_formset.is_valid():
-        create_techcard(user, techcard_form, ingridient_formset, True)
+        new_techcard: TechCard = techcard_form.save(commit=False)
+        new_techcard.is_semifabricate = True
+        new_techcard.owner = user
+        new_techcard.semifabricate = Product.objects.create(
+            name=new_techcard.name + ' п/ф',
+            owner=user,
+            price=0,
+            is_semifabricate=True,
+        )
+        new_techcard.save()
+        ingridient_formset.instance = new_techcard
+        ingridient_formset.save()
         return redirect(reverse('cards:semifabricate_list'))
     context = {
         'techcard_form': techcard_form,
@@ -187,20 +196,17 @@ def semifabricate_create(request):
 
 @login_required
 def semifabricate_edit(request, id):
-    product = get_object_or_404(Product, id=id)
-    techcard = product.techcard
+    semifabricate = get_object_or_404(Product, id=id)
+    techcard = semifabricate.techcard
     user = request.user
     techcard_form = TechCardForm(
         request.POST or None,
-        files=request.FILES or None,
         instance=techcard
     )
-    ingridients = techcard.ingridients.all()
     ingridient_formset = IngridientFormSet(
         request.POST or None,
-        files=request.FILES or None,
         form_kwargs={'user': user},
-        queryset=ingridients
+        instance=techcard
     )
     context = {
         'techcard_form': techcard_form,
@@ -210,7 +216,9 @@ def semifabricate_edit(request, id):
         'semifabricate_id': id
         }
     if techcard_form.is_valid() and ingridient_formset.is_valid():
-        edit_techcard(techcard.id, techcard_form, ingridient_formset, True)
+        techcard_form.save()
+        ingridient_formset.save()
+        semifabricate.save()
         return redirect(reverse('cards:semifabricate_list'))
     return render(request, 'cards/semifabricate_create_edit.html', context )
 
