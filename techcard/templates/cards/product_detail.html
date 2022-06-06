@@ -12,10 +12,11 @@
       <th>{{ product.name }}</th>
       <th>{{ product.unit }}</th>
       <th>{{ product.price }}</th>
-      <th><a class="btn btn-primary btn-sm" 
-             href="{% url 'cards:product_edit' product.id %}">Изменить</a>
-      </th>
     </tr>
 </table>
+<a class="btn btn-primary btn-sm" 
+   href="{% url 'cards:product_edit' product.id %}">Изменить</a>
+<a class="btn btn-danger btn-sm" 
+   href="{% url 'cards:product_delete' product.id %}">Удалить</a>
 <br>
 {% endblock content %}

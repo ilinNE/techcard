@@ -13,6 +13,7 @@ from .utils import make_xlsx, techcard_to_dict
 def index(request):
     return render(request, "users/index.html")
 
+
 @login_required
 def product_list(request):
     user = request.user
@@ -56,6 +57,16 @@ def product_edit(request, product_id):
         return redirect("cards:product_list")
     context = {"form": form, "is_edit": True, "product_id": product_id}
     return render(request, "cards/product_create_edit.html", context)
+
+
+@login_required()
+def product_delete(request, id):
+    user = request.user
+    product = get_object_or_404(Product, id=id)
+    if product.owner != user:
+        redirect(reverse("cards:product_list"))
+    product.delete()
+    return redirect(reverse("cards:product_list"))
 
 
 @login_required
@@ -125,6 +136,16 @@ def techcard_edit(request, id):
     return render(request, "cards/techcard_create_edit.html", context)
 
 
+@login_required()
+def techcard_delete(request, id):
+    user = request.user
+    techcard = get_object_or_404(TechCard, id=id)
+    if techcard.owner != user:
+        redirect(reverse("cards:techcard_list"))
+    techcard.delete()
+    return redirect(reverse("cards:techcard_list"))
+
+
 @login_required
 def semifabricate_list(request):
     user = request.user
@@ -140,7 +161,7 @@ def semifabricate_detail(request, id):
     if semifabricate.owner != user:
         redirect(reverse("index"))
     context = techcard_to_dict(semifabricate.techcard.id)
-    context['semifabricate_id'] = id
+    context["semifabricate_id"] = id
     return render(request, "cards/techcard_detail.html", context)
 
 
@@ -195,16 +216,26 @@ def semifabricate_edit(request, id):
     if techcard_form.is_valid() and ingridient_formset.is_valid():
         techcard_form.save()
         ingridient_formset.save()
-        semifabricate.name = techcard_form.cleaned_data['name'] + ' п/ф'
+        semifabricate.name = techcard_form.cleaned_data["name"] + " п/ф"
         semifabricate.save()
         semifabricate.calculate_price()
         return redirect(reverse("cards:semifabricate_list"))
     return render(request, "cards/semifabricate_create_edit.html", context)
 
 
-def download_file(request):
+@login_required()
+def semifabricate_delete(request, id):
+    user = request.user
+    semifabricate = get_object_or_404(Product, id=id)
+    if semifabricate.owner != user:
+        redirect(reverse("cards:semifabricate_list"))
+    semifabricate.delete()
+    return redirect(reverse("cards:semifabricate_list"))
+
+
+def download_xlsx(request, id):
     output = io.BytesIO()
-    wb = make_xlsx()
+    wb = make_xlsx(id)
     wb.save(output)
     output.seek(0)
     response = HttpResponse(

@@ -3,9 +3,20 @@
 {% include 'cards/includes/ingridients_table.html' %}
 {% with request.resolver_match.view_name as view_name %}
   <a class="btn btn-primary btn-sm" 
-  href={% if view_name == 'cards:techcard_edit' %}
-          "{% url 'cards:techcard_edit' techcard_id %}"
-        {% endif %}
-          "{% url 'cards:semifabricate_edit' semifabricate_id %}">Изменить</a>
+     href={% if view_name == 'cards:techcard_detail' %}
+            "{% url 'cards:techcard_edit' techcard_id %}"
+          {% else %}
+            "{% url 'cards:semifabricate_edit' semifabricate_id %}"
+          {% endif %}
+          >Изменить</a>
+  <a class="btn btn-primary btn-sm" 
+          href="{% url 'cards:download_xlsx' techcard_id %}">Скачать Exel файл</a>
+  <a class="btn btn-danger btn-sm" 
+          href={% if view_name == 'cards:techcard_detail' %}
+                 "{% url 'cards:techcard_delete' techcard_id %}"
+               {% else %}
+                 "{% url 'cards:semifabricate_delete' semifabricate_id %}"
+               {% endif %}
+          >Удалить</a>      
 {% endwith %}    
 {% endblock content %}

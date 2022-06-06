@@ -3,6 +3,7 @@
     <li class="nav-item">
       <a class="nav-link {% if view_name|slice:':7' == 'cards:t' %}active{% endif %}"
          href="{% url 'cards:techcard_list' %}">Блюда</a>
+         
     </li>
     <li class="nav-item">
         <a class="nav-link {% if view_name|slice:':7' == 'cards:s' %}active{% endif %}"
