@@ -6,28 +6,36 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cards', '0005_auto_20220523_1506'),
+        ("cards", "0005_auto_20220523_1506"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='product',
-            options={'ordering': ['-create_date'], 'verbose_name': 'Продукт', 'verbose_name_plural': 'Продукты'},
+            name="product",
+            options={
+                "ordering": ["-create_date"],
+                "verbose_name": "Продукт",
+                "verbose_name_plural": "Продукты",
+            },
         ),
         migrations.AlterModelOptions(
-            name='techcard',
-            options={'ordering': ['-create_date'], 'verbose_name': 'Техкарта', 'verbose_name_plural': 'Техкарты'},
+            name="techcard",
+            options={
+                "ordering": ["-create_date"],
+                "verbose_name": "Техкарта",
+                "verbose_name_plural": "Техкарты",
+            },
         ),
         migrations.RemoveField(
-            model_name='ingridient',
-            name='price',
+            model_name="ingridient",
+            name="price",
         ),
         migrations.RemoveField(
-            model_name='techcard',
-            name='price',
+            model_name="techcard",
+            name="price",
         ),
         migrations.RemoveField(
-            model_name='techcard',
-            name='weight',
+            model_name="techcard",
+            name="weight",
         ),
     ]
