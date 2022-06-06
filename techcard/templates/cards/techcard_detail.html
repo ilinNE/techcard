@@ -1,15 +1,11 @@
 {% extends 'cards/base_cards.html' %}
-{% block content %}
-<h1>Карта №{{ techcard_id }}</h1>
-
-  <br>
-    Техкарта: {{ techcard.name }}</br>
-    Дата создания: {{ techcard.create_date }}</br>
-    Состав: </br> 
-    {% for ingridient in ingridients %}
-      {{ ingridient }}
-      </br>
-    {% endfor %}
-    <a class="btn btn-primary btn-sm" 
-      href="{% url 'cards:techcard_edit' techcard_id %}">Изменить</a>
+{% block content %}  
+{% include 'cards/includes/ingridients_table.html' %}
+{% with request.resolver_match.view_name as view_name %}
+  <a class="btn btn-primary btn-sm" 
+  href={% if view_name == 'cards:techcard_edit' %}
+          "{% url 'cards:techcard_edit' techcard_id %}"
+        {% endif %}
+          "{% url 'cards:semifabricate_edit' semifabricate_id %}">Изменить</a>
+{% endwith %}    
 {% endblock content %}

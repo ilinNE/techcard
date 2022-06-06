@@ -7,32 +7,11 @@ from django.urls import reverse
 
 from .forms import IngridientFormSet, ProductForm, TechCardForm
 from .models import Product, TechCard
-from .utils import calculate_price, make_xlsx
+from .utils import make_xlsx, techcard_to_dict
 
 
 def index(request):
     return render(request, "users/index.html")
-
-
-@login_required
-def product_create(request):
-    form = ProductForm(request.POST or None)
-    user = request.user
-    if form.is_valid():
-        new_product = form.save(commit=False)
-        new_product.owner = user
-        new_product.save()
-        return redirect("cards:product_list")
-    return render(request, "cards/product_create_edit.html", {"form": form})
-
-
-@login_required
-def techcard_list(request):
-    user = request.user
-    techcards = user.techcards.filter(is_semifabricate=False)
-    context = {"techcards": techcards}
-    return render(request, "cards/techcard_list.html", context)
-
 
 @login_required
 def product_list(request):
@@ -55,6 +34,18 @@ def product_detail(request, product_id):
 
 
 @login_required
+def product_create(request):
+    form = ProductForm(request.POST or None)
+    user = request.user
+    if form.is_valid():
+        new_product = form.save(commit=False)
+        new_product.owner = user
+        new_product.save()
+        return redirect("cards:product_list")
+    return render(request, "cards/product_create_edit.html", {"form": form})
+
+
+@login_required
 def product_edit(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     form = ProductForm(
@@ -68,17 +59,20 @@ def product_edit(request, product_id):
 
 
 @login_required
+def techcard_list(request):
+    user = request.user
+    techcards = user.techcards.filter(is_semifabricate=False)
+    context = {"techcards": techcards}
+    return render(request, "cards/techcard_list.html", context)
+
+
+@login_required
 def techcard_detail(request, id):
     user = request.user
     product = get_object_or_404(TechCard, id=id)
     if product.owner != user:
         redirect(reverse("index"))
-    ingridients = product.ingridients.all()
-    context = {
-        "product": product,
-        "ingridients": ingridients,
-        "techcard_id": id,
-    }
+    context = techcard_to_dict(id)
     return render(request, "cards/techcard_detail.html", context)
 
 
@@ -142,14 +136,12 @@ def semifabricate_list(request):
 @login_required
 def semifabricate_detail(request, id):
     user = request.user
-    semifabricate = get_object_or_404(Product, id=id)
+    semifabricate: Product = get_object_or_404(Product, id=id)
     if semifabricate.owner != user:
         redirect(reverse("index"))
-    context = {
-        "semifabricate": semifabricate,
-        "ingridients": semifabricate.techcard.ingridients.all(),
-    }
-    return render(request, "cards/semifabricate_detail.html", context)
+    context = techcard_to_dict(semifabricate.techcard.id)
+    context['semifabricate_id'] = id
+    return render(request, "cards/techcard_detail.html", context)
 
 
 @login_required
@@ -203,6 +195,7 @@ def semifabricate_edit(request, id):
     if techcard_form.is_valid() and ingridient_formset.is_valid():
         techcard_form.save()
         ingridient_formset.save()
+        semifabricate.name = techcard_form.cleaned_data['name'] + ' п/ф'
         semifabricate.save()
         semifabricate.calculate_price()
         return redirect(reverse("cards:semifabricate_list"))

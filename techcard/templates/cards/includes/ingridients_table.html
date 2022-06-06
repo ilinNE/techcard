@@ -1,0 +1,32 @@
+<table class="table table-light">
+    <tr>
+      <td colspan=2>Карта №{{ techcard_id }}</td>
+      <td colspan=4>Название: {{ name }}</td>
+      <td colspan=2>Дата создания: {{ date }}</td>
+    </tr>
+    <tr>
+      <th>№</th>
+      <th>Ингридиент</th>
+      <th>Ед.изм</th>
+      <th>Вес брутто</th>
+      <th>Вес нетто</th>
+      <th>Вес готового продукта</th>
+      <th>Цена</th>
+      <th>Себестоимость</th>
+    </tr>
+    {% for ingridient in ingridients %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ ingridient.0 }}</td>
+      <td>{{ ingridient.1 }}</td>
+      <td>{{ ingridient.2|floatformat:3 }}</td>
+      <td>{{ ingridient.3|floatformat:3  }}</td>
+      <td>{{ ingridient.4|floatformat:3  }}</td>
+      <td>{{ ingridient.5|floatformat:2 }}</td>
+      <td>{{ ingridient.6|floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan=8>{{ description|safe|linebreaks}}</td>
+    </tr>
+  </table>
