@@ -16,8 +16,8 @@
   <tr>
     <th>{{ techcard.id }}</th>
     <th>{{ techcard.name }}</th>
-    <th>{{ techcard.price }}</th>
-    <th>{{ techcard.weight }}</th>
+    <th>{{ techcard.price|floatformat:2 }}</th>
+    <th>{{ techcard.weight|floatformat:3 }}</th>
     <th><a class="btn btn-primary btn-sm"  
            href="{% url 'cards:techcard_detail' techcard.id %}">Подробнее</a></th>
   </tr>

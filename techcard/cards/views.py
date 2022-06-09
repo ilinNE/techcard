@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.db.models import F, Sum, DecimalField
 
 from .forms import IngridientFormSet, ProductForm, TechCardForm
 from .models import Product, TechCard
@@ -72,7 +73,15 @@ def product_delete(request, id):
 @login_required
 def techcard_list(request):
     user = request.user
-    techcards = user.techcards.filter(is_semifabricate=False)
+    techcards = user.techcards.filter(is_semifabricate=False).annotate(
+        price=Sum(F("ingridients__ammount") * F("ingridients__product__price")),
+        weight=Sum(
+            F("ingridients__ammount")
+            * F("ingridients__product__unit_weight")
+            * (1 - F("ingridients__cold_waste") / 100)
+            * (1 - F("ingridients__hot_waste") / 100), output_field=DecimalField()
+    )
+    )
     context = {"techcards": techcards}
     return render(request, "cards/techcard_list.html", context)
 

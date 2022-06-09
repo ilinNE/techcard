@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from django.db.models import F, Sum
+
 User = get_user_model()
 
 
@@ -36,22 +38,18 @@ class Product(models.Model):
         """Подсчитывает себестоимость полуфабриката на 1 кг веса."""
         if not self.is_semifabricate:
             return
-        techcard = TechCard.objects.prefetch_related(
-            "ingridients__product"
-        ).get(semifabricate=self)
-        full_price = 0
-        full_weight = 0
-        for ingridient in techcard.ingridients.all():
-            full_price += ingridient.ammount * ingridient.product.price
-            full_weight += (
-                ingridient.ammount
-                * ingridient.product.unit_weight
-                * (100 - ingridient.hot_waste)
-                * (100 - ingridient.cold_waste)
-                / 10000
+        price = self.techcard.ingridients.aggregate(
+            result=Sum(F("ammount") * F("product__price"))
+            / Sum(
+                F("ammount")
+                * F("product__unit_weight")
+                * (100 - F("cold_waste"))
+                / 100
+                * (100 - F("hot_waste"))
+                / 100
             )
-        kilo_price = full_price / full_weight
-        self.price = round(kilo_price, 2)
+        )
+        self.price = round(price['result'], 2)
         self.save()
 
 
