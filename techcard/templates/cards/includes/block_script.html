@@ -13,22 +13,8 @@
         let formRegex = RegExp(`ingridients-(\\d){1}-`,'g')
         newForm.innerHTML = newForm.innerHTML.replace(formRegex, `ingridients-${formNum}-`)
         formNum++
-        container.insertBefore(newForm, addButton)
+        tbody = container.querySelector("tbody")
+        tbody.insertBefore(newForm, tbody.querySelector("#button-row"))
         totalForms.setAttribute('value', `${formNum}`)
     }
-    function delForm(e){
-        e.parentElement.remove();
-        formNum--
-        totalForms.setAttribute('value', `${formNum}`)
-        let formRegex = RegExp(`form-(\\d){1}-`,'g')
-        i = 0;
-        let ingridientForm = document.querySelectorAll(".ingridient-form")
-        do
-            {
-            alert(ingridientForm[i].innerHTML);
-            ingridientForm[i].innerHTML = ingridientForm[i].innerHTML.replace(formRegex, `form-${i}-`)
-            i++;
-            }
-        while(i<formNum);
-      }
 </script>

@@ -1,0 +1,40 @@
+<table class="table table-light" id="form-container">
+  <tr>
+      <th>{% if request.resolver_match.view_name|slice:':7' == 'cards:s' %}
+            Название полуфабриката:
+          {% else %}
+            Название блюда:
+          {% endif %}
+      </th>
+      <td colspan=2>{{ techcard_form.name }}</td>
+      {{ ingridient_formset.management_form }}
+  </tr>
+  <tr>
+    <th>Ингридиент</th>
+    <th>Количество ед.изм.</th>
+    <th>Холодный отход %</th>
+    <th>Горячий отход %</th>
+    <th>Удалить</th>
+  </tr>
+  {% for ingridient_form in ingridient_formset %}
+  <tr class="ingridient-form">
+    <td>{{ ingridient_form.product }}</td>
+    <td>{{ ingridient_form.ammount }}</td>
+    <td>{{ ingridient_form.cold_waste }}</td>
+    <td>{{ ingridient_form.hot_waste }}</td>
+    <td>{{ ingridient_form.DELETE }}{{ ingridient_form.id }}</td>
+  </tr>
+  {% endfor %} 
+  <tr id="button-row">
+        <td colspan=5 >
+          <button id="add-form" type="button" class="btn btn-primary">Добавить ингридиент</button>
+          <button type="submit" class="btn btn-primary">
+              {% if is_edit %}Сохранить карту{% else %}Создать карту{% endif %}
+          </button>
+        </td>
+  </tr>
+  <tr id="description">
+      <td>{{ techcard_form.description.help_text }}</td> 
+      <td colspan=4>{{ techcard_form.description }}</td>
+  </tr>
+</table>

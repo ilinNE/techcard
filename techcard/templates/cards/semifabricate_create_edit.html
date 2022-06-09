@@ -1,7 +1,7 @@
 {% extends 'cards/base_cards.html' %}
 {% block content %}
 <h1>Новый полуфабрикат</h1>
-<form method="post" id="form-container"
+<form method="post" 
       action= {% if is_edit %}
                  "{% url 'cards:semifabricate_edit' semifabricate_id %}"
               {% else %}
@@ -9,25 +9,7 @@
               {% endif %}
       enctype="multipart/form-data">      
     {% csrf_token %}           
-    {% for field in techcard_form %}
-    <p>{{ field }} {{ field.help_text }}</p>
-    {% endfor %} 
-        {{ ingridient_formset.management_form }}
-    {% for ingridient_form in ingridient_formset %}  
-    <div class="ingridient-form">
-        {{ ingridient_form.DELETE }}
-        {{ ingridient_form.id}}
-        {{ ingridient_form.product }}
-        {{ ingridient_form.ammount }}
-        {{ ingridient_form.cold_waste }}
-        {{ ingridient_form.hot_waste }}
-    </div>
-    {% endfor %} 
-    <button id="add-form" type="button" class="btn btn-primary">Add Another ingridient</button>
-    <button type="submit" class="btn btn-primary">
-    {% if is_edit %}Сохранить карту{% else %}Создать карту{% endif %}
-    </button>
-    <hr>
+    {% include "cards/includes/create_table.html" %}
 </form>
 {% include 'cards/includes/block_script.html' %}
 {% endblock content %}

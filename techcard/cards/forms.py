@@ -1,3 +1,4 @@
+from itertools import product
 from django import forms
 
 from .models import Ingridient, Product, TechCard
@@ -20,6 +21,7 @@ class ProductForm(forms.ModelForm):
 
 
 class TechCardForm(forms.ModelForm):
+    
     class Meta:
         model = TechCard
         fields = ["name", "description"]
@@ -28,8 +30,15 @@ class TechCardForm(forms.ModelForm):
             "description": "Технология приготовления",
         }
 
+    def __init__(self, *args, **kwargs):
+        super(TechCardForm, self).__init__(*args, **kwargs)
+        WIDGET_CLASS = 'form-control'
+        self.fields['name'].widget.attrs.update({'class': f'{WIDGET_CLASS}'})
+        self.fields['description'].widget.attrs.update({'class': f'{WIDGET_CLASS}'})
+
 
 class IngridientForm(forms.ModelForm):
+
     class Meta:
         model = Ingridient
         fields = ["product", "ammount", "cold_waste", "hot_waste"]
@@ -41,11 +50,15 @@ class IngridientForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        print(kwargs)
         if "user" in kwargs and kwargs["user"] is not None:
             user = kwargs.pop("user")
             qs = Product.objects.filter(owner=user)
         super(IngridientForm, self).__init__(*args, **kwargs)
+        WIDGET_CLASS = 'form-control'
+        self.fields['product'].widget.attrs.update({'class': f'{WIDGET_CLASS}'})
+        self.fields['ammount'].widget.attrs.update({'class': f'{WIDGET_CLASS}'})
+        self.fields['cold_waste'].widget.attrs.update({'class': f'{WIDGET_CLASS}'})
+        self.fields['hot_waste'].widget.attrs.update({'class': f'{WIDGET_CLASS}'})
         try:
             self.fields["product"].queryset = qs
         except NameError:
