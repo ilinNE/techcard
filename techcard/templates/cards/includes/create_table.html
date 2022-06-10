@@ -21,7 +21,7 @@
     <td>{{ ingridient_form.product }}</td>
     <td>{{ ingridient_form.ammount }}</td>
     <td>{{ ingridient_form.cold_waste }}</td>
-    <td>{{ ingridient_form.hot_waste }}</td>
+    <td>{{ ingridient_form.hot_waste }}{{ ingridient_form.hot_waste.errors }}</td>
     <td>{{ ingridient_form.DELETE }}{{ ingridient_form.id }}</td>
   </tr>
   {% endfor %} 

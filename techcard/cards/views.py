@@ -80,7 +80,7 @@ def techcard_list(request):
             * F("ingridients__product__unit_weight")
             * (1 - F("ingridients__cold_waste") / 100)
             * (1 - F("ingridients__hot_waste") / 100), output_field=DecimalField()
-    )
+        )
     )
     context = {"techcards": techcards}
     return render(request, "cards/techcard_list.html", context)
