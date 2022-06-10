@@ -18,8 +18,10 @@
     <td>{{ semifabricate.name }}</td>
     <td>{{ semifabricate.create_date }}</td>
     <td>{{ semifabricate.price }}</td>
-    <td><a class="btn btn-primary btn-sm"  
-           href="{% url 'cards:semifabricate_detail' semifabricate.id %}">Подробнее</a></td>
+    <td>
+      <a class="btn btn-primary btn-sm"  
+           href="{% url 'cards:semifabricate_detail' semifabricate.id %}">Подробнее</a>
+    </td>
   </tr>
   {% endfor %}
 </table>  
