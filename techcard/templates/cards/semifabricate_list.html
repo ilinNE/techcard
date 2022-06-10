@@ -4,22 +4,22 @@
 </br>
 <a class="btn btn-primary btn-sm"  
    href="{% url 'cards:semifabricate_create' %}">Добавить полуфабрикат</a>
-<table class="table table-hover table-light">
+<table class="table table-hover table-stripped">
   <tr  >
     <th>ID</th>
     <th>Название</th>
-    <th>Единица измерения</th>
+    <th>Дата создания</th>
     <th>Цена</th>
     <th></th>
   </tr>
   {% for semifabricate in semifabricates %}
   <tr>
-    <th>{{ semifabricate.id }}</th>
-    <th>{{ semifabricate.name }}</th>
-    <th>{{ semifabricate.unit }}</th>
-    <th>{{ semifabricate.price }}</th>
-    <th><a class="btn btn-primary btn-sm"  
-           href="{% url 'cards:semifabricate_detail' semifabricate.id %}">Подробнее</a></th>
+    <td>{{ semifabricate.id }}</td>
+    <td>{{ semifabricate.name }}</td>
+    <td>{{ semifabricate.create_date }}</td>
+    <td>{{ semifabricate.price }}</td>
+    <td><a class="btn btn-primary btn-sm"  
+           href="{% url 'cards:semifabricate_detail' semifabricate.id %}">Подробнее</a></td>
   </tr>
   {% endfor %}
 </table>  

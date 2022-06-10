@@ -1,10 +1,10 @@
 {% extends 'cards/base_cards.html' %}
 {% block content %}
-<h1>Мои карты</h1>
+<h1>Мои блюда</h1>
 <br>
 <a class="btn btn-primary btn-sm"  
-   href="{% url 'cards:techcard_create'%}">Добавить техкарту</a>
-<table class="table table-hover table-light">
+   href="{% url 'cards:techcard_create'%}">Добавить блюдо</a>
+<table class="table table-hover table-stripped">
   <tr>
     <th>ID</th>
     <th>Название</th>
@@ -18,8 +18,10 @@
     <th>{{ techcard.name }}</th>
     <th>{{ techcard.price|floatformat:2 }}</th>
     <th>{{ techcard.weight|floatformat:3 }}</th>
-    <th><a class="btn btn-primary btn-sm"  
-           href="{% url 'cards:techcard_detail' techcard.id %}">Подробнее</a></th>
+    <th>
+      <a class="btn btn-primary btn-sm"  
+           href="{% url 'cards:techcard_detail' techcard.id %}">Подробнее</a>
+    </th>
   </tr>
   {% endfor %}
 </table> 

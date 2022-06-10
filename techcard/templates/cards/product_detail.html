@@ -2,16 +2,18 @@
 {% block content %}
 <h1>{{ product.name }}</h1>
 <br>
-<table>
+<table class="table table-light">
     <tr>
       <th>Название</th>
+      <th>Дата создания</th>      
       <th>Единица измерения</th>
       <th>Цена</th>
     </tr>
     <tr>
-      <th>{{ product.name }}</th>
-      <th>{{ product.unit }}</th>
-      <th>{{ product.price }}</th>
+      <td>{{ product.name }}</td>
+      <td>{{ product.create_date }}</td>
+      <td>{{ product.unit }}</td>
+      <td>{{ product.price }}</td>
     </tr>
 </table>
 <a class="btn btn-primary btn-sm" 

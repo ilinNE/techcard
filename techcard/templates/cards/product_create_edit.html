@@ -9,12 +9,22 @@
               {% endif %}      
       enctype="multipart/form-data">      
     {% csrf_token %}           
-    {% for field in form %}
-    <p>{{ field }} {{ field.help_text }}</p>
-    {% endfor %} 
-    <hr>
+    <table class="table table-light">
+        <tr  >
+          <th>Название</th>
+          <th>Единица измерения</th>
+          <th>Вес одной штуки</th>
+          <th>Цена за еденицу измерения</th>
+        </tr>
+        <tr>
+          <td>{{ form.name }}</td>
+          <td>{{ form.unit }}</td>
+          <td>{{ form.unit_weight }}</td>
+          <td>{{ form.price }}</td>
+        </tr>
+      </table>  
         <button type="submit" class="btn btn-primary">
-            {% if is_edit %}Сохранить{% else %}Добавить новый ингридиент{% endif %}
+            {% if is_edit %}Сохранить{% else %}Добавить новый продукт{% endif %}
         </button>
 </form>
 {% endblock content %}

@@ -1,6 +1,6 @@
 {% extends 'cards/base_cards.html' %}
 {% block content %}
-<h1>Новая карта</h1>
+<h1>Новое блюдо </h1>
 <form method="post" 
       action= {% if is_edit %}
                  "{% url 'cards:techcard_edit' techcard_id %}"

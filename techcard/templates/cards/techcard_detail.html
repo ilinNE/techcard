@@ -22,12 +22,18 @@
     <td>{{ ingridient.0 }}</td>
     <td>{{ ingridient.1 }}</td>
     <td>{{ ingridient.2|floatformat:3 }}</td>
-    <td>{{ ingridient.3|floatformat:3  }}</td>
-    <td>{{ ingridient.4|floatformat:3  }}</td>
+    <td>{{ ingridient.3|floatformat:3 }}</td>
+    <td>{{ ingridient.4|floatformat:3 }}</td>
     <td>{{ ingridient.5|floatformat:2 }}</td>
     <td>{{ ingridient.6|floatformat:2 }}</td>
   </tr>
   {% endfor %}
+  <tr>
+    <th colspan=5>Итого</th>
+    <th>{{ weight|floatformat:3 }}</th>
+    <th></th>
+    <th>{{ price|floatformat:2 }}</th>
+  </tr>
   <tr>
     <td colspan=8>{{ description|safe|linebreaks}}</td>
   </tr>
