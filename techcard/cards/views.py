@@ -5,7 +5,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.db.models import F, Sum, DecimalField
-
+from xlsxwriter import Workbook
 from .forms import IngridientFormSet, ProductForm, TechCardForm
 from .models import Product, TechCard
 from .utils import make_xlsx, techcard_to_dict
@@ -244,13 +244,14 @@ def semifabricate_delete(request, id):
 
 def download_xlsx(request, id):
     output = io.BytesIO()
-    wb = make_xlsx(id)
-    wb.save(output)
+    workbook = Workbook(output, {'in_memory': True})
+    make_xlsx(workbook, id)
+    workbook.close()
     output.seek(0)
     response = HttpResponse(
         output.read(),
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     )
-    response["Content-Disposition"] = "attachment; filename=test.xlsx"
+    response["Content-Disposition"] = f"attachment; filename={workbook.worksheets()[0].name}.xlsx"
     output.close()
     return response

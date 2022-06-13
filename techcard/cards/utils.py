@@ -1,5 +1,4 @@
-import openpyxl as exel
-from openpyxl.styles import Border, Font, NamedStyle, Side
+import xlsxwriter
 
 from cards.models import TechCard
 
@@ -40,46 +39,84 @@ def techcard_to_dict(techcard_id):
     return tc_dict
 
 
-def make_xlsx(id):
-    wb = exel.Workbook()
-    listname = "Первый лист"
-    wb.create_sheet(title=listname, index=0)
-    wb.remove(wb["Sheet"])
-    ws = wb[listname]
-    COLUMN_WIDTHS = {
-        "A": 3,
-        "B": 20,
-        "C": 4,
-        "D": 7,
-        "E": 7,
-        "F": 7,
-        "G": 7,
-        "H": 7,
-        "I": 7,
-        "J": 7,
+def make_xlsx(workbook, id):
+    techcard_dict = techcard_to_dict(id)
+    worksheet = workbook.add_worksheet(techcard_dict['name'])
+    base_format = {
+        "top": True,
+        "left": True,
+        "right": True,
+        "bottom": True,
+        "align": "left",
+        "valign": "vcenter",
+        "font_size": 14,
+        "bold": True,
+        "text_wrap": True,
     }
-    for column, width in COLUMN_WIDTHS.items():
-        ws.column_dimensions[column].width = width
-    for row in range(1, 12):
-        ws.row_dimensions[row].height = 20
-    ws.row_dimensions[9].height = 85
-
-    ws.merge_cells("A1:E2")
-    ws.merge_cells("F1:I1")
-    ws.merge_cells("F2:I2")
-    ws.merge_cells("A3:I3")
-    ws.merge_cells("A9:I9")
-    ws.merge_cells("A10:I10")
-    ws.merge_cells("A11:B11")
-    ws.merge_cells("C11:D11")
-    ws.merge_cells("E11:G11")
-    ws.merge_cells("H11:I11")
-    borderstyle = NamedStyle(name="borderstyle")
-    borderstyle.font = Font(bold=True, size=20)
-    bd = Side(style="thin", color="000000")
-    borderstyle.border = Border(left=bd, top=bd, right=bd, bottom=bd)
-    cells = ws["A1":"I11"]
-    for row in cells:
-        for cell in row:
-            cell.style = borderstyle
-    return wb
+    big_header_format = workbook.add_format(base_format)
+    base_format["font_size"] = 8
+    medium_header_format = workbook.add_format(base_format)
+    base_format["bold"] = False
+    data_field_format = workbook.add_format(base_format)
+    data_field_format.set_num_format(4)
+    base_format["font_size"] = 6
+    small_format = workbook.add_format(base_format)
+    base_format["font_size"] = 9
+    base_format["valign"] = "top"
+    description_format = workbook.add_format(base_format)
+    worksheet.set_column("A:A", 3)
+    worksheet.set_column("B:B", 20)
+    worksheet.set_column("C:C", 3)
+    worksheet.set_column("D:H", 6)
+    for row in range(0, 16):
+        worksheet.set_row_pixels(row, 30)
+    worksheet.merge_range("A1:D2", techcard_dict["name"], big_header_format)
+    worksheet.merge_range(
+        "E1:H1",
+        f'Технологическая карта № {techcard_dict["techcard_id"]}',
+        cell_format=medium_header_format,
+    )
+    worksheet.merge_range(
+        "E2:H2", f'Дата: {techcard_dict["date"]}', medium_header_format
+    )
+    worksheet.merge_range("A3:H3", None, medium_header_format)
+    headers = (
+        "№",
+        "Наименование продукта",
+        "Ед.изм",
+        "Вес брутто",
+        "Вес нетто",
+        "Вес готового продукта",
+        "Себестоимость за ед., руб",
+        "Цена, руб",
+    )
+    worksheet.write_row(3, 0, headers, small_format)
+    row = 4
+    ingridients = techcard_dict["ingridients"]
+    worksheet.write_column(
+        row, 0, range(1, len(ingridients) + 1), small_format
+    )
+    for ingridient in ingridients:
+        worksheet.write(row, 1, ingridient[0], medium_header_format)
+        worksheet.write_row(row, 2, ingridient[1:], data_field_format)
+        row += 1
+    row += 1
+    worksheet.merge_range(
+        f"A{row}:H{row+3}",
+        "Технология приготовления:" + techcard_dict["description"],
+        description_format,
+    )
+    row += 4
+    worksheet.merge_range(f"A{row}:H{row}", "ИТОГО", medium_header_format)
+    row += 1
+    worksheet.merge_range(
+        f"A{row}:B{row}", "Стоимость блюда, руб", medium_header_format
+    )
+    worksheet.merge_range(
+        f"C{row}:D{row}", techcard_dict["price"], data_field_format
+    )
+    worksheet.merge_range(f"E{row}:F{row}", "Выход, кг", medium_header_format)
+    worksheet.merge_range(
+        f"G{row}:H{row}", techcard_dict["weight"], data_field_format
+    )
+    return workbook
