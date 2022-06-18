@@ -1,7 +1,7 @@
 {% load static %}
     {% with request.resolver_match.view_name as view_name %}
     <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand" href="{% url 'index' %}">MyTechCards.ru</a>
+      <a class="navbar-brand " href="{% url 'index' %}"><img src={% static 'img/fav/favicon.ico' %}> MyTechCards</a>
       <ul class="nav nav-pills justify-content-end">
         <li class="nav-item ">
           <a class="nav-link {% if view_name == 'about:author' %}active{% endif %}"
@@ -13,7 +13,7 @@
         </li>
         {% if request.user.is_authenticated %}
         <li class="nav-item ">
-          <a class="nav-link {% if view_name|slice:":5" in 'cards'  %}active{% endif %}"
+          <a class="nav-link {% if view_name|slice:":5" == 'cards'  %}active{% endif %}"
              href="{% url 'cards:techcard_list' %}">Мои карты</a>
         </li>
         <li class="nav-item ">

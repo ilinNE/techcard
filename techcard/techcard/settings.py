@@ -105,3 +105,5 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'index'
 
 WIDGET_CLASS = 'form-control'
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
