@@ -49,7 +49,7 @@ class Product(models.Model):
                 / 100
             )
         )
-        self.price = round(price['result'], 2)
+        self.price = round(price["result"], 2)
         self.save()
 
 

@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.db.models import F, Sum, DecimalField
 from xlsxwriter import Workbook
-from .forms import IngridientFormSet, ProductForm, TechCardForm, ProductFormSet
+from .forms import IngridientFormSet, TechCardForm, ProductFormSet
 from .models import Product, TechCard
 from .utils import make_xlsx, techcard_to_dict
 
@@ -39,16 +39,13 @@ def product_detail(request, product_id):
 def product_create(request):
     user = request.user
     product_formset = ProductFormSet(
-        request.POST or None,
-        prefix='ingridients'
+        request.POST or None, prefix="ingridients"
     )
     if product_formset.is_valid():
         product_formset.instance = user
         product_formset.save()
         return redirect("cards:product_list")
-    context = {
-        "product_formset": product_formset
-    }
+    context = {"product_formset": product_formset}
     return render(request, "cards/product_create_edit.html", context)
 
 
@@ -56,17 +53,12 @@ def product_create(request):
 def product_edit(request):
     user = request.user
     product_formset = ProductFormSet(
-        request.POST or None,
-        instance=user,
-        prefix='ingridients'
+        request.POST or None, instance=user, prefix="ingridients"
     )
     if product_formset.is_valid():
         product_formset.save()
         return redirect("cards:product_list")
-    context = {
-        "is_edit": True,
-        "product_formset": product_formset
-    }
+    context = {"is_edit": True, "product_formset": product_formset}
     return render(request, "cards/product_create_edit.html", context)
 
 
@@ -84,13 +76,16 @@ def product_delete(request, id):
 def techcard_list(request):
     user = request.user
     techcards = user.techcards.filter(is_semifabricate=False).annotate(
-        price=Sum(F("ingridients__ammount") * F("ingridients__product__price")),
+        price=Sum(
+            F("ingridients__ammount") * F("ingridients__product__price")
+        ),
         weight=Sum(
             F("ingridients__ammount")
             * F("ingridients__product__unit_weight")
             * (1 - F("ingridients__cold_waste") / 100)
-            * (1 - F("ingridients__hot_waste") / 100), output_field=DecimalField()
-        )
+            * (1 - F("ingridients__hot_waste") / 100),
+            output_field=DecimalField(),
+        ),
     )
     context = {"techcards": techcards}
     return render(request, "cards/techcard_list.html", context)
@@ -128,7 +123,7 @@ def techcard_create(request: HttpRequest):
         "techcard_form": techcard_form,
         "ingridient_formset": ingridient_formset,
     }
-    
+
     return render(request, "cards/techcard_create_edit.html", context)
 
 
@@ -256,14 +251,20 @@ def semifabricate_delete(request, id):
 
 def download_xlsx(request, id):
     output = io.BytesIO()
-    workbook = Workbook(output, {'in_memory': True})
+    workbook = Workbook(output, {"in_memory": True})
     make_xlsx(workbook, id)
     workbook.close()
     output.seek(0)
     response = HttpResponse(
         output.read(),
-        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        content_type=(
+            "application/vnd.openxmlformats-officedocument"
+            ".spreadsheetml.sheet;"
+        ),
     )
-    response["Content-Disposition"] = f"attachment; filename={workbook.worksheets()[0].name}.xlsx"
+    response[
+        "Content-Disposition"
+    ] = f"attachment; filename=techcard-{id}.xlsx;"
+    print(response.headers)
     output.close()
     return response

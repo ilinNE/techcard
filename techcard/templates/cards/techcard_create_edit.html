@@ -1,5 +1,5 @@
 {% extends 'cards/base_cards.html' %}
-{% block title %}{% if is_edit %}Редактирование{% else %}Новое блюдо{% endif %}% endblock title %}
+{% block title %}{% if is_edit %}Редактирование{% else %}Новое блюдо{% endif %}{% endblock title %}
 {% block content %}
 <h1>{% if is_edit %}{{ techcard_form.name.value }}{% else %}Новое блюдо{% endif %}</h1>
 <form method="post" 

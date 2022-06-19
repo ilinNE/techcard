@@ -1,5 +1,3 @@
-import xlsxwriter
-
 from cards.models import TechCard
 
 
@@ -41,7 +39,7 @@ def techcard_to_dict(techcard_id):
 
 def make_xlsx(workbook, id):
     techcard_dict = techcard_to_dict(id)
-    worksheet = workbook.add_worksheet(techcard_dict['name'])
+    worksheet = workbook.add_worksheet(techcard_dict["name"])
     base_format = {
         "top": True,
         "left": True,
@@ -103,7 +101,8 @@ def make_xlsx(workbook, id):
     row += 1
     worksheet.merge_range(
         f"A{row}:H{row+3}",
-        "Технология приготовления:" + techcard_dict["description"],
+        "Технология приготовления:"
+        + techcard_dict["description"].replace("\r\n", "\n"),
         description_format,
     )
     row += 4

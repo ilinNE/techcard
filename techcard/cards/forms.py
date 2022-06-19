@@ -1,6 +1,4 @@
-from sys import prefix
 from django import forms
-from django.conf import settings
 from django.contrib.auth import get_user_model
 
 from .models import Ingridient, Product, TechCard
@@ -23,7 +21,6 @@ class ProductForm(forms.ModelForm):
         min_value=0, initial=1.000, help_text="Вес одной еденицы измерения"
     )
     price = forms.DecimalField(min_value=0, help_text="Стоимость")
-
 
     class Meta:
         model = Product
@@ -67,5 +64,8 @@ IngridientFormSet = forms.inlineformset_factory(
 )
 
 ProductFormSet = forms.inlineformset_factory(
-    User, Product, form=ProductForm, extra=1,
+    User,
+    Product,
+    form=ProductForm,
+    extra=1,
 )
