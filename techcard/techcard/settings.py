@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'cards.apps.CardsConfig',
     'users.apps.UsersConfig',
     'about.apps.AboutConfig',
+    'core.apps.CoreConfig',
     'debug_toolbar',
 ]
 
@@ -104,6 +105,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'index'
 
-WIDGET_CLASS = 'form-control'
-
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

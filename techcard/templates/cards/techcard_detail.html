@@ -1,11 +1,12 @@
 {% extends 'cards/base_cards.html' %}
 {% block title %} {{ name }} {% endblock title %}
-{% block content %}  
-<table class="table table-light">
+{% block content %}
+<h2>{{ name }}</h2>
+<table class="table table-light ">
   <tr>
-    <td colspan=2>Карта №{{ techcard_id }}</td>
-    <td colspan=4>Название: {{ name }}</td>
-    <td colspan=2>Дата создания: {{ date }}</td>
+    <th colspan=2>Карта №{{ techcard_id }}</th>
+    <th colspan=4>Название: {{ name }}</th>
+    <th colspan=2>Дата создания: {{ date }}</th>
   </tr>
   <tr>
     <th>№</th>

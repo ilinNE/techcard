@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.db.models import F, Sum, DecimalField
 from xlsxwriter import Workbook
-from .forms import IngridientFormSet, ProductForm, TechCardForm
+from .forms import IngridientFormSet, ProductForm, TechCardForm, ProductFormSet
 from .models import Product, TechCard
 from .utils import make_xlsx, techcard_to_dict
 
@@ -37,26 +37,36 @@ def product_detail(request, product_id):
 
 @login_required
 def product_create(request):
-    form = ProductForm(request.POST or None)
     user = request.user
-    if form.is_valid():
-        new_product = form.save(commit=False)
-        new_product.owner = user
-        new_product.save()
+    product_formset = ProductFormSet(
+        request.POST or None,
+        prefix='ingridients'
+    )
+    if product_formset.is_valid():
+        product_formset.instance = user
+        product_formset.save()
         return redirect("cards:product_list")
-    return render(request, "cards/product_create_edit.html", {"form": form})
+    context = {
+        "product_formset": product_formset
+    }
+    return render(request, "cards/product_create_edit.html", context)
 
 
 @login_required
-def product_edit(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    form = ProductForm(
-        request.POST or None, files=request.FILES or None, instance=product
+def product_edit(request):
+    user = request.user
+    product_formset = ProductFormSet(
+        request.POST or None,
+        instance=user,
+        prefix='ingridients'
     )
-    if form.is_valid():
-        form.save()
+    if product_formset.is_valid():
+        product_formset.save()
         return redirect("cards:product_list")
-    context = {"form": form, "is_edit": True, "product_id": product_id}
+    context = {
+        "is_edit": True,
+        "product_formset": product_formset
+    }
     return render(request, "cards/product_create_edit.html", context)
 
 
@@ -112,11 +122,13 @@ def techcard_create(request: HttpRequest):
         new_techcard.save()
         ingridient_formset.instance = new_techcard
         ingridient_formset.save()
+        print(request.POST)
         return redirect(reverse("cards:techcard_list"))
     context = {
         "techcard_form": techcard_form,
         "ingridient_formset": ingridient_formset,
     }
+    
     return render(request, "cards/techcard_create_edit.html", context)
 
 

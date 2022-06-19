@@ -1,17 +1,25 @@
-<ul class="nav flex-column nav-pills">
-    {% with request.resolver_match.view_name as view_name %}
-    <li class="nav-item">
-      <a class="nav-link {% if view_name|slice:':7' == 'cards:t' %}active{% endif %}"
-         href="{% url 'cards:techcard_list' %}">Блюда</a>
-         
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {% if view_name|slice:':7' == 'cards:s' %}active{% endif %}"
-           href="{% url 'cards:semifabricate_list' %}">Полуфабрикаты</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {% if view_name|slice:':7' == 'cards:p' %}active{% endif %}"
-           href="{% url 'cards:product_list' %}">Продукты</a>
-    </li>
-    {% endwith %}
-</ul>
+</br>
+<div class="card">
+  <div class="card-header">
+    Мои карты
+  </div>   
+  <div>  
+    <ul class="nav flex-column nav-pills">
+        {% with request.resolver_match.view_name as view_name %}
+        <li class="nav-item">
+        <a class="nav-link {% if view_name|slice:':7' == 'cards:t' %}active{% else %}text-dark{% endif %}"
+            href="{% url 'cards:techcard_list' %}">Блюда</a>
+            
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if view_name|slice:':7' == 'cards:s' %}active{% else %}text-dark{% endif %}"
+            href="{% url 'cards:semifabricate_list' %}">Полуфабрикаты</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if view_name|slice:':7' == 'cards:p' %}active{% else %}text-dark{% endif %}"
+            href="{% url 'cards:product_list' %}">Продукты</a>
+        </li>
+        {% endwith %}
+    </ul>
+  </div>  
+</div>

@@ -1,31 +1,41 @@
 {% extends 'cards/base_cards.html' %}
-{% block title %}Новый продукт{% endblock title %}
+{% block title %}Продукты{% endblock title %}
 {% block content %}
-<h1>Новый продукт</h1>
+{% load user_filters %}
+<h1>Ваши продукты</h1>
 <form method="post" 
       action= {% if is_edit %}
-                 "{% url 'cards:product_edit' product_id %}"
+                "{% url 'cards:product_edit' %}"
               {% else %}
-                 "{% url 'cards:product_create' %}"
-              {% endif %}      
+                "{% url 'cards:product_create' %}"
+              {% endif %}
       enctype="multipart/form-data">      
-    {% csrf_token %}           
-    <table class="table table-light">
-        <tr  >
-          <th>Название</th>
-          <th>Единица измерения</th>
-          <th>Вес одной штуки</th>
-          <th>Цена за еденицу измерения</th>
-        </tr>
+    {% csrf_token %}
+    {{ product_formset.management_form }}
+    <table class="table table-light" id="form-container">
         <tr>
-          <td>{{ form.name }}</td>
-          <td>{{ form.unit }}</td>
-          <td>{{ form.unit_weight }}</td>
-          <td>{{ form.price }}</td>
+          <th>Название</th>
+          <th>Ед.измерения</th>
+          <th>Вес одной еденицы</th>
+          <th>Цена</th>
+          <th>Удалить</th>
         </tr>
-      </table>  
-        <button type="submit" class="btn btn-primary">
-            {% if is_edit %}Сохранить{% else %}Добавить новый продукт{% endif %}
-        </button>
+        {% for product_form in product_formset %}
+        <tr class="ingridient-form">
+          <td>{{ product_form.name|addclass:'form-control' }}</td>
+          <td>{{ product_form.unit|addclass:'form-control' }}</td>
+          <td>{{ product_form.unit_weight|addclass:'form-control' }}</td>
+          <td>{{ product_form.price|addclass:'form-control' }}</td>
+          <td>{{ product_form.DELETE|addclass:'form-check' }}{{ product_form.id }}</td>
+        </tr>
+        {% endfor %} 
+        <tr id="button-row">
+              <td colspan=5 >
+                <button id="add-form" type="button" class="btn btn-primary">Добавить ингридиент</button>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+              </td>
+        </tr>
+      </table>
 </form>
+{% include 'cards/includes/block_script.html' %}
 {% endblock content %}

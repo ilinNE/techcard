@@ -4,7 +4,9 @@
 <h1>Продукты</h1>
 </br>
 <a class="btn btn-primary btn-sm"  
-   href="{% url 'cards:product_create'%}">Добавить продукт</a>
+   href="{% url 'cards:product_create'%}">Добавить продукты</a>
+<a class="btn btn-primary btn-sm"  
+   href="{% url 'cards:product_edit'%}">Изменить</a>
 <table class="table table-hover table-stripped">
   <tr  >
     <th>ID</th>
@@ -20,8 +22,8 @@
     <td>{{ product.unit }}</td>
     <td>{{ product.price }}</td>
     <td>
-      <a class="btn btn-primary btn-sm"  
-           href="{% url 'cards:product_detail' product.id %}">Подробнее</a>
+      <a class="btn btn-danger btn-sm"  
+           href="{% url 'cards:product_delete' product.id %}">Удалить</a>
     </td>
   </tr>
   {% endfor %}

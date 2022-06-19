@@ -10,7 +10,7 @@
     function addForm(e){
         e.preventDefault()
         let newForm = ingridientForm[ingridientForm.length - 1].cloneNode(true)
-        let formRegex = RegExp(`ingridients-(\\d){1}-`,'g')
+        let formRegex = RegExp(`ingridients-(\\d){1,3}-`,'g')
         newForm.innerHTML = newForm.innerHTML.replace(formRegex, `ingridients-${formNum}-`)
         formNum++
         tbody = container.querySelector("tbody")

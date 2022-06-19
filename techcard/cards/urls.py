@@ -4,7 +4,6 @@ from .views import (
     download_xlsx,
     product_create,
     product_delete,
-    product_detail,
     product_edit,
     product_list,
     semifabricate_create,
@@ -24,8 +23,7 @@ app_name = "cards"
 urlpatterns = [
     path("product/", product_list, name="product_list"),
     path("product/create/", product_create, name="product_create"),
-    path("product/<int:product_id>/", product_detail, name="product_detail"),
-    path("product/<int:product_id>/edit/", product_edit, name="product_edit"),
+    path("product/edit/", product_edit, name="product_edit"),
     path("product/<int:id>/delete/", product_delete, name="product_delete"),
     path("semifabricate/", semifabricate_list, name="semifabricate_list"),
     path(

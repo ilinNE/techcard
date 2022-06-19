@@ -1,10 +1,12 @@
+from sys import prefix
 from django import forms
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from .models import Ingridient, Product, TechCard
 
 
-WIDGET_CLASS = settings.WIDGET_CLASS
+User = get_user_model()
 
 
 class ProductForm(forms.ModelForm):
@@ -21,10 +23,7 @@ class ProductForm(forms.ModelForm):
         min_value=0, initial=1.000, help_text="Вес одной еденицы измерения"
     )
     price = forms.DecimalField(min_value=0, help_text="Стоимость")
-    name.widget.attrs.update({"class": f"{WIDGET_CLASS}"})
-    unit.widget.attrs.update({"class": f"{WIDGET_CLASS}"})
-    unit_weight.widget.attrs.update({"class": f"{WIDGET_CLASS}"})
-    price.widget.attrs.update({"class": f"{WIDGET_CLASS}"})
+
 
     class Meta:
         model = Product
@@ -40,24 +39,12 @@ class TechCardForm(forms.ModelForm):
             "description": "Технология приготовления",
         }
 
-    def __init__(self, *args, **kwargs):
-        super(TechCardForm, self).__init__(*args, **kwargs)
-        self.fields["name"].widget.attrs.update({"class": f"{WIDGET_CLASS}"})
-        self.fields["description"].widget.attrs.update(
-            {"class": f"{WIDGET_CLASS}"}
-        )
-
 
 class IngridientForm(forms.ModelForm):
     product = forms.ModelChoiceField(queryset=Product.objects.all())
     ammount = forms.DecimalField(initial=0.000, min_value=0)
     cold_waste = forms.DecimalField(initial=0.000, min_value=0, max_value=100)
     hot_waste = forms.DecimalField(initial=0.000, min_value=0, max_value=100)
-
-    product.widget.attrs.update({"class": f"{WIDGET_CLASS}"})
-    ammount.widget.attrs.update({"class": f"{WIDGET_CLASS}"})
-    cold_waste.widget.attrs.update({"class": f"{WIDGET_CLASS}"})
-    hot_waste.widget.attrs.update({"class": f"{WIDGET_CLASS}"})
 
     class Meta:
         model = Ingridient
@@ -77,4 +64,8 @@ class IngridientForm(forms.ModelForm):
 
 IngridientFormSet = forms.inlineformset_factory(
     TechCard, Ingridient, form=IngridientForm, extra=1
+)
+
+ProductFormSet = forms.inlineformset_factory(
+    User, Product, form=ProductForm, extra=1,
 )

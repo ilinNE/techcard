@@ -1,3 +1,4 @@
+{% load user_filters %}
 <table class="table table-light" id="form-container">
   <tr>
       <th>{% if request.resolver_match.view_name|slice:':7' == 'cards:s' %}
@@ -6,7 +7,7 @@
             Название блюда:
           {% endif %}
       </th>
-      <td colspan=2>{{ techcard_form.name }}</td>
+      <td colspan=2>{{ techcard_form.name|addclass:'form-control'}}</td>
       {{ ingridient_formset.management_form }}
   </tr>
   <tr>
@@ -18,11 +19,11 @@
   </tr>
   {% for ingridient_form in ingridient_formset %}
   <tr class="ingridient-form">
-    <td>{{ ingridient_form.product }}</td>
-    <td>{{ ingridient_form.ammount }}</td>
-    <td>{{ ingridient_form.cold_waste }}</td>
-    <td>{{ ingridient_form.hot_waste }}{{ ingridient_form.hot_waste.errors }}</td>
-    <td>{{ ingridient_form.DELETE }}{{ ingridient_form.id }}</td>
+    <td>{{ ingridient_form.product|addclass:'form-control' }}</td>
+    <td>{{ ingridient_form.ammount|addclass:'form-control' }}</td>
+    <td>{{ ingridient_form.cold_waste|addclass:'form-control' }}</td>
+    <td>{{ ingridient_form.hot_waste|addclass:'form-control' }}{{ ingridient_form.hot_waste.errors }}</td>
+    <td>{{ ingridient_form.DELETE|addclass:'form-check'}}{{ ingridient_form.id }}</td>
   </tr>
   {% endfor %} 
   <tr id="button-row">
@@ -35,6 +36,6 @@
   </tr>
   <tr id="description">
       <td>{{ techcard_form.description.help_text }}</td> 
-      <td colspan=4>{{ techcard_form.description }}</td>
+      <td colspan=4>{{ techcard_form.description|addclass:'form-control' }}</td>
   </tr>
 </table>

@@ -1,32 +1,32 @@
 {% load static %}
     {% with request.resolver_match.view_name as view_name %}
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-light bg-primary">
       <a class="navbar-brand " href="{% url 'index' %}"><img src={% static 'img/fav/favicon.ico' %}> MyTechCards</a>
-      <ul class="nav nav-pills justify-content-end">
+      <ul class="nav justify-content-end">
         <li class="nav-item ">
-          <a class="nav-link {% if view_name == 'about:author' %}active{% endif %}"
+          <a class="nav-link {% if view_name == 'about:author' %}text-light{% else %}text-dark {% endif %}"
              href="{% url 'about:author' %}">Об авторе</a>
-        </li>
+        </li> 
         <li class="nav-item">
-          <a class="nav-link {% if view_name == 'about:how_it_work' %}active{% endif %}"
+          <a class="nav-link {% if view_name == 'about:how_it_work' %}text-light{% else %}text-dark {% endif %}"
              href="{% url 'about:how_it_work' %}">Как пользоваться</a>
         </li>
         {% if request.user.is_authenticated %}
         <li class="nav-item ">
-          <a class="nav-link {% if view_name|slice:":5" == 'cards'  %}active{% endif %}"
+          <a class="nav-link {% if view_name|slice:":5" == 'cards'  %}text-light{% else %}text-dark {% endif %}"
              href="{% url 'cards:techcard_list' %}">Мои карты</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link {% if view_name == 'users:logout' %}active{% endif %}"
+          <a class="nav-link {% if view_name == 'users:logout' %}text-light{% else %}text-dark {% endif %}"
              href="{% url 'users:logout' %}">Выйти</a>
         </li>
         {% else %}
         <li class="nav-item ">
-          <a class="nav-link {% if view_name == 'users:login' %}active{% endif %}"
+          <a class="nav-link {% if view_name == 'users:login' %}text-light{% else %}text-dark {% endif %}"
              href="{% url 'users:login' %}">Войти</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link {% if view_name == 'users:signup' %}active{% endif %}"
+          <a class="nav-link {% if view_name == 'users:signup' %}text-light{% else %}text-dark {% endif %}"
              href="{% url 'users:signup' %}">Регистрация</a>
         </li>
         {% endif %}
