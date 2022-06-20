@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from django.db.models import F, Sum
+
 
 User = get_user_model()
 
@@ -33,24 +33,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
-    def calculate_price(self):
-        """Подсчитывает себестоимость полуфабриката на 1 кг веса."""
-        if not self.is_semifabricate:
-            return
-        price = self.techcard.ingridients.aggregate(
-            result=Sum(F("ammount") * F("product__price"))
-            / Sum(
-                F("ammount")
-                * F("product__unit_weight")
-                * (100 - F("cold_waste"))
-                / 100
-                * (100 - F("hot_waste"))
-                / 100
-            )
-        )
-        self.price = round(price["result"], 2)
-        self.save()
 
 
 class TechCard(models.Model):

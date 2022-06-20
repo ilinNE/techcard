@@ -6,9 +6,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.db.models import F, Sum, DecimalField
 from xlsxwriter import Workbook
+
 from .forms import IngridientFormSet, TechCardForm, ProductFormSet
 from .models import Product, TechCard
-from .utils import make_xlsx, techcard_to_dict
+from .services import make_xlsx, techcard_to_dict, calculate_semifabricate
 
 
 def index(request):
@@ -117,7 +118,6 @@ def techcard_create(request: HttpRequest):
         new_techcard.save()
         ingridient_formset.instance = new_techcard
         ingridient_formset.save()
-        print(request.POST)
         return redirect(reverse("cards:techcard_list"))
     context = {
         "techcard_form": techcard_form,
@@ -204,7 +204,7 @@ def semifabricate_create(request):
         new_techcard.save()
         ingridient_formset.instance = new_techcard
         ingridient_formset.save()
-        new_techcard.semifabricate.calculate_price()
+        calculate_semifabricate(new_techcard.semifabricate)
         return redirect(reverse("cards:semifabricate_list"))
     context = {
         "techcard_form": techcard_form,
@@ -234,7 +234,7 @@ def semifabricate_edit(request, id):
         ingridient_formset.save()
         semifabricate.name = techcard_form.cleaned_data["name"] + " п/ф"
         semifabricate.save()
-        semifabricate.calculate_price()
+        calculate_semifabricate(semifabricate)
         return redirect(reverse("cards:semifabricate_list"))
     return render(request, "cards/semifabricate_create_edit.html", context)
 
@@ -265,6 +265,5 @@ def download_xlsx(request, id):
     response[
         "Content-Disposition"
     ] = f"attachment; filename=techcard-{id}.xlsx;"
-    print(response.headers)
     output.close()
     return response

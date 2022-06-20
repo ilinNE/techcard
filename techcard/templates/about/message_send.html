@@ -1,0 +1,23 @@
+{% extends 'users/base_users.html' %}
+{% block title %}Сообщение отправлено{% endblock %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-8 p-5">
+      <div class="card">
+        <div class="card-header">
+          Сообщение отправлено
+        </div>
+        <div class="card-body">
+          <p>
+            Спасибо за обратную связь! Я постараюсь учесть ваши пожелания.
+          </p>
+        </div> <!-- card body -->
+      </div> <!-- card -->
+      </br>
+      <a class="btn btn-primary btn-sm"  
+        href="{% url 'about:author'%}">Назад</a>
+      <a class="btn btn-primary btn-sm"  
+        href="{% url 'index'%}">На главную</a>   
+    </div> <!-- col -->
+  </div> <!-- row -->
+{% endblock %} 
