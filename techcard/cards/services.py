@@ -25,8 +25,19 @@ def calculate_semifabricate(semifabricate):
     )
     for ingridient in ingridients_with_semifabricate:
         calculate_semifabricate(ingridient.techcard.semifabricate)
-        
 
+
+def calculate_for_product(product):
+    """Пересчитывает все полуфабрикаты для
+    которых данный продукт является ингридиентом.
+    """
+    ingridients_with_semifabricate = Ingridient.objects.filter(
+        product=product,
+        techcard__is_semifabricate=True
+    )
+    for ingridient in ingridients_with_semifabricate:
+        calculate_semifabricate(ingridient.techcard.semifabricate)
+        
 
 def techcard_to_dict(techcard_id):
     techcard: TechCard = TechCard.objects.prefetch_related(

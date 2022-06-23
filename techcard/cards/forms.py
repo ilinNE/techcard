@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 
 from .models import Ingridient, Product, TechCard
+from .services import calculate_for_product
 
 
 User = get_user_model()
@@ -25,6 +26,12 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ["name", "unit", "unit_weight", "price"]
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data['unit'] == Product.Unit.KG:
+            cleaned_data['unit_weight'] = 1
+        return cleaned_data
 
 
 class TechCardForm(forms.ModelForm):
@@ -58,14 +65,24 @@ class IngridientForm(forms.ModelForm):
         except NameError:
             pass
 
+class BaseProductFormSet(forms.BaseInlineFormSet):
+
+    def save_existing_objects(self, commit: bool = ...):
+        saved_instances = super().save_existing_objects(commit)
+        for product in self.changed_objects:
+            calculate_for_product(product[0]) 
+        return saved_instances
+
 
 IngridientFormSet = forms.inlineformset_factory(
     TechCard, Ingridient, form=IngridientForm, extra=1
 )
+
 
 ProductFormSet = forms.inlineformset_factory(
     User,
     Product,
     form=ProductForm,
     extra=1,
+    formset=BaseProductFormSet
 )

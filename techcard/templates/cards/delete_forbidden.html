@@ -1,0 +1,33 @@
+{% extends 'cards/base_cards.html' %}
+{% block title %}Удаление невозможно{% endblock title %}
+{% block content %}
+<h1>Удаление невозможно</h1>
+</br>
+<div class="card">
+    <div class="card-header bg-warning">
+        Нельзя удалить элемент номенклатуры, если он входит в состав другого элемента
+    </div>
+
+    <div class="card-body">
+        {{ product.name }} входит в состав следующих блюд или полуфабрикатов:
+        <table class="table table-hover table-stripped">
+            <tr  >
+              <th>Название</th>
+              <th>Тип</th>
+              <th></th>
+            </tr>
+            {% for techcard in techcards %}
+            <tr>
+              <td>{{ techcard.name }}</td>
+              <td>{% if techcard.is_semifabricate %}Полуфабрикат{% else %}Блюдо{% endif %}</td>
+              <td>
+                <a class="btn btn-primary btn-sm"  
+                     href="{% url 'cards:techcard_detail' techcard.id %}">Перейти</a>
+              </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+</br>
+{% endblock content %}
