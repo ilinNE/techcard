@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
 
 # C extensions
 *.so
@@ -149,3 +150,5 @@ dmypy.json
 techcard/media/
 techcard/static/
 
+techcard/cards/__pycache__/services.cpython-37.pyc
+techcard/techcard/__pycache__/settings.cpython-37.pyc

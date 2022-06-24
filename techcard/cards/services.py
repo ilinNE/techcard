@@ -105,7 +105,7 @@ def make_xlsx(workbook, id):
     worksheet.set_column("C:C", 3)
     worksheet.set_column("D:H", 6)
     for row in range(0, 16):
-        worksheet.set_row_pixels(row, 30)
+        worksheet.set_row(row, 22)
     worksheet.merge_range("A1:D2", techcard_dict["name"], big_header_format)
     worksheet.merge_range(
         "E1:H1",
