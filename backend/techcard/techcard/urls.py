@@ -5,6 +5,7 @@ from django.conf import settings
 from cards.views import index
 
 urlpatterns = [
+    path("api/", include("api.urls")),
     path("auth/", include("users.urls")),
     path("cards/", include("cards.urls")),
     path("admin/", admin.site.urls),

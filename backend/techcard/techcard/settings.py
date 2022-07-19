@@ -12,9 +12,7 @@ SECRET_KEY = (
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "www.ilinniks.pythonanywhere.com",
-    "ilinniks.pythonanywhere.com",
-    "127.0.0.1",
+    "web", "127.0.0.1"
 ]
 
 INTERNAL_IPS = [
@@ -32,6 +30,8 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "about.apps.AboutConfig",
     "core.apps.CoreConfig",
+    "api.apps.ApiConfig",
+    "rest_framework"
 ]
 
 MIDDLEWARE = [
@@ -99,11 +99,15 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_URL = "users:login"
 LOGIN_REDIRECT_URL = "index"
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR,"core", "static"),)
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
