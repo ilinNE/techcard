@@ -152,3 +152,4 @@ techcard/static/
 
 techcard/cards/__pycache__/services.cpython-37.pyc
 techcard/techcard/__pycache__/settings.cpython-37.pyc
+static/
