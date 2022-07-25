@@ -5,9 +5,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = (
-    "django-insecure-8^2x%(&bp((vyz-4xv(kp%6f&n-_mk%bsas=@fb+1i6zx5c5z9"
-)
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True
 
@@ -31,7 +29,8 @@ INSTALLED_APPS = [
     "about.apps.AboutConfig",
     "core.apps.CoreConfig",
     "api.apps.ApiConfig",
-    "rest_framework"
+    "rest_framework",
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -67,8 +66,12 @@ WSGI_APPLICATION = "techcard.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": os.getenv("DB_ENGINE"),
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("POSTGRES_USER"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
     }
 }
 
