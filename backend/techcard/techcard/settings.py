@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'rest_framework.authtoken',
     "cards.apps.CardsConfig",
     "users.apps.UsersConfig",
     "about.apps.AboutConfig",
@@ -114,3 +115,12 @@ LOGIN_REDIRECT_URL = "index"
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR,"core", "static"),)
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.AllowAny',
+#     ],
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.TokenAuthentication',
+#     ),
+# }
