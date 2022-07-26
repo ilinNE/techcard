@@ -16,6 +16,9 @@ function App() {
   return (
     <section className="App">
       <div className="nav">
+        <NavLink className="navLink" to="/">
+          Главная
+        </NavLink>
         <NavLink className="navLink" to="/disches">
           Блюда
         </NavLink>
