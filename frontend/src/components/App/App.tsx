@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./App.scss";
 import * as Api from "../../utils/Api";
 
 function App() {
@@ -31,6 +31,7 @@ function App() {
       <button className="button" onClick={handlePost}>
         Post
       </button>
+      <p>тест</p>
     </div>
   );
 }
