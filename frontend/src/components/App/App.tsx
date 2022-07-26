@@ -31,7 +31,13 @@ function App() {
       <button className="button" onClick={handlePost}>
         Post
       </button>
-      <p>тест</p>
+      <p className="light">Montserrat-Light</p>
+      <p className="Medium">Montserrat-Medium</p>
+      <p className="SemiBold">Montserrat-SemiBold</p>
+      <br />
+      <p className="light">Монсеррат-Светлый</p>
+      <p className="Medium">Монсеррат-Средний</p>
+      <p className="SemiBold">Монсеррат-Полужирный</p>
     </div>
   );
 }
