@@ -1,17 +1,21 @@
-$font-color: #4e3536;
-
-.light {
-  font-family: Montserrat;
-  font-weight: 300;
-  color: $font-color;
-}
-.Medium {
-  font-family: Montserrat;
-  font-weight: 500;
-  color: $font-color;
-}
-.SemiBold {
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #edbd99;
+  height: 150px;
   font-family: Montserrat;
   font-weight: 600;
-  color: $font-color;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+
+.navLink {
+  color: #4e3536;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.navLink:hover {
+  color: rgb(196, 51, 123);
 }

@@ -2,7 +2,11 @@ import React, { FC } from "react";
 import "./Guide.scss";
 
 const Guide: FC = () => {
-  return <div></div>;
+  return (
+    <div>
+      <h1>Помощь</h1>
+    </div>
+  );
 };
 
 export default Guide;
