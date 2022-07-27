@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.scss";
-
-import { NavLink, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Dishes from "../Dishes/Dishes";
 import Main from "../Main/Main";
 import Semis from "../Semis/Semis";
@@ -13,46 +12,18 @@ import Guide from "../Guide/Guide";
 import ErrorPage from "../ErrorPage/ErrorPage";
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+
   return (
     <section className="App">
-      <div className="nav">
-        <NavLink className="navLink" to="/">
-          Главная
-        </NavLink>
-        <NavLink className="navLink" to="/disches">
-          Блюда
-        </NavLink>
-        <NavLink className="navLink" to="/semis">
-          Полуфабрикаты
-        </NavLink>
-        <NavLink className="navLink" to="/foodstuff">
-          Продукты
-        </NavLink>
-        <NavLink className="navLink" to="/signup">
-          Регистрация
-        </NavLink>
-        <NavLink className="navLink" to="/signin">
-          Авторизация
-        </NavLink>
-        <NavLink className="navLink" to="/profile">
-          Профайл
-        </NavLink>
-        <NavLink className="navLink" to="/guide">
-          Помощь
-        </NavLink>
-        <NavLink className="navLink" to="*">
-          404
-        </NavLink>
-      </div>
-
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/disches" element={<Dishes />} />
+        <Route path="/" element={<Main loggedIn={loggedIn} />} />
+        <Route path="/disches" element={<Dishes loggedIn={loggedIn} />} />
         <Route path="/semis" element={<Semis />} />
         <Route path="/foodstuff" element={<Foodstuff />} />
         <Route path="/signup" element={<Register />} />
-        <Route path="/signin" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/signin" element={<Login setLoggedIn={setLoggedIn} />} />
+        <Route path="/profile" element={<Profile setLoggedIn={setLoggedIn} />} />
         <Route path="/guide" element={<Guide />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>

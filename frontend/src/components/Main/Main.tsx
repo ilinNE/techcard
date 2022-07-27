@@ -1,8 +1,13 @@
 import React, { FC } from "react";
 import "./Main.scss";
 import * as Api from "../../utils/Api";
+import Header from "../Header/Header";
 
-const Main: FC = () => {
+interface MainProps {
+  loggedIn: boolean;
+}
+
+const Main: FC<MainProps> = ({ loggedIn }) => {
   function handleGet() {
     Api.getTest()
       .then((data) => {
@@ -25,6 +30,7 @@ const Main: FC = () => {
 
   return (
     <div>
+      <Header loggedIn={loggedIn} />
       <h1>Главная страница</h1>
       <button className="button" onClick={handleGet}>
         Get
@@ -32,11 +38,15 @@ const Main: FC = () => {
       <button className="button" onClick={handlePost}>
         Post
       </button>
-      <p className="light">Montserrat-Light</p>
+      <p id="test1" className="light">
+        Montserrat-Light
+      </p>
       <p className="Medium">Montserrat-Medium</p>
       <p className="SemiBold">Montserrat-SemiBold</p>
       <br />
-      <p className="light">Монсеррат-Светлый</p>
+      <p id="test2" className="light">
+        Монсеррат-Светлый
+      </p>
       <p className="Medium">Монсеррат-Средний</p>
       <p className="SemiBold">Монсеррат-Полужирный</p>
     </div>
