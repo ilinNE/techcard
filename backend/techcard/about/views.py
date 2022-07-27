@@ -1,5 +1,5 @@
-from django.views.generic.base import TemplateView
 from django.shortcuts import render
+from django.views.generic.base import TemplateView
 
 from .forms import MessageForm
 
@@ -8,9 +8,9 @@ class AboutAuthorView(TemplateView):
     template_name = "about/about.html"
 
     def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-            context['form'] = MessageForm()
-            return context
+        context = super().get_context_data(**kwargs)
+        context["form"] = MessageForm()
+        return context
 
 
 class HowItWorkView(TemplateView):

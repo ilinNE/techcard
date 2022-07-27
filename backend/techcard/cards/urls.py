@@ -1,22 +1,11 @@
 from django.urls import path
 
-from .views import (
-    download_xlsx,
-    product_create,
-    product_delete,
-    product_edit,
-    product_list,
-    semifabricate_create,
-    semifabricate_delete,
-    semifabricate_detail,
-    semifabricate_edit,
-    semifabricate_list,
-    techcard_create,
-    techcard_delete,
-    techcard_detail,
-    techcard_edit,
-    techcard_list,
-)
+from .views import (download_xlsx, product_create, product_delete,
+                    product_edit, product_list, semifabricate_create,
+                    semifabricate_delete, semifabricate_detail,
+                    semifabricate_edit, semifabricate_list, techcard_create,
+                    techcard_delete, techcard_detail, techcard_edit,
+                    techcard_list)
 
 app_name = "cards"
 
