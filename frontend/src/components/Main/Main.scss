@@ -1,14 +1,14 @@
-$font-color: #4e3536;
+@import "../Modules/variables";
 
 .light {
   font-weight: 300;
-  color: $font-color;
+  color: $brown;
 }
 .Medium {
   font-weight: 500;
-  color: $font-color;
+  color: $brown;
 }
 .SemiBold {
   font-weight: 600;
-  color: $font-color;
+  color: $brown;
 }

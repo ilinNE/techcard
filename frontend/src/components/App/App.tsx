@@ -10,15 +10,17 @@ import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Guide from "../Guide/Guide";
 import ErrorPage from "../ErrorPage/ErrorPage";
+import Header from "../Header/Header";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
   return (
     <section className="App">
+      <Header loggedIn={loggedIn} />
       <Routes>
-        <Route path="/" element={<Main loggedIn={loggedIn} />} />
-        <Route path="/disches" element={<Dishes loggedIn={loggedIn} />} />
+        <Route path="/" element={<Main />} />
+        <Route path="/disches" element={<Dishes />} />
         <Route path="/semis" element={<Semis />} />
         <Route path="/foodstuff" element={<Foodstuff />} />
         <Route path="/signup" element={<Register />} />

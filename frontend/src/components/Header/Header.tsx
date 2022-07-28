@@ -6,7 +6,6 @@ import logoRed from "../../images/logo-red.svg";
 import Nav from "../Nav/Nav";
 import Avatar from "../Avatar/Avatar";
 import { MEDIUM } from "../../utils/constants";
-import Burger from "../Burger/Burger";
 
 interface HeaderProps {
   loggedIn: boolean;
@@ -14,7 +13,7 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ loggedIn }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= MEDIUM);
-  const pathName = window.location.pathname;
+  const [isPathName, setIsPathName] = useState("/");
 
   const updateWidth = useCallback(() => {
     const newWidth = window.innerWidth <= MEDIUM;
@@ -24,19 +23,27 @@ const Header: FC<HeaderProps> = ({ loggedIn }) => {
   }, [isMobile]);
 
   useEffect(() => {
+    setIsPathName(window.location.pathname);
+  }, [window.location.pathname]); //при смене роута не срабатывает зависимость
+
+  useEffect(() => {
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
   }, [updateWidth]);
 
   return (
-    <section className={`header ${pathName === "/" && "header_main"}`}>
+    <section className={`header ${isPathName === "/" && "header_main"}`}>
       <div className="header__content">
         <NavLink to="/">
-          <img className="header__logo" src={pathName === "/" ? logoRed : logoWhite} alt="Логотип"></img>
+          <img
+            className="header__logo"
+            src={isPathName === "/" || isPathName === "/signup" || isPathName === "/signin" ? logoRed : logoWhite}
+            alt="Логотип"
+          ></img>
         </NavLink>
 
-        {isMobile && pathName !== "/" ? (
-          <Burger />
+        {isMobile && isPathName !== "/" ? (
+          <button className="header__burger-button" />
         ) : (
           <>
             <Nav loggedIn={loggedIn} />
@@ -44,10 +51,10 @@ const Header: FC<HeaderProps> = ({ loggedIn }) => {
               <Avatar />
             ) : (
               <div className="header__auth">
-                <Link className="header__link link-opacity" to="/signin">
+                <Link className="header__link" to="/signin">
                   Войти
                 </Link>
-                <Link className="header__link link-opacity" to="/signup">
+                <Link className="header__link" to="/signup">
                   <button className="header__button">Регистрация</button>
                 </Link>
               </div>

@@ -1,13 +1,8 @@
 import React, { FC } from "react";
 import "./Main.scss";
 import * as Api from "../../utils/Api";
-import Header from "../Header/Header";
 
-interface MainProps {
-  loggedIn: boolean;
-}
-
-const Main: FC<MainProps> = ({ loggedIn }) => {
+const Main: FC = () => {
   function handleGet() {
     Api.getTest()
       .then((data) => {
@@ -30,7 +25,6 @@ const Main: FC<MainProps> = ({ loggedIn }) => {
 
   return (
     <div>
-      <Header loggedIn={loggedIn} />
       <h1>Главная страница</h1>
       <button className="button" onClick={handleGet}>
         Get

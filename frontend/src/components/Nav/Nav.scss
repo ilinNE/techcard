@@ -1,18 +1,17 @@
+@import "../Modules/variables", "../Modules/mixins";
+
 .nav {
-  display: flex;
-  align-items: center;
+  @include flex($align: center);
   gap: 28px;
 
   &__link {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
-    color: #4e3536;
+    @include link-opacity;
+    @include font(14px, 500, 16px, center);
+    color: $brown;
     text-decoration: none;
 
     &:hover {
-      color: #ec7068;
+      color: $coral;
     }
   }
 }

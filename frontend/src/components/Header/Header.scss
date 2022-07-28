@@ -1,59 +1,46 @@
-// @import "../Colors/Colors.scss"
-
-// $green: #84bb9f;
+@import "../Modules/variables", "../Modules/mixins";
 
 .header {
-  display: flex;
-  align-items: center;
-  background-color: #edbd99;
+  @include flex();
+  background-color: $peach;
   min-height: 70px;
-  font-weight: 500;
 
   .header__content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex(space-between, center);
     width: 100%;
     margin: 0 60px;
     transition: 0.3s;
 
     .header__logo {
-      display: flex;
+      @include flex();
       width: 79px;
       height: 50px;
       transition: 0.3s;
     }
 
     .header__auth {
-      display: flex;
-      align-items: center;
+      @include flex(space-between, center);
       gap: 28px;
-      justify-content: space-between;
       transition: 0.3s;
 
       .header__link {
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 16px;
-        color: #4e3536;
+        @include link-opacity;
+        @include font(14px, 500, 16px);
+        color: $brown;
         text-decoration: none;
         &:hover {
-          color: #ec7068;
+          color: $coral;
         }
       }
 
       .header__button {
-        margin: 0;
-        padding: 0;
         width: 120px;
         height: 30px;
-        background-color: #84bb9f;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 16px;
-        color: #4e3536;
+        margin: 0;
+        padding: 0;
+        @include font(14px, 500, 16px);
+        color: $brown;
+        background-color: $green;
         border-radius: 5px;
         border: none;
         cursor: pointer;
@@ -78,8 +65,17 @@
       margin: 0 20px;
 
       .header__auth {
-        flex-direction: column;
+        @include flex($direction: column);
         gap: 8px;
+      }
+
+      .header__burger-button {
+        @include link-opacity;
+        width: 20px;
+        height: 13px;
+        background-image: url("../../images/burger.svg");
+        background-color: transparent;
+        border: none;
       }
     }
   }
