@@ -36,25 +36,21 @@ const Header: FC<HeaderProps> = ({ loggedIn }) => {
         </NavLink>
 
         {isMobile && pathName !== "/" ? (
-          <>
-            <Burger />
-          </>
+          <Burger />
         ) : (
           <>
             <Nav loggedIn={loggedIn} />
             {loggedIn ? (
               <Avatar />
             ) : (
-              <>
-                <div className="header__auth">
-                  <Link className="header__link link-opacity" to="/signin">
-                    Войти
-                  </Link>
-                  <Link className="header__link link-opacity" to="/signup">
-                    <button className="header__button">Регистрация</button>
-                  </Link>
-                </div>
-              </>
+              <div className="header__auth">
+                <Link className="header__link link-opacity" to="/signin">
+                  Войти
+                </Link>
+                <Link className="header__link link-opacity" to="/signup">
+                  <button className="header__button">Регистрация</button>
+                </Link>
+              </div>
             )}
           </>
         )}

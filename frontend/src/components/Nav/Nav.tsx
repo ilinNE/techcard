@@ -23,7 +23,7 @@ const Nav: FC<NavProps> = ({ loggedIn }) => {
           <a href="#test1" className="nav__link link-opacity">
             О проекте
           </a>
-          <a href="#test1" className="nav__link link-opacity">
+          <a href="#test2" className="nav__link link-opacity">
             Тарифы
           </a>
         </>
