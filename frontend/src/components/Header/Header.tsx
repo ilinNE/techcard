@@ -5,20 +5,18 @@ import logoWhite from "../../images/logo-white.svg";
 import logoRed from "../../images/logo-red.svg";
 import Nav from "../Nav/Nav";
 import Avatar from "../Avatar/Avatar";
-import { MEDIUM, logoHeader, whiteHeader } from "../../utils/constants";
+import { MEDIUM_SCREEN, logoHeader, whiteHeader } from "../../utils/constants";
 
 interface HeaderProps {
   loggedIn: boolean;
 }
 
 const Header: FC<HeaderProps> = ({ loggedIn }) => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= MEDIUM);
-
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= MEDIUM_SCREEN);
   const { pathname } = useLocation();
-  console.log(pathname);
 
   const updateWidth = useCallback(() => {
-    const newWidth = window.innerWidth <= MEDIUM;
+    const newWidth = window.innerWidth <= MEDIUM_SCREEN;
     if (newWidth !== isMobile) {
       setIsMobile(newWidth);
     }

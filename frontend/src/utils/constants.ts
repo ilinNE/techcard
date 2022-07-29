@@ -1,6 +1,6 @@
-export const SHORT: number = 40;
-export const LARGE: number = 1279;
-export const MEDIUM: number = 767;
+export const SMALL_SCREEN: number = 40;
+export const LARGE_SCREEN: number = 1279;
+export const MEDIUM_SCREEN: number = 767;
 // export const AmountShowCardsAtLarge = 12;
 // export const AmountShowCardsAtMedium = 8;
 // export const AmountShowCardsAtShort = 5;
