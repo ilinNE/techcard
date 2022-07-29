@@ -1,6 +1,9 @@
 import React, { FC } from "react";
 import "./Main.scss";
 import * as Api from "../../utils/Api";
+import Header from "../Header/Header";
+import Greeting from "../../components/Main/Greeting/Greeting";
+
 
 const Main: FC = () => {
   function handleGet() {
@@ -43,6 +46,7 @@ const Main: FC = () => {
       </p>
       <p className="Medium">Монсеррат-Средний</p>
       <p className="SemiBold">Монсеррат-Полужирный</p>
+      <Greeting />
     </div>
   );
 };
