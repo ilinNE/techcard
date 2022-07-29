@@ -1,30 +1,26 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import "./Header.scss";
 import logoWhite from "../../images/logo-white.svg";
 import logoRed from "../../images/logo-red.svg";
 import Nav from "../Nav/Nav";
 import Avatar from "../Avatar/Avatar";
-import { MEDIUM } from "../../utils/constants";
+import { MEDIUM_SCREEN, logoHeader, whiteHeader } from "../../utils/constants";
 
 interface HeaderProps {
   loggedIn: boolean;
 }
 
 const Header: FC<HeaderProps> = ({ loggedIn }) => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= MEDIUM);
-  const [isPathName, setIsPathName] = useState("/");
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= MEDIUM_SCREEN);
+  const { pathname } = useLocation();
 
   const updateWidth = useCallback(() => {
-    const newWidth = window.innerWidth <= MEDIUM;
+    const newWidth = window.innerWidth <= MEDIUM_SCREEN;
     if (newWidth !== isMobile) {
       setIsMobile(newWidth);
     }
   }, [isMobile]);
-
-  useEffect(() => {
-    setIsPathName(window.location.pathname);
-  }, [window.location.pathname]); //при смене роута не срабатывает зависимость
 
   useEffect(() => {
     window.addEventListener("resize", updateWidth);
@@ -32,32 +28,31 @@ const Header: FC<HeaderProps> = ({ loggedIn }) => {
   }, [updateWidth]);
 
   return (
-    <section className={`header ${isPathName === "/" && "header_main"}`}>
+    <section className={`header ${whiteHeader.includes(pathname) && "header_main"}`}>
       <div className="header__content">
         <NavLink to="/">
-          <img
-            className="header__logo"
-            src={isPathName === "/" || isPathName === "/signup" || isPathName === "/signin" ? logoRed : logoWhite}
-            alt="Логотип"
-          ></img>
+          <img className="header__logo" src={whiteHeader.includes(pathname) ? logoRed : logoWhite} alt="Логотип"></img>
         </NavLink>
-
-        {isMobile && isPathName !== "/" ? (
-          <button className="header__burger-button" />
-        ) : (
+        {!logoHeader.includes(pathname) && (
           <>
-            <Nav loggedIn={loggedIn} />
-            {loggedIn ? (
-              <Avatar />
+            {isMobile && pathname !== "/" ? (
+              <button className="header__burger-button" />
             ) : (
-              <div className="header__auth">
-                <Link className="header__link" to="/signin">
-                  Войти
-                </Link>
-                <Link className="header__link" to="/signup">
-                  <button className="header__button">Регистрация</button>
-                </Link>
-              </div>
+              <>
+                <Nav loggedIn={loggedIn} />
+                {loggedIn ? (
+                  <Avatar />
+                ) : (
+                  <div className="header__auth">
+                    <Link className="header__link" to="/signin">
+                      Войти
+                    </Link>
+                    <Link className="header__link" to="/signup">
+                      <button className="header__button">Регистрация</button>
+                    </Link>
+                  </div>
+                )}
+              </>
             )}
           </>
         )}

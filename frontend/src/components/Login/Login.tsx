@@ -10,7 +10,7 @@ const Login: FC<DishesProps> = ({ setLoggedIn }) => {
   const navigate = useNavigate();
   const fastLogin = () => {
     setLoggedIn(true);
-    navigate("/disches");
+    navigate("/dishes");
   };
 
   return (
