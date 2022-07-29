@@ -1,7 +1,20 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+
 User = get_user_model()
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=32)
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="tags"
+    )
+    color = models.CharField(max_length=8)
+
+    class Meta:
+        verbose_name = "Метка"
+        verbose_name_plural = "Метки"
 
 
 class Product(models.Model):
@@ -9,8 +22,9 @@ class Product(models.Model):
         PCS = "Шт", "Шт"
         KG = "Кг", "Кг"
         LIT = "Л", "Л"
+        GR = "Гр", "Гр"
 
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=32)
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="products"
     )

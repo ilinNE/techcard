@@ -4,7 +4,6 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = True
@@ -73,8 +72,12 @@ DATABASES = {
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": os.getenv("DB_PORT"),
+        'TEST': {
+            'NAME': 'mytestdatabase',
+        }
+    },
     }
-}
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

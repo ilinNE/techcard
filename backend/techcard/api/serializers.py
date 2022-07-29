@@ -1,6 +1,9 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
+from cards.models import Tag, Product
+
+
 User = get_user_model()
 
 
@@ -44,3 +47,14 @@ class TokenRefreshResponseSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         raise NotImplementedError()
+
+
+class TagSerializer(serializers.ModelSerializer):
+    owner = serializers.SlugRelatedField(
+        slug_field="username",
+        read_only=True
+    )
+    class Meta:
+        model = Tag
+        fields = ("id", "owner", "name", "color")
+        read_only_fields = ("id", "owner")

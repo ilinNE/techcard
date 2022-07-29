@@ -5,12 +5,13 @@ from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
 
 from .serializers import (TokenObtainPairResponseSerializer,
-                          TokenRefreshResponseSerializer, UserSerializer)
+                          TokenRefreshResponseSerializer, UserSerializer, TagSerializer)
+from cards.models import Tag                          
 
 
 @method_decorator(
@@ -73,3 +74,18 @@ class DecoratedTokenRefreshView(TokenRefreshView):
     )
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
+
+   
+class TagViewSet(ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = TagSerializer
+    http_method_names = ['get', 'post', 'head', 'put', 'delete']
+    TAG = "Метка"
+
+    def get_queryset(self):
+        queryset = Tag.objects.filter(owner__id=self.request.user.id)
+        return queryset
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
