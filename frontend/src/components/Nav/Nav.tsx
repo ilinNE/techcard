@@ -1,22 +1,24 @@
 import React, { FC } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Nav.scss";
 
 interface NavProps {
   loggedIn: boolean;
 }
 
+const setActive = ({ isActive }: any) => `nav__link ${isActive && "nav__link_active"}`;
+
 const Nav: FC<NavProps> = ({ loggedIn }) => {
   return (
     <div className="nav">
       {loggedIn ? (
         <>
-          <Link className="nav__link" to="/dishes">
+          <NavLink className={setActive} to="/dishes">
             Мои техкарты
-          </Link>
-          <Link className="nav__link" to="/guide">
+          </NavLink>
+          <NavLink className={setActive} to="/guide">
             Помощь
-          </Link>
+          </NavLink>
         </>
       ) : (
         <>
