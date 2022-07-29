@@ -4,15 +4,15 @@
   @include flex(center, center, column);
 
   &__header {
-    @include font(49px, 600, 1.2);
+    @include font(40px, 600, 1.05);
     color: $brown;
-    width: 370px;
-    margin: 100px 0 5px;
+    width: 301px;
+    margin: 76px 0 5px;
     padding: 0;
   }
 
   &__text {
-    @include font(11px, 400, 1.2);
+    @include font(10px, 300, 1.05);
     color: $brown;
     width: 250px;
     margin: 0;
@@ -21,6 +21,7 @@
 
   &__button {
     @include font(14px, 500, 1.2);
+    @include interactive();
     color: $brown;
     width: 160px;
     height: 30px;
@@ -34,7 +35,7 @@
   }
 
   &__image {
-    width: 660px;
-    height: 350px;
+    width: 608px;
+    height: 335px;
   }
 }
