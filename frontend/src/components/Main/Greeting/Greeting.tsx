@@ -4,13 +4,13 @@ import kitchen from "../../../images/kitchen.png";
 
 
 const Greeting: FC = () => {
-  return <>
-    <h1>Организуй свои рецепты</h1>
-    <p>ТехКарта – это простой способ создавать, хранить, изменять технические карты
+  return <div className="greeting">
+    <h1 className="greeting__header">Организуй свои рецепты</h1>
+    <p className="greeting__text">ТехКарта – это простой способ создавать, хранить, изменять технические карты
       для своих блюд.</p>
-    <button>Начать бесплатно</button>
-    <img className="kitchen" src={kitchen} alt="Девушка на кухне" />
-  </>;
+    <button className="greeting__button">Начать бесплатно</button>
+    <img className="greeting__image" src={kitchen} alt="Девушка на кухне" />
+  </div>;
 };
 
 export default Greeting;
