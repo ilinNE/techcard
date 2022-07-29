@@ -23,7 +23,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/disches" element={<Dishes />} />
+        <Route path="/dishes" element={<Dishes />} />
         <Route path="/semis" element={<Semis />} />
         <Route path="/foodstuff" element={<Foodstuff />} />
         <Route path="/signup" element={<Register />} />

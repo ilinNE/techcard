@@ -8,7 +8,7 @@ export const MEDIUM: number = 767;
 // export const AddShowCardsAtMedium = 2;
 export const pathWithHeader: string[] = [
   "/",
-  "/disches",
+  "/dishes",
   "/semis",
   "/foodstuff",
   "/signup",

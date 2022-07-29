@@ -11,7 +11,7 @@ const Nav: FC<NavProps> = ({ loggedIn }) => {
     <div className="nav">
       {loggedIn ? (
         <>
-          <Link className="nav__link" to="/disches">
+          <Link className="nav__link" to="/dishes">
             Мои техкарты
           </Link>
           <Link className="nav__link" to="/guide">
