@@ -3,7 +3,7 @@
 .greeting {
   @include flex(center, center, column);
 
-  &__header {
+  &__title {
     @include font(40px, 600, 1.05);
     color: $brown;
     width: 301px;
@@ -11,7 +11,7 @@
     padding: 0;
   }
 
-  &__text {
+  &__subtitle {
     @include font(10px, 300, 1.05);
     color: $brown;
     width: 250px;
@@ -20,7 +20,7 @@
   }
 
   &__button {
-    @include font(14px, 500, 1.2);
+    @include font(14px, 500, 1.05);
     @include interactive();
     color: $brown;
     width: 160px;

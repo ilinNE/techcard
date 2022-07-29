@@ -6,8 +6,8 @@ import kitchen from "../../../images/kitchen.png";
 
 const Greeting: FC = () => {
   return <div className="greeting">
-    <h1 className="greeting__header">Организуй свои рецепты</h1>
-    <p className="greeting__text">ТехКарта&nbsp;&mdash; это простой способ создавать, хранить, изменять технические карты
+    <h1 className="greeting__title">Организуй свои рецепты</h1>
+    <p className="greeting__subtitle">ТехКарта&nbsp;&mdash; это простой способ создавать, хранить, изменять технические карты
       для своих блюд.</p>
     <Link className="header__link" to="/signup">
       <button className="greeting__button">Начать бесплатно</button>
