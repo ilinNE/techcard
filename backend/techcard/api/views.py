@@ -9,9 +9,9 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
 
-from .serializers import (TokenObtainPairResponseSerializer,
+from .serializers import (ProductSerializer, TokenObtainPairResponseSerializer,
                           TokenRefreshResponseSerializer, UserSerializer, TagSerializer)
-from cards.models import Tag                          
+from cards.models import Product, Tag                          
 
 
 @method_decorator(
@@ -80,10 +80,22 @@ class TagViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = TagSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'delete']
-    TAG = "Метка"
 
     def get_queryset(self):
         queryset = Tag.objects.filter(owner__id=self.request.user.id)
+        return queryset
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class ProductViewSet(ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ProductSerializer
+    http_method_names = ['get', 'post', 'head', 'put', 'delete']
+
+    def get_queryset(self):
+        queryset = Product.objects.filter(owner__id=self.request.user.id)
         return queryset
 
     def perform_create(self, serializer):
