@@ -1,23 +1,24 @@
-import React, { FC, SetStateAction } from "react";
-import { useNavigate } from "react-router-dom";
+import { FC } from "react";
+import AuthTitle from "../AuthTitle/AuthTitle";
+import Form from "../Form/Form";
 import "./Login.scss";
+import { login } from "../../utils/textСonstants";
 
-interface DishesProps {
-  setLoggedIn: React.Dispatch<SetStateAction<boolean>>;
-}
-
-const Login: FC<DishesProps> = ({ setLoggedIn }) => {
-  const navigate = useNavigate();
-  const fastLogin = () => {
-    setLoggedIn(true);
-    navigate("/dishes");
+const Login: FC = () => {
+  const handleLogin = (values: any) => {
+    console.log(values);
   };
 
   return (
-    <div>
-      <h1>Авторизация</h1>
-      <button onClick={fastLogin}>Быстрая авторизация</button>
-    </div>
+    <section className="register">
+      <AuthTitle titleText={login.ToBegin} />
+      <Form
+        buttonText={login.Signin}
+        textDescription={login.NotRegistred}
+        textLink={login.Registration}
+        handleSubmitForm={handleLogin}
+      />
+    </section>
   );
 };
 

@@ -27,7 +27,7 @@ function App() {
         <Route path="/semis" element={<Semis />} />
         <Route path="/foodstuff" element={<Foodstuff />} />
         <Route path="/signup" element={<Register />} />
-        <Route path="/signin" element={<Login setLoggedIn={setLoggedIn} />} />
+        <Route path="/signin" element={<Login />} />
         <Route path="/profile" element={<Profile setLoggedIn={setLoggedIn} />} />
         <Route path="/guide" element={<Guide />} />
         <Route path="/error" element={<ErrorPage />} />
