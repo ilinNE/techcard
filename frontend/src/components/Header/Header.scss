@@ -6,6 +6,7 @@
   min-height: 70px;
 
   .header__content {
+    position: relative;
     @include flex(space-between, center);
     width: 100%;
     margin: 0 60px;
