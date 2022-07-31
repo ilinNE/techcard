@@ -2,8 +2,25 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 
-
 User = get_user_model()
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=32, verbose_name="Название")
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="tags",
+        verbose_name="Владелец",
+    )
+    color = models.CharField(max_length=8, verbose_name="Цвет")
+
+    class Meta:
+        verbose_name = "Метка"
+        verbose_name_plural = "Метки"
+
+    def __str__(self):
+        return self.name
 
 
 class Product(models.Model):
@@ -11,25 +28,47 @@ class Product(models.Model):
         PCS = "Шт", "Шт"
         KG = "Кг", "Кг"
         LIT = "Л", "Л"
+        GR = "Гр", "Гр"
 
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=32, verbose_name="Название")
     owner = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="products"
+        User,
+        on_delete=models.CASCADE,
+        related_name="products",
+        verbose_name="Владелец",
     )
-    create_date = models.DateField(auto_now_add=True)
     unit = models.CharField(
-        max_length=2, choices=Unit.choices, default=Unit.KG
+        max_length=2,
+        choices=Unit.choices,
+        default=Unit.KG,
+        verbose_name="Единица измерения",
     )
     unit_weight = models.DecimalField(
-        max_digits=8, decimal_places=3, default=1
+        max_digits=8,
+        decimal_places=3,
+        default=1,
+        verbose_name="Вес еденицы измерения",
     )
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    is_semifabricate = models.BooleanField(default=False)
+    price = models.DecimalField(
+        max_digits=10, decimal_places=2, verbose_name="Цена"
+    )
+    is_semifabricate = models.BooleanField(
+        default=False, verbose_name="Это полуфабрикат"
+    )
+    tags = models.ManyToManyField(
+        Tag, related_name="products", verbose_name="Тэги", blank=True
+    )
+    modified_date = models.DateTimeField(
+        auto_now=True, verbose_name="Дата изменения"
+    )
+    create_date = models.DateField(
+        auto_now_add=True, verbose_name="Дата создания"
+    )
 
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
-        ordering = ["-create_date"]
+        ordering = ["-modified_date"]
 
     def __str__(self):
         return self.name

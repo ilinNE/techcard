@@ -1,4 +1,4 @@
-from django.db.models import F, Sum, DecimalField, ExpressionWrapper
+from django.db.models import DecimalField, ExpressionWrapper, F, Sum
 
 from cards.models import Ingridient, TechCard
 
@@ -9,19 +9,20 @@ def calculate_semifabricate(semifabricate):
     для которых данный полуфабрикат является ингридиентом.
     """
     result = semifabricate.techcard.ingridients.aggregate(
-        price = Sum(F("ammount") * F("product__price")) / Sum(
+        price=Sum(F("ammount") * F("product__price"))
+        / Sum(
             ExpressionWrapper(
                 F("ammount")
-                * (1 - F("cold_waste")*0.01)
-                * (1 - F("hot_waste")*0.01),
-                output_field=DecimalField())
+                * (1 - F("cold_waste") * 0.01)
+                * (1 - F("hot_waste") * 0.01),
+                output_field=DecimalField(),
+            )
         )
     )
     semifabricate.price = round(result["price"], 2)
     semifabricate.save()
     ingridients_with_semifabricate = Ingridient.objects.filter(
-        product=semifabricate,
-        techcard__is_semifabricate=True
+        product=semifabricate, techcard__is_semifabricate=True
     )
     for ingridient in ingridients_with_semifabricate:
         calculate_semifabricate(ingridient.techcard.semifabricate)
@@ -32,12 +33,11 @@ def calculate_for_product(product):
     которых данный продукт является ингридиентом.
     """
     ingridients_with_semifabricate = Ingridient.objects.filter(
-        product=product,
-        techcard__is_semifabricate=True
+        product=product, techcard__is_semifabricate=True
     )
     for ingridient in ingridients_with_semifabricate:
         calculate_semifabricate(ingridient.techcard.semifabricate)
-        
+
 
 def techcard_to_dict(techcard_id):
     techcard: TechCard = TechCard.objects.prefetch_related(

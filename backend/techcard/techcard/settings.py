@@ -1,17 +1,14 @@
 import os
+from datetime import timedelta
 from pathlib import Path
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "web", "127.0.0.1"
-]
+ALLOWED_HOSTS = ["web", "127.0.0.1"]
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -24,13 +21,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework.authtoken",
     "cards.apps.CardsConfig",
     "users.apps.UsersConfig",
     "about.apps.AboutConfig",
     "core.apps.CoreConfig",
     "api.apps.ApiConfig",
     "rest_framework",
-    'drf_yasg',
+    "djoser",
+    "rest_framework_simplejwt.token_blacklist",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
@@ -72,8 +72,12 @@ DATABASES = {
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": os.getenv("DB_PORT"),
+        'TEST': {
+            'NAME': 'mytestdatabase',
+        }
+    },
     }
-}
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -112,5 +116,21 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "users:login"
 LOGIN_REDIRECT_URL = "index"
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR,"core", "static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "core", "static"),)
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+}

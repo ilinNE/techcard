@@ -1,15 +1,15 @@
 import io
 
 from django.contrib.auth.decorators import login_required
+from django.db.models import DecimalField, F, Sum
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from django.db.models import F, Sum, DecimalField
 from xlsxwriter import Workbook
 
-from .forms import IngridientFormSet, TechCardForm, ProductFormSet
+from .forms import IngridientFormSet, ProductFormSet, TechCardForm
 from .models import Ingridient, Product, TechCard
-from .services import make_xlsx, techcard_to_dict, calculate_semifabricate
+from .services import calculate_semifabricate, make_xlsx, techcard_to_dict
 
 
 def index(request):
@@ -71,8 +71,8 @@ def product_delete(request, id):
         redirect(reverse("cards:product_list"))
     if Ingridient.objects.filter(product=product):
         context = {
-            'product': product,
-            'techcards': TechCard.objects.filter(ingridients__product=product),
+            "product": product,
+            "techcards": TechCard.objects.filter(ingridients__product=product),
         }
         return render(request, "cards/delete_forbidden.html", context)
     product.delete()
@@ -253,8 +253,10 @@ def semifabricate_delete(request, id):
         redirect(reverse("cards:semifabricate_list"))
     if Ingridient.objects.filter(product=semifabricate):
         context = {
-            'product': semifabricate,
-            'techcards': TechCard.objects.filter(ingridients__product=semifabricate),
+            "product": semifabricate,
+            "techcards": TechCard.objects.filter(
+                ingridients__product=semifabricate
+            ),
         }
         return render(request, "cards/delete_forbidden.html", context)
     semifabricate.delete()
