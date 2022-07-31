@@ -8,7 +8,7 @@ app_name = "api"
 router = DefaultRouter()
 router.register("users", UserViewSet, basename="users")
 router.register("tags", TagViewSet, basename="tags")
-# router.register("products", ProductViewSet, basename="products")
+router.register("products", ProductViewSet, basename="products")
 
 urlpatterns = [
     path("", include(router.urls)),
