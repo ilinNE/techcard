@@ -4,29 +4,33 @@ import "./Nav.scss";
 
 interface NavProps {
   loggedIn: boolean;
+  mainNavAboute: string;
+  mainNavTariffs: string;
+  authNavMyTechCards: string;
+  authNavHelp: string;
 }
 
 const setActive = ({ isActive }: any) => `nav__link ${isActive && "nav__link_active"}`;
 
-const Nav: FC<NavProps> = ({ loggedIn }) => {
+const Nav: FC<NavProps> = ({ loggedIn, mainNavAboute, mainNavTariffs, authNavMyTechCards, authNavHelp }) => {
   return (
     <section className="nav">
       {loggedIn ? (
         <>
           <NavLink className={setActive} to="/dishes">
-            Мои техкарты
+            {authNavMyTechCards}
           </NavLink>
           <NavLink className={setActive} to="/guide">
-            Помощь
+            {authNavHelp}
           </NavLink>
         </>
       ) : (
         <>
           <a href="#test1" className="nav__link">
-            О проекте
+            {mainNavAboute}
           </a>
           <a href="#test2" className="nav__link">
-            Тарифы
+            {mainNavTariffs}
           </a>
         </>
       )}

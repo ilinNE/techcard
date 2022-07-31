@@ -6,6 +6,7 @@ import logoRed from "../../images/logo-red.svg";
 import Nav from "../Nav/Nav";
 import Avatar from "../Avatar/Avatar";
 import { MEDIUM_SCREEN, logoHeader, whiteHeader } from "../../utils/constants";
+import { header } from "../../utils/textСonstants";
 
 interface HeaderProps {
   loggedIn: boolean;
@@ -39,16 +40,22 @@ const Header: FC<HeaderProps> = ({ loggedIn }) => {
               <button className="header__burger-button" />
             ) : (
               <>
-                <Nav loggedIn={loggedIn} />
+                <Nav
+                  loggedIn={loggedIn}
+                  mainNavAboute={header.Aboute}
+                  mainNavTariffs={header.Tariffs}
+                  authNavMyTechCards={header.MyTechCards}
+                  authNavHelp={header.Help}
+                />
                 {loggedIn ? (
                   <Avatar />
                 ) : (
                   <div className="header__auth">
                     <Link className="header__link" to="/signin">
-                      Войти
+                      {header.AuthLogin}
                     </Link>
                     <Link className="header__link" to="/signup">
-                      <button className="header__button">Регистрация</button>
+                      <button className="header__button">{header.AuthRegistration}</button>
                     </Link>
                   </div>
                 )}
