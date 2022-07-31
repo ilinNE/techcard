@@ -1,4 +1,4 @@
-import React, { FC, SetStateAction } from "react";
+import { FC, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.scss";
 
@@ -14,10 +14,10 @@ const Profile: FC<DishesProps> = ({ setLoggedIn }) => {
   };
 
   return (
-    <div>
+    <section>
       <h1>Профайл</h1>
       <button onClick={fastLogout}>Выйти из аккаунта</button>
-    </div>
+    </section>
   );
 };
 

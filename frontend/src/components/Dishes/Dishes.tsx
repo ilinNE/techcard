@@ -1,11 +1,11 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import "./Dishes.scss";
 
 const Dishes: FC = () => {
   return (
-    <div>
+    <section>
       <h1>Блюда</h1>
-    </div>
+    </section>
   );
 };
 

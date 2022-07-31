@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import "./Nav.scss";
 
@@ -10,7 +10,7 @@ const setActive = ({ isActive }: any) => `nav__link ${isActive && "nav__link_act
 
 const Nav: FC<NavProps> = ({ loggedIn }) => {
   return (
-    <div className="nav">
+    <section className="nav">
       {loggedIn ? (
         <>
           <NavLink className={setActive} to="/dishes">
@@ -30,7 +30,7 @@ const Nav: FC<NavProps> = ({ loggedIn }) => {
           </a>
         </>
       )}
-    </div>
+    </section>
   );
 };
 

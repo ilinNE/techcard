@@ -1,11 +1,11 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import "./Guide.scss";
 
 const Guide: FC = () => {
   return (
-    <div>
+    <section>
       <h1>Помощь</h1>
-    </div>
+    </section>
   );
 };
 
