@@ -7,6 +7,7 @@ import Nav from "../Nav/Nav";
 import Avatar from "../Avatar/Avatar";
 import { MEDIUM_SCREEN, logoHeader, whiteHeader } from "../../utils/constants";
 import { header } from "../../utils/textСonstants";
+import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
 interface HeaderProps {
   loggedIn: boolean;
@@ -14,6 +15,7 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ loggedIn }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= MEDIUM_SCREEN);
+  const [isBurger, setIsBurger] = useState<boolean>(false);
   const { pathname } = useLocation();
 
   const updateWidth = useCallback(() => {
@@ -22,6 +24,14 @@ const Header: FC<HeaderProps> = ({ loggedIn }) => {
       setIsMobile(newWidth);
     }
   }, [isMobile]);
+
+  const handleOpenBurgerMenu = () => {
+    setIsBurger(true);
+  };
+
+  const handleCloseBurgerMenu = () => {
+    setIsBurger(false);
+  };
 
   useEffect(() => {
     window.addEventListener("resize", updateWidth);
@@ -37,7 +47,7 @@ const Header: FC<HeaderProps> = ({ loggedIn }) => {
         {!logoHeader.includes(pathname) && (
           <>
             {isMobile && pathname !== "/" ? (
-              <button className="header__burger-button" />
+              <button onClick={handleOpenBurgerMenu} className="header__burger-button" />
             ) : (
               <>
                 <Nav
@@ -64,6 +74,14 @@ const Header: FC<HeaderProps> = ({ loggedIn }) => {
           </>
         )}
       </div>
+      {isMobile && (
+        <BurgerMenu
+          handleCloseBurgerMenu={handleCloseBurgerMenu}
+          isBurger={isBurger}
+          authNavMyTechCards={header.MyTechCards}
+          authNavHelp={header.Help}
+        />
+      )}
     </section>
   );
 };

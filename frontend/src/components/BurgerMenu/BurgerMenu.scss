@@ -1,0 +1,54 @@
+@import "../Modules/variables", "../Modules/mixins";
+.burgerMenu {
+  position: fixed;
+  right: -300px;
+  width: 300px;
+  height: 100vh;
+  background-color: $yellow;
+  opacity: 1;
+  visibility: hidden;
+  @include sideMenuTransition;
+
+  &__arrow {
+    width: 11px;
+    height: 22px;
+    padding: 0;
+    margin: 10px 0 0 8px;
+    background-image: url(../../images/arrow-big.svg);
+    background-size: cover;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    @include interactive();
+  }
+
+  &__container {
+    height: 100%;
+
+    @include flex(space-around, center, column);
+
+    .burgerMenu__links {
+      @include flex(center, center, column);
+      gap: 30px;
+
+      .burgerMenu__link {
+        @include font(14px, 500, 16px, center);
+        color: $brown;
+        text-decoration: none;
+        @include link-opacity;
+      }
+
+      .burgerMenu__link_active {
+        font-weight: 600;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+
+  &_opened {
+    right: 0px;
+    visibility: visible;
+    opacity: 1;
+  }
+}
