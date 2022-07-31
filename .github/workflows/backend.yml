@@ -41,7 +41,6 @@ jobs:
           script: |
             cd infra/
             sudo docker-compose stop
-            sudo docker-compose rm web
+            sudo docker container rm infra_web_1
             sudo docker image rm ilinne/techcard
-            sudo docker pull ilinne/techcard
             sudo docker-compose up -d
