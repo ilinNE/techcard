@@ -11,3 +11,18 @@ export const login = {
   NotRegistred: "Если вы не зарегистрированы, то самое время ",
   Registration: "зарегистрироваться.",
 };
+
+export const header = {
+  Aboute: "О проекте",
+  Tariffs: "Тарифы",
+  MyTechCards: "Мои техкарты",
+  Help: "Помощь",
+  AuthLogin: "Войти",
+  AuthRegistration: "Регистрация",
+};
+
+export const greeting = {
+  Title: "Организуй свои рецепты",
+  SubTitle: `ТехКарта это простой способ создавать, хранить, изменять технические карты для своих блюд.`,
+  LetStart: "Начать бесплатно",
+};

@@ -3,15 +3,19 @@ import { Link } from "react-router-dom";
 import "./Greeting.scss";
 import kitchen from "../../../images/kitchen.png";
 
-const Greeting: FC = () => {
+interface GreetingProps {
+  greetingTitle: string;
+  greetingSubtitle: string;
+  buttonTitle: string;
+}
+
+const Greeting: FC<GreetingProps> = ({ greetingTitle, greetingSubtitle, buttonTitle }) => {
   return (
     <section className="greeting">
-      <h1 className="greeting__title">Организуй свои рецепты</h1>
-      <p className="greeting__subtitle">
-        ТехКарта&nbsp;&mdash; это простой способ создавать, хранить, изменять технические карты для своих блюд.
-      </p>
+      <h1 className="greeting__title">{greetingTitle}</h1>
+      <p className="greeting__subtitle">{greetingSubtitle}</p>
       <Link className="header__link" to="/signup">
-        <button className="greeting__button">Начать бесплатно</button>
+        <button className="greeting__button">{buttonTitle}</button>
       </Link>
       <img className="greeting__image" src={kitchen} alt="Девушка на кухне" />
     </section>

@@ -14,7 +14,7 @@ import Header from "../Header/Header";
 import { pathWithHeader } from "../../utils/constants";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [loggedIn, setLoggedIn] = useState<boolean>(true);
   const { pathname } = useLocation();
 
   return (

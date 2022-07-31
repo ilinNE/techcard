@@ -1,4 +1,4 @@
-@import '../../Modules/variables', '../../Modules/mixins';
+@import "../../Modules/variables", "../../Modules/mixins";
 
 .greeting {
   @include flex(center, center, column);
@@ -14,7 +14,7 @@
   &__subtitle {
     @include font(10px, 300, 1.05);
     color: $brown;
-    width: 250px;
+    width: 210px;
     margin: 0;
     padding: 0;
   }
