@@ -3,11 +3,10 @@ import "./Main.scss";
 import Greeting from "./Greeting/Greeting";
 
 const Main: FC<{}> = () => {
-
   return (
-    <div>
+    <section>
       <Greeting />
-    </div>
+    </section>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./App.scss";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Dishes from "../Dishes/Dishes";
