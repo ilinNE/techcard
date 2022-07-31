@@ -1,9 +1,6 @@
 name: Frontend CI
 
 on:
-  pull_request:
-    types:
-      - closed
   push:
     branches: [ "frontend" ]
 
@@ -44,6 +41,7 @@ jobs:
           script: |
             cd infra/
             sudo docker-compose stop
+            sudo docker image rm ilinne/techcard_front
             sudo docker container rm infra_frontend_1
             sudo docker pull ilinne/techcard_front
             sudo docker-compose up -d
