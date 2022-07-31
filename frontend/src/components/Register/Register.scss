@@ -1,0 +1,6 @@
+@import "../Modules/variables", "../Modules/mixins";
+
+.register {
+  @include flex(center, center, column);
+  min-height: calc(100vh - $headerHeight - $headerHeight);
+}
