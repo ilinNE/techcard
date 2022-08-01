@@ -22,6 +22,7 @@
 
 @mixin interactive() {
   transition: transform 0.4s;
+  cursor: pointer;
   &:active {
     box-shadow: none;
   }
