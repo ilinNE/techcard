@@ -1,6 +1,3 @@
-from email import message
-from tabnanny import verbose
-from turtle import title
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
