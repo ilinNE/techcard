@@ -1,3 +1,6 @@
+from email import message
+from tabnanny import verbose
+from turtle import title
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
@@ -49,16 +52,34 @@ class TokenRefreshResponseSerializer(serializers.Serializer):
         raise NotImplementedError()
 
 
+class SendMailSerializer(serializers.Serializer):
+    title = serializers.CharField(label='Заголовок')
+    message = serializers.CharField(label="Текст сообщения")
+    return_address = serializers.EmailField(label="Адрес отправителя")
+
+
 class TagSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Tag
-        fields = ("name", "color")
+        fields = ("id","name", "color")
+        read_only_fields = ("id",)
+
+
+class RepresentProductSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(many=True)
+
+    class Meta:
+        model = Product
+        exclude = ("owner",)
 
 
 class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ("__all__")
-        read_only_fields = ("id", "owner", "modified_date", "created_date")
+        fields = ("name", "unit", "unit_weight", "price", "tags")
+
+    def to_representation(self, instance):
+        serializer = RepresentProductSerializer(instance, context=self.context)
+        return serializer.data

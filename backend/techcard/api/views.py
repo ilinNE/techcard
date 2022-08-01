@@ -1,17 +1,21 @@
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import status
+from rest_framework import status, exceptions
 from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.views import APIView
+from django_filters.rest_framework import DjangoFilterBackend
+from django.core.mail import send_mail
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
 
 from .serializers import (ProductSerializer, TokenObtainPairResponseSerializer,
-                          TokenRefreshResponseSerializer, UserSerializer, TagSerializer)
-from cards.models import Product, Tag                          
+                          TokenRefreshResponseSerializer, UserSerializer, TagSerializer, SendMailSerializer)
+from cards.models import Product, Tag 
+from .filters import ProductFilterSet                         
 
 
 @method_decorator(
@@ -23,7 +27,7 @@ from cards.models import Product, Tag
 class UserViewSet(GenericViewSet, CreateModelMixin):
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
-
+    
     @action(
         detail=False,
         methods=["get"],
@@ -92,6 +96,8 @@ class TagViewSet(ModelViewSet):
 class ProductViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = ProductSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ProductFilterSet
     http_method_names = ['get', 'post', 'head', 'put', 'delete']
 
     def get_queryset(self):
@@ -101,3 +107,27 @@ class ProductViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
+class SendMailApiView(APIView):
+    permission_classes = (AllowAny,)
+    
+
+    @swagger_auto_schema(
+        tags=("Почта",),
+        operation_id="Отправка обратной связи",
+        request_body=SendMailSerializer,
+        responses={
+            status.HTTP_200_OK: "Сообщение отправленно"
+        })
+    def post(self, request):
+        try:
+            title = self.request.data["title"]
+            message = self.request.data["message"]
+            return_address = self.request.data["return_address"]
+        except KeyError:
+            raise exceptions.ValidationError("Отсутствует необходимые поля")
+        message += f'\n Адрес отправителя: {return_address}'
+        send_mail(title, message, None, ['kikume34@gmail.com'])
+        return Response(status=status.HTTP_200_OK, data='Сообщение отправленно')
+
+        
