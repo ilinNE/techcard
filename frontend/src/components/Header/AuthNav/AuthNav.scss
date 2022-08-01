@@ -38,7 +38,7 @@
     @include flex($direction: column);
     gap: 8px;
   }
-  .authNav__link_display-none {
+  .authNav__button {
     display: none;
   }
 }

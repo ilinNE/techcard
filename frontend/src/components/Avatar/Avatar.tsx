@@ -1,7 +1,7 @@
 import { FC } from "react";
 import "./Avatar.scss";
 import avatar from "../../images/avatar.svg";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 interface AvatarProps {
   handleCloseBurgerMenu?: () => void;
@@ -9,7 +9,7 @@ interface AvatarProps {
 
 const Avatar: FC<AvatarProps> = ({ handleCloseBurgerMenu }) => {
   return (
-    <NavLink className="avatar link-opacity" onClick={handleCloseBurgerMenu} to="/profile">
+    <NavLink className="avatar" onClick={handleCloseBurgerMenu} to="/profile">
       <img className="avatar-image" src={avatar} alt="Аватар" />
     </NavLink>
   );

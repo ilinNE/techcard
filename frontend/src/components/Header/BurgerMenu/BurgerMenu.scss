@@ -1,6 +1,7 @@
 @import "../../Modules/variables", "../../Modules/mixins";
 
 .burgerMenu {
+  display: none;
   position: fixed;
   right: -300px;
   width: 300px;
@@ -34,5 +35,11 @@
     right: 0px;
     visibility: visible;
     opacity: 1;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .burgerMenu {
+    display: block;
   }
 }

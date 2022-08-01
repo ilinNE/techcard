@@ -6,18 +6,12 @@ import "./BurgerMenu.scss";
 
 interface BurgerMenuProps {
   handleCloseBurgerMenu: () => void;
-  isBurger: boolean;
+  isBurgerOpen: boolean;
 }
 
-const BurgerMenu: FC<BurgerMenuProps> = ({ handleCloseBurgerMenu, isBurger }) => {
-  const { pathname } = useLocation();
-
-  // useEffect(() => {
-  //   handleCloseBurgerMenu();
-  // }, [pathname]);
-
+const BurgerMenu: FC<BurgerMenuProps> = ({ handleCloseBurgerMenu, isBurgerOpen }) => {
   return (
-    <section className={`burgerMenu ${isBurger && "burgerMenu_opened"}`}>
+    <section className={`burgerMenu ${isBurgerOpen && "burgerMenu_opened"}`}>
       <button onClick={handleCloseBurgerMenu} className="burgerMenu__arrow" />
       <div className="burgerMenu__container">
         <Nav handleCloseBurgerMenu={handleCloseBurgerMenu} />
