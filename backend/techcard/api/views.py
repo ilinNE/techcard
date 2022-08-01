@@ -13,8 +13,9 @@ from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
 
 from .serializers import (ProductSerializer, TokenObtainPairResponseSerializer,
-                          TokenRefreshResponseSerializer, UserSerializer, TagSerializer, SendMailSerializer)
-from cards.models import Product, Tag 
+                          TokenRefreshResponseSerializer, UserSerializer, TagSerializer, SendMailSerializer,
+                          TechCardSerializer,)
+from cards.models import Product, Tag, TechCard 
 from .filters import ProductFilterSet                         
 
 
@@ -111,7 +112,6 @@ class ProductViewSet(ModelViewSet):
 class SendMailApiView(APIView):
     permission_classes = (AllowAny,)
     
-
     @swagger_auto_schema(
         tags=("Почта",),
         operation_id="Отправка обратной связи",
@@ -131,3 +131,33 @@ class SendMailApiView(APIView):
         return Response(status=status.HTTP_200_OK, data='Сообщение отправленно')
 
         
+class TechCardViewSet(ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = TechCardSerializer
+    http_method_names = ['get', 'post', 'head', 'put', 'delete']
+
+    def get_queryset(self):
+        queryset = TechCard.objects.filter(owner__id=self.request.user.id)
+        return queryset
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+# def download_xlsx(request, id):
+#     output = io.BytesIO()
+#     workbook = Workbook(output, {"in_memory": True})
+#     make_xlsx(workbook, id)
+#     workbook.close()
+#     output.seek(0)
+#     response = HttpResponse(
+#         output.read(),
+#         content_type=(
+#             "application/vnd.openxmlformats-officedocument"
+#             ".spreadsheetml.sheet;"
+#         ),
+#     )
+#     response[
+#         "Content-Disposition"
+#     ] = f"attachment; filename=techcard-{id}.xlsx;"
+#     output.close()
+#     return response

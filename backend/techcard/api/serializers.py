@@ -1,13 +1,15 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from django.db import transaction
 
-from cards.models import Tag, Product
-
+from cards.models import Tag, Product, TechCard, Ingredient
+from .utils import create_or_update_semifabricate
 
 User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
     password = serializers.CharField(
         write_only=True, style={"input_type": "password"}
     )
@@ -63,20 +65,61 @@ class TagSerializer(serializers.ModelSerializer):
         read_only_fields = ("id",)
 
 
-class RepresentProductSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True)
-
-    class Meta:
-        model = Product
-        exclude = ("owner",)
-
-
 class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
         fields = ("name", "unit", "unit_weight", "price", "tags")
 
-    def to_representation(self, instance):
-        serializer = RepresentProductSerializer(instance, context=self.context)
-        return serializer.data
+
+class IngredientSerializer(serializers.ModelSerializer):
+    unit = serializers.CharField(
+        source="product.unit", read_only=True
+    )
+
+    class Meta:
+        model = Ingredient
+        fields = ("product", "unit", "amount", "cold_waste", "hot_waste")
+
+
+class TechCardSerializer(serializers.ModelSerializer):
+    ingredients = IngredientSerializer(many=True, source="ingredient_set")
+
+    class Meta:
+        model = TechCard
+        exclude = ('owner',)
+        read_only_fields = ("semifabricate",)
+
+    def add_ingredients(self, techcard, ingredients):
+        for ingredient in ingredients:
+            techcard.ingredients.add(
+                ingredient["product"],
+                through_defaults={
+                    "amount": ingredient["amount"],
+                    "cold_waste": ingredient["cold_waste"],
+                    "hot_waste": ingredient["hot_waste"],
+                    },
+            )
+
+    @transaction.atomic()
+    def create(self, validated_data):
+        ingredients = validated_data.pop("ingredient_set")
+        tags = validated_data.pop("tags")
+        techcard = TechCard.objects.create(**validated_data)
+        techcard.tags.add(*tags)
+        self.add_ingredients(techcard, ingredients)
+        if techcard.is_semifabricate == True:
+            create_or_update_semifabricate(techcard)
+        return techcard 
+
+    @transaction.atomic()
+    def update(self, techcard: TechCard, validated_data):
+        ingredients = validated_data.pop("ingredient_set")
+        tags = validated_data.pop("tags")
+        techcard.update(data=validated_data)
+        techcard.tags.set(tags)
+        techcard.ingredients.clear()
+        self.add_ingredients(techcard, ingredients)
+        if techcard.is_semifabricate == True:
+            create_or_update_semifabricate(techcard)
+        return techcard

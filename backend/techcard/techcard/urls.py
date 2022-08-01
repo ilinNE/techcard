@@ -5,7 +5,6 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
-from cards.views import index
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -20,11 +19,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("api/", include("api.urls")),
     path("auth/", include("users.urls")),
-    path("cards/", include("cards.urls")),
     path("admin/", admin.site.urls),
     path("auth/", include("django.contrib.auth.urls")),
     path("about/", include("about.urls")),
-    path("", index, name="index"),
 ]
 
 urlpatterns += [
