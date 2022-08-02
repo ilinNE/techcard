@@ -7,11 +7,18 @@ const setActive = ({ isActive }: any) => `nav__link ${isActive && "nav__link_act
 
 interface NavProps {
   handleCloseBurgerMenu?: () => void;
+  isBurgerOpen?: boolean;
 }
 
-const Nav: FC<NavProps> = ({ handleCloseBurgerMenu }) => {
+const Nav: FC<NavProps> = ({ handleCloseBurgerMenu, isBurgerOpen }) => {
   return (
-    <section className="nav">
+    <section className={`nav ${isBurgerOpen && "nav_burger"}`}>
+      {isBurgerOpen && (
+        <NavLink onClick={handleCloseBurgerMenu} className={setActive} to="/profile">
+          {header.Profile}
+        </NavLink>
+      )}
+
       <NavLink onClick={handleCloseBurgerMenu} className={setActive} to="/dishes">
         {header.MyTechCards}
       </NavLink>

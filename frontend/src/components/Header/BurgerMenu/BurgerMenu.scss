@@ -3,32 +3,35 @@
 .burgerMenu {
   display: none;
   position: fixed;
+  top: $headerHeight;
   right: -300px;
   width: 300px;
   height: 100vh;
-  background-color: $yellow;
+  background-color: #fff;
   opacity: 1;
   visibility: hidden;
   @include sideMenuTransition;
   z-index: 1;
 
-  &__arrow {
-    width: 11px;
-    height: 22px;
-    padding: 0;
-    margin: 10px 0 0 8px;
-    background-image: url(../../../images/arrow-big.svg);
-    background-size: cover;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    @include interactive();
-  }
+  // &__arrow {
+  //   width: 11px;
+  //   height: 22px;
+  //   padding: 0;
+  //   margin: 10px 0 0 8px;
+  //   background-image: url(../../../images/arrow-big.svg);
+  //   background-size: cover;
+  //   background-color: transparent;
+  //   background-repeat: no-repeat;
+  //   border: none;
+  //   cursor: pointer;
+  //   @include interactive();
+  // }
   &__container {
+    margin-top: 40px;
     @include flex(center, center, column);
-    height: 100%;
-    justify-content: space-around;
+    // height: 50%;
+    justify-content: start;
+    gap: 30px;
   }
 
   &_opened {

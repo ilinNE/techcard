@@ -12,10 +12,10 @@ interface BurgerMenuProps {
 const BurgerMenu: FC<BurgerMenuProps> = ({ handleCloseBurgerMenu, isBurgerOpen }) => {
   return (
     <section className={`burgerMenu ${isBurgerOpen && "burgerMenu_opened"}`}>
-      <button onClick={handleCloseBurgerMenu} className="burgerMenu__arrow" />
+      {/* <button onClick={handleCloseBurgerMenu} className="burgerMenu__arrow" /> */}
       <div className="burgerMenu__container">
-        <Nav handleCloseBurgerMenu={handleCloseBurgerMenu} />
-        <Avatar handleCloseBurgerMenu={handleCloseBurgerMenu} />
+        <Avatar handleCloseBurgerMenu={handleCloseBurgerMenu} isBurgerOpen={isBurgerOpen} />
+        <Nav handleCloseBurgerMenu={handleCloseBurgerMenu} isBurgerOpen={isBurgerOpen} />
       </div>
     </section>
   );

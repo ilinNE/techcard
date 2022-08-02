@@ -19,6 +19,7 @@ export const header = {
   Help: "Помощь",
   AuthLogin: "Войти",
   AuthRegistration: "Регистрация",
+  Profile: "Профиль",
 };
 
 export const greeting = {

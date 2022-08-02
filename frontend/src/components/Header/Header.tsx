@@ -48,7 +48,12 @@ const Header: FC<HeaderProps> = ({ loggedIn }) => {
             )}
           </>
         )}
-        {loggedIn && <button onClick={handleOpenBurgerMenu} className="header__burger-button" />}
+        {loggedIn && (
+          <button
+            onClick={isBurgerOpen ? handleCloseBurgerMenu : handleOpenBurgerMenu}
+            className={`header__burger-button ${isBurgerOpen && "header__burger-button_close"}  `}
+          />
+        )}
       </div>
 
       <BurgerMenu handleCloseBurgerMenu={handleCloseBurgerMenu} isBurgerOpen={isBurgerOpen} />
