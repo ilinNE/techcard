@@ -6,49 +6,16 @@
   min-height: $headerHeight;
 
   .header__content {
-    position: relative;
-    @include flex(space-between, center);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
     width: 100%;
     margin: 0 60px;
     transition: 0.3s;
 
-    .header__logo {
-      @include flex();
-      width: 79px;
-      height: 50px;
-      transition: 0.3s;
-    }
-
-    .header__auth {
-      @include flex(space-between, center);
-      gap: 28px;
-      transition: 0.3s;
-
-      .header__link {
-        @include link-opacity;
-        @include font(14px, 500, 16px);
-        color: $brown;
-        text-decoration: none;
-
-        .header__button {
-          @include interactive();
-          width: 120px;
-          height: 30px;
-          margin: 0;
-          padding: 0;
-          @include font(14px, 500, 16px);
-          color: $brown;
-          background-color: $green;
-          border-radius: 5px;
-          border: none;
-          cursor: pointer;
-          filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-        }
-
-        &:hover {
-          color: $coral;
-        }
-      }
+    .header__burger-button {
+      display: none;
     }
   }
 
@@ -59,26 +26,28 @@
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .header {
-    .header__logo {
-      width: 47px;
-      height: 30px;
-    }
-
     .header__content {
       margin: 0 20px;
 
-      .header__auth {
-        @include flex($direction: column);
-        gap: 8px;
+      .header__hide {
+        display: none;
       }
 
       .header__burger-button {
-        @include link-opacity;
+        display: flex;
+        justify-self: end;
+        grid-column: 3/4;
         width: 20px;
         height: 13px;
         background-image: url("../../images/burger.svg");
+        background-size: cover;
         background-color: transparent;
         border: none;
+        @include link-opacity;
+      }
+
+      .header__burger-button_close {
+        background-image: url("../../images/burger-close.svg");
       }
     }
   }

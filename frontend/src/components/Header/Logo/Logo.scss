@@ -1,0 +1,21 @@
+@import "../../Modules/variables", "../../Modules/mixins";
+
+.logo {
+  justify-self: flex-start;
+  @include flex(center, center);
+  transition: 0.3s;
+
+  &__image {
+    width: 79px;
+    height: 50px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .logo {
+    &__image {
+      width: 47px;
+      height: 30px;
+    }
+  }
+}

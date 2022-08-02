@@ -1,69 +1,62 @@
-import { FC, useCallback, useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { FC, useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./Header.scss";
-import logoWhite from "../../images/logo-white.svg";
-import logoRed from "../../images/logo-red.svg";
-import Nav from "../Nav/Nav";
+import Nav from "./Nav/Nav";
 import Avatar from "../Avatar/Avatar";
-import { MEDIUM_SCREEN, logoHeader, whiteHeader } from "../../utils/constants";
-import { header } from "../../utils/textСonstants";
+import { logoHeader, whiteHeader } from "../../utils/constants";
+import BurgerMenu from "./BurgerMenu/BurgerMenu";
+import Logo from "./Logo/Logo";
+import AuthNav from "./AuthNav/AuthNav";
+import MainNav from "./MainNav/MainNav";
 
 interface HeaderProps {
   loggedIn: boolean;
 }
 
 const Header: FC<HeaderProps> = ({ loggedIn }) => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= MEDIUM_SCREEN);
+  const [isBurgerOpen, setIsBurgerOpen] = useState<boolean>(false);
   const { pathname } = useLocation();
 
-  const updateWidth = useCallback(() => {
-    const newWidth = window.innerWidth <= MEDIUM_SCREEN;
-    if (newWidth !== isMobile) {
-      setIsMobile(newWidth);
-    }
-  }, [isMobile]);
+  const handleOpenBurgerMenu = () => {
+    setIsBurgerOpen(true);
+  };
 
-  useEffect(() => {
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
-  }, [updateWidth]);
+  const handleCloseBurgerMenu = () => {
+    setIsBurgerOpen(false);
+  };
 
   return (
     <section className={`header ${whiteHeader.includes(pathname) && "header_main"}`}>
       <div className="header__content">
-        <NavLink to="/">
-          <img className="header__logo" src={whiteHeader.includes(pathname) ? logoRed : logoWhite} alt="Логотип"></img>
-        </NavLink>
+        <Logo />
+
         {!logoHeader.includes(pathname) && (
           <>
-            {isMobile && pathname !== "/" ? (
-              <button className="header__burger-button" />
+            {loggedIn ? (
+              <>
+                <div className="header__hide">
+                  <Nav />
+                </div>
+                <div className="header__hide">
+                  <Avatar />
+                </div>
+              </>
             ) : (
               <>
-                <Nav
-                  loggedIn={loggedIn}
-                  mainNavAboute={header.Aboute}
-                  mainNavTariffs={header.Tariffs}
-                  authNavMyTechCards={header.MyTechCards}
-                  authNavHelp={header.Help}
-                />
-                {loggedIn ? (
-                  <Avatar />
-                ) : (
-                  <div className="header__auth">
-                    <Link className="header__link" to="/signin">
-                      {header.AuthLogin}
-                    </Link>
-                    <Link className="header__link" to="/signup">
-                      <button className="header__button">{header.AuthRegistration}</button>
-                    </Link>
-                  </div>
-                )}
+                <MainNav /> <AuthNav />
               </>
             )}
           </>
         )}
+        {loggedIn && (
+          <button
+            onClick={isBurgerOpen ? handleCloseBurgerMenu : handleOpenBurgerMenu}
+            className={`header__burger-button ${isBurgerOpen && "header__burger-button_close"}  `}
+          />
+        )}
       </div>
+
+      <BurgerMenu handleCloseBurgerMenu={handleCloseBurgerMenu} isBurgerOpen={isBurgerOpen} />
     </section>
   );
 };

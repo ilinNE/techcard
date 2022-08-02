@@ -1,11 +1,7 @@
-@import "../Modules/variables", "../Modules/mixins";
+@import "../../Modules/variables", "../../Modules/mixins";
 
-.nav {
+.MainNav {
   @include flex($align: center);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   gap: 28px;
 
   &__link {
@@ -24,7 +20,7 @@
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
-  .nav {
+  .MainNav {
     flex-direction: column;
     gap: 8px;
   }
