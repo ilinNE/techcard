@@ -1,0 +1,26 @@
+@import '../../components/Modules/variables',
+  '../../components/Modules/mixins';
+
+.addIcon {
+  width: 15px;
+  height: 15px;
+  margin: 0 10px;
+}
+
+.doneIcon {
+  width: 14px;
+  height: 14px;
+  margin: 0 10px;
+}
+
+.saveIcon {
+  width: 65px;
+  height: 19px;
+  margin: 0 10px;
+}
+
+.editIcon,
+.excelIcon {
+  width: 20px;
+  height: 20px;
+}
