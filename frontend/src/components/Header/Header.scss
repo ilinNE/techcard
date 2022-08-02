@@ -13,10 +13,6 @@
     width: 100%;
     margin: 0 60px;
     transition: 0.3s;
-
-    .header__burger-button {
-      display: none;
-    }
   }
 
   &_main {
@@ -31,23 +27,6 @@
 
       .header__hide {
         display: none;
-      }
-
-      .header__burger-button {
-        display: flex;
-        justify-self: end;
-        grid-column: 3/4;
-        width: 20px;
-        height: 13px;
-        background-image: url("../../images/burger.svg");
-        background-size: cover;
-        background-color: transparent;
-        border: none;
-        @include link-opacity;
-      }
-
-      .header__burger-button_close {
-        background-image: url("../../images/burger-close.svg");
       }
     }
   }

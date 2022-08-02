@@ -8,6 +8,7 @@ import BurgerMenu from "./BurgerMenu/BurgerMenu";
 import Logo from "./Logo/Logo";
 import AuthNav from "./AuthNav/AuthNav";
 import MainNav from "./MainNav/MainNav";
+import BurgerButton from "./BurgerButton/BurgerButton";
 
 interface HeaderProps {
   loggedIn: boolean;
@@ -49,9 +50,10 @@ const Header: FC<HeaderProps> = ({ loggedIn }) => {
           </>
         )}
         {loggedIn && (
-          <button
-            onClick={isBurgerOpen ? handleCloseBurgerMenu : handleOpenBurgerMenu}
-            className={`header__burger-button ${isBurgerOpen && "header__burger-button_close"}  `}
+          <BurgerButton
+            handleOpenBurgerMenu={handleOpenBurgerMenu}
+            handleCloseBurgerMenu={handleCloseBurgerMenu}
+            isBurgerOpen={isBurgerOpen}
           />
         )}
       </div>
