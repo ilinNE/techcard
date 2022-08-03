@@ -1,9 +1,9 @@
 import { FC, Fragment } from "react";
-import "./Guide.scss";
+import { Link } from "react-router-dom";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
-
 import { questions } from "../../utils/textСonstants"
+import "./Guide.scss";
 
 interface Icon {
   className: string;
@@ -18,30 +18,34 @@ interface Details {
 
 const Guide: FC = () => {
   function getImage(icon: Icon) {
-    return <img className={icon.className} src={icon.src} alt={icon.alt} />
+    return <img className={`accordion__${icon.className}`} src={icon.src} alt={icon.alt} />
   }
   function getDetails(details: Details, index: number) {
-    return <Fragment key={index}>
+    return <p key={index} className="accordion__paragraph">
       {details.text.map((value, index) => {
         return <Fragment key={index}>
           {value}
           {index !== details.text.length - 1 && getImage(details.icons[index])}
         </Fragment>
-      })}</Fragment>
+      })}</p>
   }
   return (
-    <section>
-      <h1>{questions.Title}</h1>
+    <section className="guide-section">
+      <h1 className="guide-section__title">{questions.Title}</h1>
       {questions.QuestionList.map((question, index) => {
-        return <Accordion key={index}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        return <Accordion key={index} className="accordion" disableGutters={true}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />} className="accordion__summary">
             {question.header}
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails className="accordion__details">
             {question.details.map((info, index) => getDetails(info, index))}
           </AccordionDetails>
         </Accordion>
       })}
+      <p className="guide-section__text">{questions.Paragraph}
+        <Link to="/" className="guide-section__link">{questions.Link}</Link>
+      </p>
+      <div className="guide-section__wave"></div>
     </section>
   );
 };

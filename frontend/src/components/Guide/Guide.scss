@@ -1,26 +1,107 @@
 @import '../../components/Modules/variables',
   '../../components/Modules/mixins';
 
-.addIcon {
-  width: 15px;
-  height: 15px;
-  margin: 0 10px;
-}
+.guide-section {
+  &__title {
+    @include font(20px, 600, 1.2);
+    color: $brown;
+    text-align: center;
+    margin: 40px 0 20px;
+  }
 
-.doneIcon {
-  width: 14px;
-  height: 14px;
-  margin: 0 10px;
-}
+  .accordion {
+    width: 900px;
+    margin: 0 auto 16px;
+    box-shadow: none;
+    outline: 1px solid $blue;
+    border-radius: 10px;
+    box-sizing: border-box;
 
-.saveIcon {
-  width: 65px;
-  height: 19px;
-  margin: 0 10px;
-}
+    &__summary {
+      @include font(16px, 500, 1);
+      color: $brown;
+      outline: 3px solid $blue;
+      border-radius: 10px;
+      box-sizing: border-box;
+      padding: 0 30px;
+      margin: 0;
+    }
 
-.editIcon,
-.excelIcon {
-  width: 20px;
-  height: 20px;
+    &__details {
+      @include font(14px, 300, 1.2);
+      color: $brown;
+      margin: 0;
+      padding: 0 19px 0;
+      box-sizing: border-box;
+      text-align: justify;
+      box-shadow: none;
+    }
+
+    &__paragraph {
+      margin: 0 0 10px;
+
+      &:first-child {
+        margin: 15px 0 10px;
+      }
+
+      &:last-child {
+        margin: 0 0 20px;
+      }
+
+      &:only-child {
+        margin: 15px 0 20px;
+      }
+    }
+
+    &__addIcon {
+      width: 15px;
+      height: 15px;
+      margin: 0 10px;
+    }
+
+    &__doneIcon {
+      width: 14px;
+      height: 14px;
+      margin: 0 10px;
+    }
+
+    &__saveIcon {
+      width: 65px;
+      height: 19px;
+      margin: 0 10px;
+    }
+
+    &__editIcon,
+    &__excelIcon {
+      width: 20px;
+      height: 20px;
+    }
+
+    &::before {
+      background-color: unset;
+    }
+
+    &:nth-last-child(3) {
+      margin: 0 auto;
+    }
+  }
+
+  &__text {
+    @include font(16px, 300, 1.05);
+    color: $brown;
+    width: 800px;
+    margin: 100px auto 0;
+  }
+
+  &__link {
+    @include link-opacity();
+    color: $green;
+  }
+
+  &__wave {
+    background-image: url('../../images/Vector.svg');
+    background-size: 101.5vw;
+    background-repeat: no-repeat;
+    height: 233px;
+  }
 }
