@@ -34,3 +34,13 @@
 @mixin sideMenuTransition() {
   transition: 1s cubic-bezier(0.36, 0, 0.36, 1) 0s;
 }
+
+@mixin background-image($url) {
+  background-image: url($url);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  width: 100vw;
+  padding-top: 15%;
+  position: absolute;
+  z-index: -1;
+}

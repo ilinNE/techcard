@@ -1,0 +1,67 @@
+@import "../../Modules/mixins";
+
+.feedback {
+  @include flex(flex-start, flex-start, column);
+  @include font();
+  max-width: 600px;
+  height: 300px;
+  margin: 15px auto 0;
+  outline: 1px solid #ffd983;
+  border-radius: 10px;
+
+  &__header-container {
+    @include flex(space-between, center);
+    width: calc(100% - 120px);
+    padding: 13px 60px;
+    background-color: #ffd983;
+    border-radius: 8px 8px 0 0;
+  }
+
+  &__input-container {
+    width: 200px;
+
+    &:first-child {
+      width: 150px;
+      margin-bottom: 5px;
+    }
+
+    &_text {
+      width: 600px;
+      height: 100%;
+    }
+  }
+
+  &__input {
+    width: calc(100% - 30px);
+    padding: 5px 15px;
+    border: none;
+    border-radius: 10px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &_text {
+      height: calc(100% - 10px);
+      resize: none;
+    }
+
+    &-error {
+      @include font(10px, 300, 1.14);
+    }
+  }
+
+  &__submit-button {
+    @include font(14px, 500, 1.14);
+    padding: 7px 10px;
+    background-color: #fffefd;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    &_enabled {
+      @include interactive();
+      cursor: pointer;
+    }
+  }
+}
