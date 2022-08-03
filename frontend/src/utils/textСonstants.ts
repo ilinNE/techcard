@@ -27,3 +27,8 @@ export const greeting = {
   SubTitle: `ТехКарта это простой способ создавать, хранить, изменять технические карты для своих блюд.`,
   LetStart: "Начать бесплатно",
 };
+
+export const errorMessages = {
+  DuplicateEmail: "Пользователь с такой почтой уже зарегистрирован",
+  BadEmailOrPassword: "Неправильные почта или пароль",
+};

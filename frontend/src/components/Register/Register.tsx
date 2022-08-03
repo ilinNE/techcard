@@ -1,21 +1,21 @@
-import { FC } from "react";
-import { useNavigate } from "react-router-dom";
+import { FC, SetStateAction } from "react";
 import AuthTitle from "../AuthTitle/AuthTitle";
 import Form from "../Form/Form";
 import "./Register.scss";
-import * as Api from "../../utils/Api";
 import { register } from "../../utils/textСonstants";
+import Popup from "../Popup/Popup";
 
-const Register: FC = () => {
-  const navigate = useNavigate();
+interface RegisterProps {
+  handleRegister: (values: any) => void;
+  errorMesage: string;
+  setErrorMesage: React.Dispatch<SetStateAction<string>>;
+}
 
-  const handleRegister = (values: any) => {
-    Api.register(values)
-      .then((data) => {
-        alert("Регистрация пользователя " + data.username + " прошла успешно");
-        navigate("/dishes");
-      })
-      .catch((error) => console.error(error));
+const Register: FC<RegisterProps> = ({ handleRegister, errorMesage, setErrorMesage }) => {
+  const closePopup = (evt: any) => {
+    if (evt.currentTarget === evt.target || evt.target.classList.contains("popup__close-button")) {
+      setErrorMesage("");
+    }
   };
 
   return (
@@ -27,8 +27,8 @@ const Register: FC = () => {
         textLink={register.Login}
         handleSubmitForm={handleRegister}
       />
+      {errorMesage && <Popup text={errorMesage} closePopup={closePopup} />}
     </section>
   );
 };
-
 export default Register;

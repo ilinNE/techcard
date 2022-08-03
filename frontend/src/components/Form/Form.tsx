@@ -21,37 +21,37 @@ const Form: FC<FormProps> = ({ buttonText, textDescription, textLink, handleSubm
 
   return (
     <form className="form" onSubmit={handleSubmit}>
-      {pathname === "/signup" && (
-        <div className="form__input-container">
-          <input
-            type="text"
-            name="username"
-            autoComplete="off"
-            minLength={2}
-            maxLength={150}
-            placeholder="Логин"
-            className="form__input"
-            required
-            onChange={handleChange}
-          />
-          <span className="form__input-error">{errors.username}</span>
-        </div>
-      )}
-
       <div className="form__input-container">
         <input
-          type="email"
-          name="email"
+          type="text"
+          name="username"
           autoComplete="off"
           minLength={2}
-          maxLength={30}
-          placeholder="Email"
+          maxLength={150}
+          placeholder="Логин"
           className="form__input"
           required
           onChange={handleChange}
         />
-        <span className="form__input-error">{errors.email}</span>
+        <span className="form__input-error">{errors.username}</span>
       </div>
+
+      {pathname === "/signup" && (
+        <div className="form__input-container">
+          <input
+            type="email"
+            name="email"
+            autoComplete="off"
+            minLength={2}
+            maxLength={30}
+            placeholder="Email"
+            className="form__input"
+            required
+            onChange={handleChange}
+          />
+          <span className="form__input-error">{errors.email}</span>
+        </div>
+      )}
 
       <div className="form__input-container">
         <input
