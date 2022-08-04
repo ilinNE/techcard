@@ -42,7 +42,8 @@
     }
 
     &_text {
-      height: calc(100% - 10px);
+      height: calc(100% - 30px);
+      padding: 15px;
       resize: none;
     }
 
@@ -62,6 +63,50 @@
     &_enabled {
       @include interactive();
       cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 619px) {
+  .feedback {
+    max-width: 500px;
+
+    &__input-container_text {
+      width: 500px;
+    }
+  }
+}
+
+@media screen and (max-width: 519px) {
+  .feedback {
+    @include font(12px, 300, 1);
+    max-width: 300px;
+
+    &__header-container {
+      width: calc(100% - 30px);
+      padding: 13px 15px;
+    }
+
+    &__input-container {
+      width: 150px;
+
+      &_text {
+        width: 300px;
+      }
+    }
+
+    &__input {
+      width: calc(100% - 20px);
+      padding: 6px 10px;
+
+      &_text {
+        height: calc(100% - 12px);
+      }
+    }
+
+    &__submit-button {
+      @include font(8px, 500, 1.25);
+      padding: 5px 10px;
     }
   }
 }

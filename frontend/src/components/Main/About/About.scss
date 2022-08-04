@@ -1,7 +1,8 @@
-@import "../../Modules/mixins";
+@import "../../Modules/mixins", "../../Modules/variables";
 
 .about {
   margin: 0 auto;
+  color: $brown;
 
   &__title {
     @include font(32px, 600, 1);
@@ -12,7 +13,7 @@
     @include font($font-weight: 400);
     max-width: 700px;
     margin: 0 auto;
-    padding: 0 20px 15px;
+    padding: 0 30px 15px;
   }
 
   &__wave {
@@ -23,6 +24,45 @@
 
     &_green {
       @include background("../../../images/firstpage-wave-2.svg", 100%);
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .about__title {
+    margin: -5% auto 8%;
+  }
+}
+
+@media screen and (max-width: 619px) {
+  .about {
+    &__title {
+      margin-top: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 519px) {
+  .about {
+    &__title {
+      @include font(20px, 500, 1.6);
+      margin: -5% auto 6%;
+    }
+
+    &__text {
+      @include font(12px, 300, 1.17);
+      padding: 0 24px 12px;
+    }
+
+    &__wave {
+      padding-top: 22%;
+      &_blue {
+        background-image: url("../../../images/mobile-wave-1.svg");
+      }
+
+      &_green {
+        background-image: url("../../../images/mobile-wave-2.svg");
+      }
     }
   }
 }
