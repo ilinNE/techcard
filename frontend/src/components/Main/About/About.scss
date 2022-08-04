@@ -16,14 +16,13 @@
   }
 
   &__wave {
+    padding-top: 15%;
     &_blue {
       @include background("../../../images/firstpage-wave-1.svg", 100%);
-      padding-top: 15%;
     }
 
     &_green {
       @include background("../../../images/firstpage-wave-2.svg", 100%);
-      padding-top: 15%;
     }
   }
 }
