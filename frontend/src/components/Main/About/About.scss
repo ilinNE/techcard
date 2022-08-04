@@ -1,36 +1,29 @@
 @import "../../Modules/mixins";
 
 .about {
-  margin: -7px auto 0;
-  padding-top: 78px;
-  position: relative;
+  margin: 0 auto;
 
   &__title {
     @include font(32px, 600, 1);
-    margin: 0 auto 100px;
+    margin: -9% auto 8%;
   }
 
   &__text {
     @include font($font-weight: 400);
-    max-width: 55%;
+    max-width: 700px;
     margin: 0 auto;
-    padding-bottom: 15px;
+    padding: 0 20px 15px;
   }
 
   &__wave {
     &_blue {
-      @include background-image("../../../images/firstpage-wave-1.svg");
-      top: 0;
+      @include background("../../../images/firstpage-wave-1.svg", 100%);
+      padding-top: 15%;
     }
 
     &_green {
-      @include background-image("../../../images/firstpage-wave-2.svg");
-    }
-  }
-
-  @media screen and (max-width: 767px) {
-    &__title {
-      margin-bottom: 70px;
+      @include background("../../../images/firstpage-wave-2.svg", 100%);
+      padding-top: 15%;
     }
   }
 }
