@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import "./AuthNav.scss";
-import { header } from "../../../utils/textСonstants";
+import { header } from "../../../utils/textConstants";
 
 const AuthNav: FC = () => {
   return (

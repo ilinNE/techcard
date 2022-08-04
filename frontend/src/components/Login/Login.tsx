@@ -2,8 +2,8 @@ import { FC, SetStateAction } from "react";
 import AuthTitle from "../AuthTitle/AuthTitle";
 import Form from "../Form/Form";
 import "./Login.scss";
-import { login } from "../../utils/textСonstants";
 import Popup from "../Popup/Popup";
+import { login } from "../../utils/textConstants";
 
 interface LoginProps {
   handleAuthorize: (values: any) => void;

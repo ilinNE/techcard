@@ -2,8 +2,8 @@ import { FC, SetStateAction } from "react";
 import AuthTitle from "../AuthTitle/AuthTitle";
 import Form from "../Form/Form";
 import "./Register.scss";
-import { register } from "../../utils/textСonstants";
 import Popup from "../Popup/Popup";
+import { register } from "../../utils/textConstants";
 
 interface RegisterProps {
   handleRegister: (values: any) => void;

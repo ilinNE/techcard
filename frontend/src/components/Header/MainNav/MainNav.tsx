@@ -1,6 +1,6 @@
 import { FC } from "react";
 import "./MainNav.scss";
-import { header } from "../../../utils/textСonstants";
+import { header } from "../../../utils/textConstants";
 
 const Nav: FC = () => {
   return (

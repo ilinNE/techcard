@@ -14,7 +14,7 @@ import Header from "../Header/Header";
 import { pathWithHeader } from "../../utils/constants";
 import * as Api from "../../utils/Api";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
-import { errorMessages } from "../../utils/textСonstants";
+import { errorMessages } from "../../utils/textConstants";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
