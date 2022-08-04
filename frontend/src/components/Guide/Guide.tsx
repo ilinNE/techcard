@@ -1,9 +1,9 @@
 import { FC, Fragment } from "react";
 import { Link } from "react-router-dom";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import { questions } from "../../utils/textСonstants"
 import "./Guide.scss";
+import arrow from "../../images/arrow-big.svg";
 
 interface Icon {
   className: string;
@@ -34,7 +34,8 @@ const Guide: FC = () => {
       <h1 className="guide-section__title">{questions.Title}</h1>
       {questions.QuestionList.map((question, index) => {
         return <Accordion key={index} className="accordion" disableGutters={true}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />} className="accordion__summary">
+          <AccordionSummary expandIcon={<img src={arrow} alt="стрелка вниз" className="accordion__arrow" />}
+            className="accordion__summary">
             {question.header}
           </AccordionSummary>
           <AccordionDetails className="accordion__details">
