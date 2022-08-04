@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import "./Nav.scss";
-import { header } from "../../../utils/textСonstants";
+import { header } from "../../../utils/textConstants";
 
 const setActive = ({ isActive }: any) => `nav__link ${isActive && "nav__link_active"}`;
 

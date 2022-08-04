@@ -2,7 +2,7 @@ import { FC } from "react";
 import "./Main.scss";
 import Greeting from "./Greeting/Greeting";
 import About from "./About/About";
-import { greeting, about } from "../../utils/textСonstants";
+import { greeting, about } from "../../utils/textConstants";
 
 const Main: FC = () => {
   return (

@@ -1,7 +1,7 @@
 import { FC, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
-import { questions } from "../../utils/textСonstants"
+import { questions } from "../../utils/textConstants"
 import "./Guide.scss";
 import arrow from "../../images/arrow-big.svg";
 

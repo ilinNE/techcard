@@ -1,6 +1,6 @@
 import { FC } from "react";
 import FeedbackForm from "../FeedbackForm/FeedbackForm";
-import { about } from "../../../utils/textСonstants";
+import { about } from "../../../utils/textConstants";
 import "./About.scss";
 
 interface AboutProps {
