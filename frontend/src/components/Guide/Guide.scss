@@ -1,5 +1,4 @@
-@import '../../components/Modules/variables',
-  '../../components/Modules/mixins';
+@import "../../components/Modules/variables", "../../components/Modules/mixins";
 
 .guide-section {
   &__title {
@@ -105,7 +104,7 @@
   }
 
   &__wave {
-    background-image: url('../../images/Vector.svg');
+    background-image: url("../../images/Vector.svg");
     background-size: 101.5vw;
     background-repeat: no-repeat;
     height: 233px;

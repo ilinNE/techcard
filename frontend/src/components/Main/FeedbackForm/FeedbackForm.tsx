@@ -60,9 +60,7 @@ const FeedbackForm: FC<FormProps> = ({ buttonText }) => {
 
         <button
           type="submit"
-          className={`feedback__submit-button ${
-            isValid && "feedback__submit-button_enabled"
-          }`}
+          className={`feedback__submit-button ${isValid && "feedback__submit-button_enabled"}`}
           disabled={!isValid}
         >
           {buttonText}

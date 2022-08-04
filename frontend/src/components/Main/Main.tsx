@@ -7,8 +7,16 @@ import { greeting, about } from "../../utils/textConstants";
 const Main: FC = () => {
   return (
     <section>
-      <Greeting greetingTitle={greeting.Title} greetingSubtitle={greeting.SubTitle} buttonTitle={greeting.LetStart} />
-      <About aboutTitle={about.Title} aboutParagraphOne={about.ParagraphOne} aboutParagraphTwo={about.ParagraphTwo} />
+      <Greeting
+        greetingTitle={greeting.Title}
+        greetingSubtitle={greeting.SubTitle}
+        buttonTitle={greeting.LetStart}
+      />
+      <About
+        aboutTitle={about.Title}
+        aboutParagraphOne={about.ParagraphOne}
+        aboutParagraphTwo={about.ParagraphTwo}
+      />
     </section>
   );
 };

@@ -10,7 +10,11 @@ const Logo: FC = () => {
 
   return (
     <NavLink className="logo" to="/">
-      <img className="logo__image" src={whiteHeader.includes(pathname) ? logoRed : logoWhite} alt="Логотип"></img>
+      <img
+        className="logo__image"
+        src={whiteHeader.includes(pathname) ? logoRed : logoWhite}
+        alt="Логотип"
+      ></img>
     </NavLink>
   );
 };
