@@ -2,7 +2,7 @@ import { FC } from "react";
 import AuthTitle from "../AuthTitle/AuthTitle";
 import Form from "../Form/Form";
 import "./Login.scss";
-import { login } from "../../utils/textСonstants";
+import { login } from "../../utils/textConstants";
 
 const Login: FC = () => {
   const handleLogin = (values: any) => {

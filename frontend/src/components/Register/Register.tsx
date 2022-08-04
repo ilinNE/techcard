@@ -4,7 +4,7 @@ import AuthTitle from "../AuthTitle/AuthTitle";
 import Form from "../Form/Form";
 import "./Register.scss";
 import * as Api from "../../utils/Api";
-import { register } from "../../utils/textСonstants";
+import { register } from "../../utils/textConstants";
 
 const Register: FC = () => {
   const navigate = useNavigate();
