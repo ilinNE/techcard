@@ -38,3 +38,16 @@ export const authorize = async (data: string) => {
       return res.data;
     });
 };
+
+export const feedback = async (data: string) => {
+  return await axios
+    .post("/api/send_mail/", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
+};

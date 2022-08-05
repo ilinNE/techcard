@@ -1,24 +1,46 @@
-import { FC } from "react";
+import { FC, SetStateAction } from "react";
 import FeedbackForm from "../FeedbackForm/FeedbackForm";
 import { about } from "../../../utils/textConstants";
 import "./About.scss";
+import Popup from "../../Popup/Popup";
 
 interface AboutProps {
   aboutTitle: string;
   aboutParagraphOne: string;
   aboutParagraphTwo: string;
+  handleFeedback: (values: any) => void;
+  errorMesage: string;
+  setErrorMesage: React.Dispatch<SetStateAction<string>>;
 }
 
-const About: FC<AboutProps> = ({ aboutTitle, aboutParagraphOne, aboutParagraphTwo }) => {
+const About: FC<AboutProps> = ({
+  aboutTitle,
+  aboutParagraphOne,
+  aboutParagraphTwo,
+  handleFeedback,
+  errorMesage,
+  setErrorMesage,
+}) => {
+  console.log(errorMesage);
+
+  const closePopup = (evt: any) => {
+    if (evt.currentTarget === evt.target || evt.target.classList.contains("popup__close-button")) {
+      setErrorMesage("");
+    }
+  };
+
   return (
-    <section className="about">
-      <div className="about__wave about__wave_blue"></div>
-      <h2 className="about__title">{aboutTitle}</h2>
-      <p className="about__text">{aboutParagraphOne}</p>
-      <p className="about__text">{aboutParagraphTwo}</p>
-      <FeedbackForm buttonText={about.SendButton} />
-      <div className="about__wave about__wave_green"></div>
-    </section>
+    <>
+      {errorMesage && <Popup text={errorMesage} closePopup={closePopup} />}
+      <section className="about">
+        <div className="about__wave about__wave_blue"></div>
+        <h2 className="about__title">{aboutTitle}</h2>
+        <p className="about__text">{aboutParagraphOne}</p>
+        <p className="about__text">{aboutParagraphTwo}</p>
+        <FeedbackForm buttonText={about.SendButton} handleFeedback={handleFeedback} />
+        <div className="about__wave about__wave_green"></div>
+      </section>
+    </>
   );
 };
 

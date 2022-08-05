@@ -1,27 +1,19 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Validation } from "../../../utils/Validation";
 import "./FeedbackForm.scss";
 
 interface FormProps {
   buttonText: string;
+  handleFeedback: (values: any) => void;
 }
 
-const FeedbackForm: FC<FormProps> = ({ buttonText }) => {
+const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
   const { values, handleChange, errors, isValid } = Validation();
 
   function handleSubmit(evt: any) {
     evt.preventDefault();
-    handleSubmitForm(values);
+    handleFeedback(values);
   }
-
-  const handleSubmitForm = (values: any) => {
-    // Api.register(values)
-    //   .then((data) => {
-    //     alert("Регистрация пользователя " + data.username + " прошла успешно");
-    //     navigate("/dishes");
-    //   })
-    //   .catch((error) => console.error(error));
-  };
 
   return (
     <form className="feedback" onSubmit={handleSubmit}>
@@ -30,31 +22,31 @@ const FeedbackForm: FC<FormProps> = ({ buttonText }) => {
           <div className="feedback__input-container">
             <input
               type="text"
-              name="username"
+              name="title"
               autoComplete="off"
-              minLength={2}
+              minLength={1}
               maxLength={150}
               placeholder="Имя"
               className="feedback__input"
               required
               onChange={handleChange}
             />
-            <span className="feedback__input-error">{errors.username}</span>
+            <span className="feedback__input-error">{errors.title}</span>
           </div>
 
           <div className="feedback__input-container">
             <input
               type="email"
-              name="email"
+              name="return_address"
               autoComplete="off"
-              minLength={2}
+              minLength={1}
               maxLength={30}
               placeholder="Email"
               className="feedback__input"
               required
               onChange={handleChange}
             />
-            <span className="feedback__input-error">{errors.email}</span>
+            <span className="feedback__input-error">{errors.return_address}</span>
           </div>
         </div>
 
@@ -69,16 +61,16 @@ const FeedbackForm: FC<FormProps> = ({ buttonText }) => {
 
       <div className="feedback__input-container feedback__input-container_text">
         <textarea
-          name="text"
+          name="message"
           autoComplete="off"
-          minLength={2}
-          // maxLength={150}
+          minLength={1}
+          maxLength={150}
           placeholder="Текст..."
           className="feedback__input feedback__input_text"
           required
           onChange={handleChange}
         ></textarea>
-        <span className="feedback__input-error">{errors.text}</span>
+        <span className="feedback__input-error">{errors.message}</span>
       </div>
     </form>
   );

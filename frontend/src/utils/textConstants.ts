@@ -50,6 +50,8 @@ export const about = {
 export const errorMessages = {
   DuplicateEmail: "Пользователь с такой почтой уже зарегистрирован",
   BadEmailOrPassword: "Неправильные почта или пароль",
+  BadFeedback: "Ой, что-то пошло не так",
+  SuccessFeedback: "Спасибо за обратную связь",
 };
 
 export const questions = {
