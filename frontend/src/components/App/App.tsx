@@ -58,6 +58,12 @@ function App() {
       .catch(() => setErrorMesage(errorMessages.BadEmailOrPassword));
   };
 
+  const feedback = (values: any) => {
+    Api.feedback(values)
+      .then(() => setErrorMesage(errorMessages.SuccessFeedback))
+      .catch(() => setErrorMesage(errorMessages.BadFeedback));
+  };
+
   const handleloggedOutClick = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
@@ -70,7 +76,16 @@ function App() {
         {pathWithHeader.includes(pathname) && <Header loggedIn={loggedIn} />}
 
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route
+            path="/"
+            element={
+              <Main
+                handleFeedback={feedback}
+                errorMesage={errorMesage}
+                setErrorMesage={setErrorMesage}
+              />
+            }
+          />
           <Route path="/dishes" element={<Dishes />} />
           <Route path="/semis" element={<Semis />} />
           <Route path="/foodstuff" element={<Foodstuff />} />
