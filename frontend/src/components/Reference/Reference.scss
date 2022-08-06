@@ -1,0 +1,13 @@
+@import "../Modules/variables", "../Modules/mixins";
+
+.reference {
+  margin: 10px auto 0;
+  padding: 0 10px;
+  max-width: 600px;
+  @include font(12px, 500, 1);
+
+  &__link {
+    color: $green;
+    @include link-opacity;
+  }
+}

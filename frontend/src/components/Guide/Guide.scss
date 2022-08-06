@@ -15,6 +15,7 @@
     outline: 1px solid $blue;
     border-radius: 10px;
     box-sizing: border-box;
+    border: 1px red solid;
 
     .accordion__arrow {
       width: 10px;
@@ -89,18 +90,6 @@
     &:nth-last-child(3) {
       margin: 0 auto;
     }
-  }
-
-  &__text {
-    @include font(16px, 300, 1.05);
-    color: $brown;
-    max-width: 800px;
-    margin: 100px auto 0;
-  }
-
-  &__link {
-    @include link-opacity();
-    color: $green;
   }
 
   &__wave {

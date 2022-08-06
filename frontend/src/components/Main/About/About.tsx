@@ -21,8 +21,6 @@ const About: FC<AboutProps> = ({
   errorMesage,
   setErrorMesage,
 }) => {
-  console.log(errorMesage);
-
   const closePopup = (evt: any) => {
     if (evt.currentTarget === evt.target || evt.target.classList.contains("popup__close-button")) {
       setErrorMesage("");

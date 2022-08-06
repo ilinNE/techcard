@@ -1,16 +1,14 @@
 import { FC } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Validation } from "../../utils/Validation";
 import "./Form.scss";
 
 interface FormProps {
   buttonText: string;
-  textDescription: string;
-  textLink: string;
   handleSubmitForm: ({}) => void;
 }
 
-const Form: FC<FormProps> = ({ buttonText, textDescription, textLink, handleSubmitForm }) => {
+const Form: FC<FormProps> = ({ buttonText, handleSubmitForm }) => {
   const { values, handleChange, errors, isValid } = Validation();
   const { pathname } = useLocation();
 
@@ -75,13 +73,6 @@ const Form: FC<FormProps> = ({ buttonText, textDescription, textLink, handleSubm
       >
         {buttonText}
       </button>
-
-      <p className="form__subtitle">
-        {textDescription}
-        <Link to={pathname === "/signin" ? "/signup" : "/signin"} className="form__link">
-          {textLink}
-        </Link>
-      </p>
     </form>
   );
 };

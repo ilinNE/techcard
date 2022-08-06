@@ -4,6 +4,7 @@ import Form from "../Form/Form";
 import "./Register.scss";
 import Popup from "../Popup/Popup";
 import { register } from "../../utils/textConstants";
+import Reference, { LinkVariant } from "../Reference/Reference";
 
 interface RegisterProps {
   handleRegister: (values: any) => void;
@@ -21,11 +22,11 @@ const Register: FC<RegisterProps> = ({ handleRegister, errorMesage, setErrorMesa
   return (
     <section className="register">
       <AuthTitle titleText={register.Welcome} />
-      <Form
-        buttonText={register.Signup}
+      <Form buttonText={register.Signup} handleSubmitForm={handleRegister} />
+      <Reference
         textDescription={register.AlreadyRegistered}
         textLink={register.Login}
-        handleSubmitForm={handleRegister}
+        path={LinkVariant.toLogin}
       />
       {errorMesage && <Popup text={errorMesage} closePopup={closePopup} />}
     </section>
