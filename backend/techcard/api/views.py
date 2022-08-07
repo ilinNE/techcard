@@ -1,5 +1,4 @@
 from django.utils.decorators import method_decorator
-from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, exceptions
 from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin
@@ -11,20 +10,17 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.core.mail import send_mail
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
+from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiResponse
 
 from .serializers import (ProductSerializer, TokenObtainPairResponseSerializer,
                           TokenRefreshResponseSerializer, UserSerializer, TagSerializer, SendMailSerializer,
                           TechCardSerializer,)
 from cards.models import Product, Tag, TechCard 
-from .filters import ProductFilterSet                         
+from .filters import ProductFilterSet
+import api.schemas as schemas                
+import api.examples as examples  
 
-
-@method_decorator(
-    name="create",
-    decorator=swagger_auto_schema(
-        tags=["Пользователь"], operation_id="Создание пользователя"
-    ),
-)
+@extend_schema(tags=["Пользователи"])
 class UserViewSet(GenericViewSet, CreateModelMixin):
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
@@ -36,13 +32,6 @@ class UserViewSet(GenericViewSet, CreateModelMixin):
         permission_classes=[IsAuthenticated],
         serializer_class=UserSerializer,
     )
-    @swagger_auto_schema(
-        tags=["Пользователь"],
-        operation_id="Профиль пользователя",
-        operation_description=(
-            "Получить информацию об аутентифицированном пользователе"
-        ),
-    )
     def users_me(self, request):
         user = request.user
         context = {"request": request}
@@ -52,35 +41,19 @@ class UserViewSet(GenericViewSet, CreateModelMixin):
 
 
 class DecoratedTokenObtainPairView(TokenObtainPairView):
-    @swagger_auto_schema(
-        tags=["JWT"],
-        operation_id="Получить токен",
-        operation_description=(
-            "Отправляем логин и пароль, получаем access и refresh токены"
-        ),
-        responses={
-            status.HTTP_200_OK: TokenObtainPairResponseSerializer,
-        },
-    )
+    @extend_schema(**schemas.TOKEN_OBTAIN_SCHEMA)
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
 
 class DecoratedTokenRefreshView(TokenRefreshView):
-    @swagger_auto_schema(
-        tags=["JWT"],
-        operation_id="Обновить токен",
-        operation_description=(
-            "Отправляем refresh-токен, получаем access, и новый refresh"
-        ),
-        responses={
-            status.HTTP_200_OK: TokenRefreshResponseSerializer,
-        },
-    )
+    @extend_schema(**schemas.TOKEN_REFRESH_SCHEMA)
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
-   
+
+@extend_schema(tags=["Тэги"])
+@extend_schema_view(**schemas.TAGS)
 class TagViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = TagSerializer
@@ -94,6 +67,7 @@ class TagViewSet(ModelViewSet):
         serializer.save(owner=self.request.user)
 
 
+@extend_schema(tags=["Продукты"])
 class ProductViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = ProductSerializer
@@ -108,17 +82,10 @@ class ProductViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-
 class SendMailApiView(APIView):
     permission_classes = (AllowAny,)
-    
-    @swagger_auto_schema(
-        tags=("Почта",),
-        operation_id="Отправка обратной связи",
-        request_body=SendMailSerializer,
-        responses={
-            status.HTTP_200_OK: "Сообщение отправленно"
-        })
+
+    @extend_schema(tags=["Почта"], summary="Отправка почты")    
     def post(self, request):
         try:
             title = self.request.data["title"]
@@ -130,7 +97,8 @@ class SendMailApiView(APIView):
         send_mail(title, message, None, ['kikume34@gmail.com'])
         return Response(status=status.HTTP_200_OK, data='Сообщение отправленно')
 
-        
+
+@extend_schema(tags=["Техкарты"])     
 class TechCardViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = TechCardSerializer

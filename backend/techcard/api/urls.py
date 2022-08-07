@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from .views import (DecoratedTokenObtainPairView, DecoratedTokenRefreshView,
                     UserViewSet, TagViewSet, ProductViewSet, SendMailApiView, TechCardViewSet)
+                    
 
 app_name = "api"
 router = DefaultRouter()
@@ -25,3 +26,4 @@ urlpatterns = [
         name="refresh_token",
     ),
 ]
+

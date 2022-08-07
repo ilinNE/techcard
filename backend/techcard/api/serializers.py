@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from django.db import transaction
+from drf_spectacular.utils import OpenApiExample, extend_schema_serializer
 
 from cards.models import Tag, Product, TechCard, Ingredient
 from .utils import create_or_update_semifabricate
@@ -56,7 +57,27 @@ class SendMailSerializer(serializers.Serializer):
     message = serializers.CharField(label="Текст сообщения")
     return_address = serializers.EmailField(label="Адрес отправителя")
 
-
+@extend_schema_serializer(
+    examples = [
+        OpenApiExample(
+            'Tag response example',
+            value={
+                'id': 4,
+                'name': "yellow",
+                'color': "#ffff00",
+            },
+            response_only=True,
+        ),
+        OpenApiExample(
+            'Tag request example',
+            value={
+                'name': "yellow",
+                'color': "#ffff00",
+            },
+            request_only=True,
+        ),
+    ]
+)
 class TagSerializer(serializers.ModelSerializer):
     
     class Meta:
