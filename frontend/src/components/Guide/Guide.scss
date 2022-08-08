@@ -91,18 +91,6 @@
     }
   }
 
-  &__text {
-    @include font(16px, 300, 1.05);
-    color: $brown;
-    max-width: 800px;
-    margin: 100px auto 0;
-  }
-
-  &__link {
-    @include link-opacity();
-    color: $green;
-  }
-
   &__wave {
     @include background("../../images/Vector.svg", 100%);
     padding-top: 19%;

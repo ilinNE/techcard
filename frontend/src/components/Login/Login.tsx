@@ -4,6 +4,7 @@ import Form from "../Form/Form";
 import "./Login.scss";
 import Popup from "../Popup/Popup";
 import { login } from "../../utils/textConstants";
+import Reference, { LinkVariant } from "../Reference/Reference";
 
 interface LoginProps {
   handleAuthorize: (values: any) => void;
@@ -21,11 +22,11 @@ const Login: FC<LoginProps> = ({ handleAuthorize, errorMesage, setErrorMesage })
   return (
     <section className="register">
       <AuthTitle titleText={login.ToBegin} />
-      <Form
-        buttonText={login.Signin}
+      <Form buttonText={login.Signin} handleSubmitForm={handleAuthorize} />
+      <Reference
         textDescription={login.NotRegistred}
         textLink={login.Registration}
-        handleSubmitForm={handleAuthorize}
+        path={LinkVariant.toRegister}
       />
       {errorMesage && <Popup text={errorMesage} closePopup={closePopup} />}
     </section>

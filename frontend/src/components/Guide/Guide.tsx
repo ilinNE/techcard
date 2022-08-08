@@ -1,9 +1,9 @@
 import { FC, Fragment } from "react";
-import { Link } from "react-router-dom";
 import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import { questions } from "../../utils/textConstants";
 import "./Guide.scss";
 import arrow from "../../images/arrow-big.svg";
+import Reference, { LinkVariant } from "../Reference/Reference";
 
 interface Icon {
   className: string;
@@ -52,12 +52,11 @@ const Guide: FC = () => {
           </Accordion>
         );
       })}
-      <p className="guide-section__text">
-        {questions.Paragraph}
-        <Link to="/" className="guide-section__link">
-          {questions.Link}
-        </Link>
-      </p>
+      <Reference
+        textDescription={questions.Paragraph}
+        textLink={questions.Link}
+        path={LinkVariant.toFeedback}
+      />
       <div className="guide-section__wave"></div>
     </section>
   );

@@ -47,16 +47,6 @@
     @include interactive;
   }
 
-  &__subtitle {
-    margin: 10px 0 0;
-    @include font(12px, 500, 1);
-
-    .form__link {
-      color: $green;
-      @include link-opacity;
-    }
-  }
-
   input::placeholder {
     @include font(14px, 300, 1);
     color: $brown;
