@@ -1,6 +1,10 @@
 @import "../Modules/variables", "../Modules/mixins";
 .popup {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   @include flex(center, center);
   width: 100vw;
   height: 100vh;
@@ -12,7 +16,7 @@
     flex-basis: 350px;
     width: 300px;
     margin: 0 10px;
-    height: 300px;
+    min-height: 180px;
     background-color: #fff;
     border: none;
     border-radius: 10px;
@@ -35,9 +39,9 @@
     .popup__text {
       justify-self: center;
       margin: 0;
-      padding: 0 30px;
+      padding: 40px 30px 30px;
       color: $brown;
-      @include font(14, 500, 2);
+      @include font(18px, 500, 2);
     }
   }
 }
