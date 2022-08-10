@@ -1,6 +1,4 @@
-from re import S
 from drf_spectacular.utils import OpenApiExample
-from pyrsistent import v
 
 LOGIN_EXAMPLE = OpenApiExample(
     "Login example",
@@ -40,9 +38,7 @@ REFRESH_EXAMPLE = OpenApiExample(
 )
 METHOD_NOT_ALLOWED_EXAMPLE = OpenApiExample(
     "Метод недоступен",
-    value={
-        "detail": "Метод \"<Название метода>\" не разрешен."
-    },
+    value={"detail": 'Метод "<Название метода>" не разрешен.'},
     response_only=True,
     status_codes=[405],
 )
@@ -57,7 +53,7 @@ NOT_FOUND_EXAMPLE = OpenApiExample(
 
 UNAUTHORIZED_EXAMPLE = OpenApiExample(
     "Ошибка авторизации",
-    description="""В HTTP заголовке не установлен 
+    description="""В HTTP заголовке не установлен
                 JWT-токен, или установлен неправильно""",
     value={"detail": "Учетные данные не были предоставлены."},
     response_only=True,
@@ -74,9 +70,9 @@ INVALID_TOKEN_EXAMPLE = OpenApiExample(
             {
                 "token_class": "AccessToken",
                 "token_type": "access",
-                "message": "Token is invalid or expired"
+                "message": "Token is invalid or expired",
             }
-        ]
+        ],
     },
     response_only=True,
     status_codes=[401],
@@ -84,96 +80,92 @@ INVALID_TOKEN_EXAMPLE = OpenApiExample(
 
 SEND_MAIL_EXAMPLE = OpenApiExample(
     "Отправка сообщения",
-    value= {
+    value={
         "title": "Заголовок",
         "message": "Здарвствуйте! Досвидания!",
-        "return_address": "example@mail.ru"
+        "return_address": "example@mail.ru",
     },
     request_only=True,
 )
 
 SEND_MAIL_RESPONSE_EXAMPLE = OpenApiExample(
     "Удачная отправка",
-    value= ['Сообщение отправленно'],
+    value=["Сообщение отправленно"],
     response_only=True,
 )
 
 TAG_RESPONSE_EXAMPLE = OpenApiExample(
-    'Tag response example',
+    "Tag response example",
     value={
-        'id': 4,
-        'name': "yellow",
-        'color': "#ffff00",
+        "id": 4,
+        "name": "yellow",
+        "color": "#ffff00",
     },
     response_only=True,
 )
 
 TAG_REQUEST_EXAMPLE = OpenApiExample(
-    'Tag request example',
+    "Tag request example",
     value={
-        'name': "yellow",
-        'color': "#ffff00",
+        "name": "yellow",
+        "color": "#ffff00",
     },
     request_only=True,
 )
 
 PRODUCT_PIECES_EXAMPLE = OpenApiExample(
-    'Создание/обновление штучного продукта',
+    "Создание/обновление штучного продукта",
     value={
         "name": "Яйцо куриное",
         "unit": "Шт",
         "unit_weight": "0.050",
         "price": "6.90",
-        "tags": [2, 3]
+        "tags": [2, 3],
     },
     request_only=True,
 )
 
 PRODUCT_WEIGHT_EXAMPLE = OpenApiExample(
-    'Создание/обновление весового продукта',
-    value={
-        "name": "Картофель",
-        "price": "6.90",
-        "tags": [2,3]
-    },
+    "Создание/обновление весового продукта",
+    value={"name": "Картофель", "price": "6.90", "tags": [2, 3]},
     request_only=True,
 )
 
 PRODUCT_RESPONSE_EXAMPLE = OpenApiExample(
-    'Product response example',
+    "Product response example",
     value={
         "id": 18,
         "name": "Яйцо куриное",
         "unit": "Шт",
         "unit_weight": "0.050",
         "price": "6.90",
-        "tags": [2, 3]
+        "tags": [2, 3],
     },
     response_only=True,
 )
 
 TECHCARD_REQUEST_EXAMPLE = OpenApiExample(
-    'Создание техкарты',
+    "Создание техкарты",
     value={
         "ingredients": [
             {
                 "product": 2,
                 "amount": "1.00",
                 "cold_waste": "0",
-                "hot_waste": "0"
+                "hot_waste": "0",
             }
         ],
-    "name": "Яичница",
-    "description": "Разбить яйца и пожарить",
-    "is_semifabricate": False,
-    "weight": "0",
-    "tags": [2, 9 ]
+        "name": "Яичница",
+        "description": "Разбить яйца и пожарить",
+        "is_semifabricate": False,
+        "weight": "0",
+        "tags": [2, 9],
     },
     request_only=True,
 )
 
 TECHCARD_RESPONSE_EXAMPLE = OpenApiExample(
-    'Техкарта',
+    "Техкарта",
     value={
         "id": 20,
         "ingredients": [
@@ -182,7 +174,7 @@ TECHCARD_RESPONSE_EXAMPLE = OpenApiExample(
                 "unit": "Шт",
                 "amount": "1.000",
                 "cold_waste": "0.000",
-                "hot_waste": "0.000"
+                "hot_waste": "0.000",
             }
         ],
         "name": "Яичница",
@@ -192,7 +184,7 @@ TECHCARD_RESPONSE_EXAMPLE = OpenApiExample(
         "is_semifabricate": False,
         "weight": "0.000",
         "semifabricate": None,
-        "tags": [2, 9]
+        "tags": [2, 9],
     },
     response_only=True,
 )

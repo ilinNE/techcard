@@ -6,18 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cards', '0009_auto_20220801_1755'),
+        ("cards", "0009_auto_20220801_1755"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='ingredient',
-            old_name='ammount',
-            new_name='amount',
+            model_name="ingredient",
+            old_name="ammount",
+            new_name="amount",
         ),
         migrations.AddField(
-            model_name='techcard',
-            name='tags',
-            field=models.ManyToManyField(blank=True, related_name='ingredients', to='cards.Tag', verbose_name='Тэги'),
+            model_name="techcard",
+            name="tags",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="ingredients",
+                to="cards.Tag",
+                verbose_name="Тэги",
+            ),
         ),
     ]

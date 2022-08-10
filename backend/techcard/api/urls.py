@@ -2,8 +2,8 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from .views import (DecoratedTokenObtainPairView, DecoratedTokenRefreshView,
-                    UserViewSet, TagViewSet, ProductViewSet, SendMailApiView, TechCardViewSet)
-                    
+                    ProductViewSet, SendMailApiView, TagViewSet,
+                    TechCardViewSet, UserViewSet)
 
 app_name = "api"
 router = DefaultRouter()
@@ -14,7 +14,7 @@ router.register("techcards", TechCardViewSet, basename="techcards")
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("send_mail/", SendMailApiView.as_view(), name='send_mail' ),
+    path("send_mail/", SendMailApiView.as_view(), name="send_mail"),
     path(
         "auth/jwt/create/",
         DecoratedTokenObtainPairView.as_view(),
@@ -26,4 +26,3 @@ urlpatterns = [
         name="refresh_token",
     ),
 ]
-

@@ -1,12 +1,11 @@
 from django.contrib.auth import get_user_model
-from rest_framework import serializers
 from django.db import transaction
-from drf_spectacular.utils import OpenApiExample, extend_schema_serializer
+from drf_spectacular.utils import extend_schema_serializer
+from rest_framework import serializers
 
-from cards.models import Tag, Product, TechCard, Ingredient
-from .utils import create_or_update_semifabricate
 import api.examples as examples
-
+from .utils import create_or_update_semifabricate
+from cards.models import Ingredient, Product, Tag, TechCard
 
 User = get_user_model()
 
@@ -55,39 +54,37 @@ class TokenRefreshResponseSerializer(serializers.Serializer):
 
 
 class SendMailSerializer(serializers.Serializer):
-    title = serializers.CharField(label='Заголовок')
+    title = serializers.CharField(label="Заголовок")
     message = serializers.CharField(label="Текст сообщения")
     return_address = serializers.EmailField(label="Адрес отправителя")
 
+
 @extend_schema_serializer(
-    examples = [examples.TAG_REQUEST_EXAMPLE, examples.TAG_RESPONSE_EXAMPLE]
+    examples=[examples.TAG_REQUEST_EXAMPLE, examples.TAG_RESPONSE_EXAMPLE]
 )
 class TagSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = Tag
-        fields = ("id","name", "color")
+        fields = ("id", "name", "color")
         read_only_fields = ("id",)
 
 
 @extend_schema_serializer(
-    examples = [
+    examples=[
         examples.PRODUCT_PIECES_EXAMPLE,
-        examples.PRODUCT_WEIGHT_EXAMPLE, 
+        examples.PRODUCT_WEIGHT_EXAMPLE,
         examples.PRODUCT_RESPONSE_EXAMPLE,
     ]
 )
 class ProductSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Product
-        fields = ("id","name", "unit", "unit_weight", "price", "tags")
-        read_only_fields = ("id",) 
+        fields = ("id", "name", "unit", "unit_weight", "price", "tags")
+        read_only_fields = ("id",)
+
 
 class IngredientSerializer(serializers.ModelSerializer):
-    unit = serializers.CharField(
-        source="product.unit", read_only=True
-    )
+    unit = serializers.CharField(source="product.unit", read_only=True)
 
     class Meta:
         model = Ingredient
@@ -95,7 +92,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 
 @extend_schema_serializer(
-    examples = [
+    examples=[
         examples.TECHCARD_REQUEST_EXAMPLE,
         examples.TECHCARD_RESPONSE_EXAMPLE,
     ]
@@ -105,7 +102,7 @@ class TechCardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TechCard
-        exclude = ('owner',)
+        exclude = ("owner",)
         read_only_fields = ("semifabricate",)
 
     def add_ingredients(self, techcard, ingredients):
@@ -116,7 +113,7 @@ class TechCardSerializer(serializers.ModelSerializer):
                     "amount": ingredient["amount"],
                     "cold_waste": ingredient["cold_waste"],
                     "hot_waste": ingredient["hot_waste"],
-                    },
+                },
             )
 
     @transaction.atomic()
@@ -126,9 +123,9 @@ class TechCardSerializer(serializers.ModelSerializer):
         techcard = TechCard.objects.create(**validated_data)
         techcard.tags.add(*tags)
         self.add_ingredients(techcard, ingredients)
-        if techcard.is_semifabricate == True:
+        if techcard.is_semifabricate:
             create_or_update_semifabricate(techcard)
-        return techcard 
+        return techcard
 
     @transaction.atomic()
     def update(self, techcard: TechCard, validated_data):
@@ -138,6 +135,6 @@ class TechCardSerializer(serializers.ModelSerializer):
         techcard.tags.set(tags)
         techcard.ingredients.clear()
         self.add_ingredients(techcard, ingredients)
-        if techcard.is_semifabricate == True:
+        if techcard.is_semifabricate:
             create_or_update_semifabricate(techcard)
         return techcard

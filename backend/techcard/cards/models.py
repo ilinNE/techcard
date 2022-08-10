@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-
 User = get_user_model()
 
 
@@ -126,7 +125,6 @@ class TechCard(models.Model):
         for field, value in data.items():
             setattr(self, field, value)
         self.save()
-
 
 
 class Ingredient(models.Model):

@@ -1,27 +1,26 @@
-from django.utils.decorators import method_decorator
-from rest_framework import status, exceptions
+from django.core.mail import send_mail
+from drf_spectacular.utils import extend_schema, extend_schema_view
+from rest_framework import exceptions, status
 from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework.views import APIView
-from django.core.mail import send_mail
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
-from drf_spectacular.utils import extend_schema, extend_schema_view
 
-from .serializers import (ProductSerializer,
-                          UserSerializer, TagSerializer,
-                          TechCardSerializer,)
-from cards.models import Product, Tag, TechCard 
-import api.schemas as schemas                
+import api.schemas as schemas
+from .serializers import (ProductSerializer, TagSerializer, TechCardSerializer,
+                          UserSerializer)
+from cards.models import Product, Tag, TechCard
+
 
 @extend_schema(tags=["Пользователи"])
 class UserViewSet(GenericViewSet, CreateModelMixin):
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
-    
+
     @action(
         detail=False,
         methods=["get"],
@@ -54,7 +53,7 @@ class DecoratedTokenRefreshView(TokenRefreshView):
 class TagViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = TagSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'delete']
+    http_method_names = ["get", "post", "head", "put", "delete"]
 
     def get_queryset(self):
         queryset = Tag.objects.filter(owner__id=self.request.user.id)
@@ -69,7 +68,7 @@ class TagViewSet(ModelViewSet):
 class ProductViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = ProductSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'delete']
+    http_method_names = ["get", "post", "head", "put", "delete"]
 
     def get_queryset(self):
         queryset = Product.objects.filter(owner__id=self.request.user.id)
@@ -78,10 +77,11 @@ class ProductViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
 class SendMailApiView(APIView):
     permission_classes = (AllowAny,)
 
-    @extend_schema(**schemas.SEND_MAIL_SCHEMA)    
+    @extend_schema(**schemas.SEND_MAIL_SCHEMA)
     def post(self, request):
         try:
             title = self.request.data["title"]
@@ -89,17 +89,19 @@ class SendMailApiView(APIView):
             return_address = self.request.data["return_address"]
         except KeyError:
             raise exceptions.ValidationError("Отсутствует необходимые поля")
-        message += f'\n Адрес отправителя: {return_address}'
-        send_mail(title, message, None, ['kikume34@gmail.com'])
-        return Response(status=status.HTTP_200_OK, data='Сообщение отправленно')
+        message += f"\n Адрес отправителя: {return_address}"
+        send_mail(title, message, None, ["kikume34@gmail.com"])
+        return Response(
+            status=status.HTTP_200_OK, data="Сообщение отправленно"
+        )
 
 
-@extend_schema(tags=["Техкарты"])     
+@extend_schema(tags=["Техкарты"])
 @extend_schema_view(**schemas.TECHCARD_SCHEMA.get_params())
 class TechCardViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = TechCardSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'delete']
+    http_method_names = ["get", "post", "head", "put", "delete"]
 
     def get_queryset(self):
         queryset = TechCard.objects.filter(owner__id=self.request.user.id)
@@ -107,6 +109,7 @@ class TechCardViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
 
 # def download_xlsx(request, id):
 #     output = io.BytesIO()
