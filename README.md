@@ -36,7 +36,7 @@
 
 <ul>
   <li>Бэкенд - <b>Python</b>, <b>Django</b></li>
-  <li>Фронтенд - система шаблонизации <b>Django</b>, <b>Bootstrap</b>, <b>CSS</b>, <b>HTML</b></li>
+  <li>Фронтенд -<b>JavaScript</b>, <b>Bootstrap</b>, <b>CSS</b>, <b>HTML</b></li>
   <li>База данных - <b>SQLite</b>, <b>PostgreSQL</b></li>
 </ul>
 
