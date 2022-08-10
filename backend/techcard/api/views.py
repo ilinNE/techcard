@@ -6,19 +6,16 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework.views import APIView
-from django_filters.rest_framework import DjangoFilterBackend
 from django.core.mail import send_mail
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
-from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiResponse
+from drf_spectacular.utils import extend_schema, extend_schema_view
 
-from .serializers import (ProductSerializer, TokenObtainPairResponseSerializer,
-                          TokenRefreshResponseSerializer, UserSerializer, TagSerializer, SendMailSerializer,
+from .serializers import (ProductSerializer,
+                          UserSerializer, TagSerializer,
                           TechCardSerializer,)
 from cards.models import Product, Tag, TechCard 
-from .filters import ProductFilterSet
 import api.schemas as schemas                
-import api.examples as examples  
 
 @extend_schema(tags=["Пользователи"])
 class UserViewSet(GenericViewSet, CreateModelMixin):
@@ -53,7 +50,7 @@ class DecoratedTokenRefreshView(TokenRefreshView):
 
 
 @extend_schema(tags=["Тэги"])
-@extend_schema_view(**schemas.TAGS)
+@extend_schema_view(**schemas.TAG_SCHEMA.get_params())
 class TagViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = TagSerializer
@@ -68,11 +65,10 @@ class TagViewSet(ModelViewSet):
 
 
 @extend_schema(tags=["Продукты"])
+@extend_schema_view(**schemas.PRODUCT_SCHEMA.get_params())
 class ProductViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = ProductSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = ProductFilterSet
     http_method_names = ['get', 'post', 'head', 'put', 'delete']
 
     def get_queryset(self):
@@ -85,7 +81,7 @@ class ProductViewSet(ModelViewSet):
 class SendMailApiView(APIView):
     permission_classes = (AllowAny,)
 
-    @extend_schema(tags=["Почта"], summary="Отправка почты")    
+    @extend_schema(**schemas.SEND_MAIL_SCHEMA)    
     def post(self, request):
         try:
             title = self.request.data["title"]
@@ -99,6 +95,7 @@ class SendMailApiView(APIView):
 
 
 @extend_schema(tags=["Техкарты"])     
+@extend_schema_view(**schemas.TECHCARD_SCHEMA.get_params())
 class TechCardViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = TechCardSerializer

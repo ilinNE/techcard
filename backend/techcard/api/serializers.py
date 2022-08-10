@@ -5,6 +5,8 @@ from drf_spectacular.utils import OpenApiExample, extend_schema_serializer
 
 from cards.models import Tag, Product, TechCard, Ingredient
 from .utils import create_or_update_semifabricate
+import api.examples as examples
+
 
 User = get_user_model()
 
@@ -58,25 +60,7 @@ class SendMailSerializer(serializers.Serializer):
     return_address = serializers.EmailField(label="Адрес отправителя")
 
 @extend_schema_serializer(
-    examples = [
-        OpenApiExample(
-            'Tag response example',
-            value={
-                'id': 4,
-                'name': "yellow",
-                'color': "#ffff00",
-            },
-            response_only=True,
-        ),
-        OpenApiExample(
-            'Tag request example',
-            value={
-                'name': "yellow",
-                'color': "#ffff00",
-            },
-            request_only=True,
-        ),
-    ]
+    examples = [examples.TAG_REQUEST_EXAMPLE, examples.TAG_RESPONSE_EXAMPLE]
 )
 class TagSerializer(serializers.ModelSerializer):
     
@@ -86,12 +70,19 @@ class TagSerializer(serializers.ModelSerializer):
         read_only_fields = ("id",)
 
 
+@extend_schema_serializer(
+    examples = [
+        examples.PRODUCT_PIECES_EXAMPLE,
+        examples.PRODUCT_WEIGHT_EXAMPLE, 
+        examples.PRODUCT_RESPONSE_EXAMPLE,
+    ]
+)
 class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ("name", "unit", "unit_weight", "price", "tags")
-
+        fields = ("id","name", "unit", "unit_weight", "price", "tags")
+        read_only_fields = ("id",) 
 
 class IngredientSerializer(serializers.ModelSerializer):
     unit = serializers.CharField(
@@ -103,6 +94,12 @@ class IngredientSerializer(serializers.ModelSerializer):
         fields = ("product", "unit", "amount", "cold_waste", "hot_waste")
 
 
+@extend_schema_serializer(
+    examples = [
+        examples.TECHCARD_REQUEST_EXAMPLE,
+        examples.TECHCARD_RESPONSE_EXAMPLE,
+    ]
+)
 class TechCardSerializer(serializers.ModelSerializer):
     ingredients = IngredientSerializer(many=True, source="ingredient_set")
 
