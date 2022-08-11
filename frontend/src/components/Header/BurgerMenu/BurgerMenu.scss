@@ -1,33 +1,38 @@
 @import "../../Modules/variables", "../../Modules/mixins";
 
 .burgerMenu {
-  display: none;
   position: fixed;
-  top: $headerHeight;
-  right: -300px;
-  width: 300px;
+  width: 100vw;
   height: 100vh;
-  background-color: #fff;
-  opacity: 1;
   visibility: hidden;
-  @include sideMenuTransition;
   z-index: 1;
+  transition: 0.8s;
 
-  &__container {
-    margin-top: 40px;
-    @include flex(center, center, column);
-    gap: 30px;
+  &__menu {
+    filter: none;
+    position: fixed;
+    right: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: #fff;
+    opacity: 1;
+    @include sideMenuTransition;
+
+    .burgerMenu__container {
+      margin-top: 40px;
+      @include flex(center, center, column);
+      gap: 30px;
+    }
   }
 
-  &_opened {
+  .burgerMenu__menu_opened {
     right: 0px;
     visibility: visible;
     opacity: 1;
   }
 }
 
-@media screen and (min-width: 320px) and (max-width: 767px) {
-  .burgerMenu {
-    display: block;
-  }
+.burgerMenu_opened {
+  backdrop-filter: blur(2px);
+  visibility: visible;
 }
