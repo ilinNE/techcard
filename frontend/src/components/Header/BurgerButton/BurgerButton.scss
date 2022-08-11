@@ -2,12 +2,12 @@
 
 .burgerButton {
   display: none;
-  position: relative;
   justify-self: end;
   grid-column: 3/4;
   width: 20px;
   height: 13px;
   transition: all 0.5s ease-in-out;
+  z-index: 2;
   @include link-opacity;
 
   &__line {
@@ -41,6 +41,8 @@
 // ANIMATION
 .burgerButton {
   &_open {
+    position: fixed;
+
     .burgerButton__line {
       transform: translateX(-23px);
       background: transparent;
