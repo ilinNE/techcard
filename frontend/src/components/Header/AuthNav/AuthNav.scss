@@ -9,7 +9,7 @@
   .authNav__link {
     @include link-opacity;
     @include font(14px, 500, 16px);
-    color: $brown;
+    color: $cacao;
     text-decoration: none;
 
     .authNav__button {
@@ -19,8 +19,8 @@
       margin: 0;
       padding: 0;
       @include font(14px, 500, 16px);
-      color: $brown;
-      background-color: $green;
+      color: $cacao;
+      background-color: $avocado;
       border-radius: 5px;
       border: none;
       cursor: pointer;
@@ -28,7 +28,7 @@
     }
 
     &:hover {
-      color: $coral;
+      color: $litchi;
     }
   }
 }

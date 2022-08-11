@@ -7,7 +7,7 @@
   @include font(12px, 500, 1);
 
   &__link {
-    color: $green;
+    color: $avocado;
     @include link-opacity;
   }
 }
