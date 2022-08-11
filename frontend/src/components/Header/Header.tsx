@@ -38,7 +38,7 @@ const Header: FC<HeaderProps> = ({ loggedIn }) => {
                 <div className="header__hide">
                   <Nav />
                 </div>
-                <div className="header__hide">
+                <div className="header__hide header__avatar">
                   <Avatar />
                 </div>
               </>

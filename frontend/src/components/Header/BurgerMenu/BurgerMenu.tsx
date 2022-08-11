@@ -10,7 +10,7 @@ interface BurgerMenuProps {
 
 const BurgerMenu: FC<BurgerMenuProps> = ({ handleCloseBurgerMenu, isBurgerOpen }) => {
   return (
-    <section className={`burgerMenu ${isBurgerOpen && "burgerMenu_opened"}`}>
+    <section className={`burgerMenu ${isBurgerOpen && "burgerMenu__backdrop"}`}>
       <div className={`burgerMenu__menu  ${isBurgerOpen && "burgerMenu__menu_opened"}`}>
         <div className="burgerMenu__container">
           <Avatar handleCloseBurgerMenu={handleCloseBurgerMenu} isBurgerOpen={isBurgerOpen} />
