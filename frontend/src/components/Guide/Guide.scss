@@ -3,7 +3,7 @@
 .guide-section {
   &__title {
     @include font(20px, 600, 1.2);
-    color: $brown;
+    color: $cacao;
     text-align: center;
     margin: 40px 0 20px;
   }
@@ -12,7 +12,7 @@
     max-width: 900px;
     margin: 0 auto 16px;
     box-shadow: none;
-    outline: 1px solid $blue;
+    outline: 1px solid $blueberry;
     border-radius: 10px;
     box-sizing: border-box;
 
@@ -24,8 +24,8 @@
 
     &__summary {
       @include font(16px, 500, 1);
-      color: $brown;
-      outline: 3px solid $blue;
+      color: $cacao;
+      outline: 3px solid $blueberry;
       border-radius: 10px;
       box-sizing: border-box;
       padding: 0 30px;
@@ -34,7 +34,7 @@
 
     &__details {
       @include font(14px, 300, 1.2);
-      color: $brown;
+      color: $cacao;
       margin: 0;
       padding: 0 19px 0;
       box-sizing: border-box;

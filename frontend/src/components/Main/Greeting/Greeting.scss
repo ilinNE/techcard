@@ -5,7 +5,7 @@
 
   &__title {
     @include font(40px, 600, 1.05);
-    color: $brown;
+    color: $cacao;
     width: 301px;
     margin: 76px 0 5px;
     padding: 0;
@@ -13,7 +13,7 @@
 
   &__subtitle {
     @include font(10px, 300, 1.05);
-    color: $brown;
+    color: $cacao;
     width: 210px;
     margin: 0;
     padding: 0;
@@ -22,12 +22,12 @@
   &__button {
     @include font(14px, 500, 1.05);
     @include interactive();
-    color: $brown;
+    color: $cacao;
     width: 160px;
     height: 30px;
     margin: 40px 0 50px;
     padding: 0;
-    background-color: $green;
+    background-color: $avocado;
     border-radius: 5px;
     border: none;
     cursor: pointer;
