@@ -1,4 +1,4 @@
-@import "../../Modules/mixins";
+@import "../../../Modules/mixins";
 
 .feedback {
   @include flex(flex-start, flex-start, column);

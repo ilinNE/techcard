@@ -1,5 +1,5 @@
 import { FC, SetStateAction } from "react";
-import FeedbackForm from "../FeedbackForm/FeedbackForm";
+import FeedbackForm from "./FeedbackForm/FeedbackForm";
 import { about } from "../../../utils/textConstants";
 import "./About.scss";
 import Popup from "../../Popup/Popup";

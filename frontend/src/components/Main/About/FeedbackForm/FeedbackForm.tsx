@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Validation } from "../../../utils/Validation";
+import { Validation } from "../../../../utils/Validation";
 import "./FeedbackForm.scss";
 
 interface FormProps {
