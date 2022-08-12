@@ -93,7 +93,11 @@
 
   &__wave {
     @include background("../../images/Vector.svg", 100%);
-    padding-top: 19%;
+    padding-top: 18%;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: -1;
   }
 }
 
