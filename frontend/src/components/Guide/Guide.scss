@@ -1,7 +1,6 @@
 @import "../../components/Modules/variables", "../../components/Modules/mixins";
 
 .guide-section {
-  min-height: 100%;
   &__title {
     @include font(20px, 600, 1.2);
     color: $cacao;
