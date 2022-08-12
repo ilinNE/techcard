@@ -96,3 +96,62 @@
     padding-top: 19%;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .guide-section {
+    &__title {
+      @include font(24px, 500, 1.2);
+      margin: 10px 0;
+    }
+
+    .accordion {
+      margin: 0 10px 16px;
+
+      &__summary {
+        @include font(10px, 500, 1.2);
+        padding: 0 10px;
+      }
+
+      &__details {
+        @include font(10px, 300, 1.2);
+        padding: 0 10px 0;
+        text-align: justify;
+      }
+
+      &__paragraph {
+        margin: 0 0 8px;
+
+        &:first-child {
+          margin: 12px 0 8px;
+        }
+
+        &:last-child {
+          margin: 0 0 15px;
+        }
+
+        &:only-child {
+          margin: 12px 0 15px;
+        }
+      }
+
+      &__addIcon,
+      &__doneIcon {
+        width: 10px;
+        height: 10px;
+        margin: 0 8px;
+      }
+
+      &__saveIcon {
+        width: 50px;
+        height: 12px;
+        margin: 0 8px;
+      }
+
+      &__editIcon,
+      &__excelIcon {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+}
