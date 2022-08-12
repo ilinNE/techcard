@@ -1,6 +1,7 @@
 @import "../../components/Modules/variables", "../../components/Modules/mixins";
 
 .guide-section {
+  min-height: 100%;
   &__title {
     @include font(20px, 600, 1.2);
     color: $cacao;
@@ -105,7 +106,7 @@
     }
 
     .accordion {
-      max-width: 90%;
+      margin: 0 10px 16px;
 
       &__summary {
         @include font(10px, 500, 1.2);
