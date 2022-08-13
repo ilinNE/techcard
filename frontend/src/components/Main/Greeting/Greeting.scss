@@ -37,7 +37,6 @@
   &__image {
     width: 608px;
     height: 335px;
-    transform: translate(0px, 7px);
   }
 }
 
@@ -59,23 +58,6 @@
     &__image {
       width: 80%;
       height: 44%;
-      transform: translate(0px, 6px);
-    }
-  }
-}
-
-@media screen and (max-width: 519px) {
-  .greeting {
-    &__image {
-      transform: translate(0px, 5px);
-    }
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .greeting {
-    &__image {
-      transform: translate(0px, 4px);
     }
   }
 }
