@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import "./Greeting.scss";
-import kitchen from "../../../images/kitchen.png";
+import kitchen from "../../../images/first-page-image.png";
 
 interface GreetingProps {
   greetingTitle: string;
