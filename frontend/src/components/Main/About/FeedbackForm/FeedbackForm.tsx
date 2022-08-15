@@ -27,7 +27,7 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
               minLength={1}
               maxLength={150}
               placeholder="Имя"
-              className="feedback__input"
+              className={`feedback__input ${errors.title && "feedback__input_error"}`}
               required
               onChange={handleChange}
             />
@@ -42,7 +42,7 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
               minLength={1}
               maxLength={30}
               placeholder="Email"
-              className="feedback__input"
+              className={`feedback__input ${errors.return_address && "feedback__input_error"}`}
               required
               onChange={handleChange}
             />
@@ -66,7 +66,9 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
           minLength={1}
           maxLength={150}
           placeholder="Текст..."
-          className="feedback__input feedback__input_text"
+          className={`feedback__input feedback__input_text ${
+            errors.message && "feedback__input_text-error"
+          }`}
           required
           onChange={handleChange}
         ></textarea>

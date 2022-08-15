@@ -1,4 +1,4 @@
-@import "../../../Modules/mixins";
+@import "../../../Modules/mixins", "../../../Modules/variables";
 
 .feedback {
   @include flex(flex-start, flex-start, column);
@@ -33,7 +33,7 @@
   }
 
   &__input {
-    width: calc(100% - 30px);
+    width: calc(100% - 32px);
     padding: 5px 15px;
     border: none;
     border-radius: 10px;
@@ -42,10 +42,21 @@
       outline: none;
     }
 
+    &_error {
+      box-shadow: 0 0 8px $litchi;
+      border: 1px $litchi solid;
+    }
+
     &_text {
       height: calc(100% - 30px);
       padding: 15px;
       resize: none;
+    }
+
+    &_text-error {
+      box-shadow: 0 0 8px $litchi;
+      border: 1px $litchi solid;
+      border-radius: 0 0 8px 8px;
     }
 
     &-error {

@@ -16,13 +16,17 @@
       border-bottom: 1px $cacao solid;
     }
 
+    .form__input_error {
+      box-shadow: 0 6px 4px -4px $litchi;
+    }
+
     .form__input-error {
       position: absolute;
       top: 30px;
       left: 50%;
       width: 500px;
       @include font(8px, 500, 1);
-      color: $litchi;
+      color: $cacao;
       transform: translate(-50%, -50%);
     }
   }
