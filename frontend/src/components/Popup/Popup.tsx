@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import "./Popup.scss";
 
 interface PopupProps {
@@ -7,6 +7,14 @@ interface PopupProps {
 }
 
 const Popup: FC<PopupProps> = ({ text, closePopup }) => {
+  useEffect(() => {
+    const closeByEscape = (evt: any) => {
+      closePopup(evt);
+    };
+    document.addEventListener("keydown", closeByEscape);
+    return () => document.removeEventListener("keydown", closeByEscape);
+  }, []);
+
   return (
     <section onClick={closePopup} className="popup">
       <div className="popup__container">
