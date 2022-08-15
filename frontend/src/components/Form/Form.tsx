@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useLocation } from "react-router-dom";
 import { Validation } from "../../utils/Validation";
 import "./Form.scss";
+import { regExp } from "../../utils/constants";
 
 interface FormProps {
   buttonText: string;
@@ -44,6 +45,7 @@ const Form: FC<FormProps> = ({ buttonText, handleSubmitForm }) => {
             maxLength={30}
             placeholder="Email"
             className={`form__input ${errors.email && "form__input_error"}`}
+            pattern={regExp}
             required
             onChange={handleChange}
           />
