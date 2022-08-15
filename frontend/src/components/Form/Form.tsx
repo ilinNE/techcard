@@ -27,7 +27,7 @@ const Form: FC<FormProps> = ({ buttonText, handleSubmitForm }) => {
           minLength={2}
           maxLength={150}
           placeholder="Логин"
-          className="form__input"
+          className={`form__input ${errors.username && "form__input_error"}`}
           required
           onChange={handleChange}
         />
@@ -43,7 +43,7 @@ const Form: FC<FormProps> = ({ buttonText, handleSubmitForm }) => {
             minLength={2}
             maxLength={30}
             placeholder="Email"
-            className="form__input"
+            className={`form__input ${errors.email && "form__input_error"}`}
             required
             onChange={handleChange}
           />
@@ -59,7 +59,7 @@ const Form: FC<FormProps> = ({ buttonText, handleSubmitForm }) => {
           minLength={2}
           maxLength={30}
           placeholder="Пароль"
-          className="form__input"
+          className={`form__input ${errors.password && "form__input_error"}`}
           required
           onChange={handleChange}
         />
