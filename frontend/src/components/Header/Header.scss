@@ -13,6 +13,10 @@
     width: 100%;
     margin: 0 60px;
     transition: 0.3s;
+
+    .header__avatar {
+      justify-self: end;
+    }
   }
 
   &_main {
