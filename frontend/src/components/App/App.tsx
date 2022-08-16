@@ -15,6 +15,7 @@ import { pathWithHeader } from "../../utils/constants";
 import * as Api from "../../utils/Api";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { errorMessages } from "../../utils/textConstants";
+import { ProtectedRoute } from "../HOC/ProtectedRoute";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
@@ -86,36 +87,77 @@ function App() {
               />
             }
           />
-          <Route path="/dishes" element={<Dishes />} />
-          <Route path="/semis" element={<Semis />} />
-          <Route path="/foodstuff" element={<Foodstuff />} />
           <Route
-            path="/signup"
+            path="/dishes"
             element={
-              <Register
-                handleRegister={registration}
-                errorMesage={errorMesage}
-                setErrorMesage={setErrorMesage}
-              />
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Dishes />
+              </ProtectedRoute>
             }
           />
           <Route
-            path="/signin"
+            path="/semis"
             element={
-              <Login
-                handleAuthorize={authorization}
-                errorMesage={errorMesage}
-                setErrorMesage={setErrorMesage}
-              />
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Semis />
+              </ProtectedRoute>
             }
           />
+          <Route
+            path="/foodstuff"
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Foodstuff />
+              </ProtectedRoute>
+            }
+          />
+          {loggedIn ? (
+            <>
+              <Route path="/signup" element={<Navigate replace to="/dishes" />} />
+              <Route path="/signin" element={<Navigate replace to="/dishes" />} />
+            </>
+          ) : (
+            <>
+              <Route
+                path="/signup"
+                element={
+                  <Register
+                    handleRegister={registration}
+                    errorMesage={errorMesage}
+                    setErrorMesage={setErrorMesage}
+                  />
+                }
+              />
+              <Route
+                path="/signin"
+                element={
+                  <Login
+                    handleAuthorize={authorization}
+                    errorMesage={errorMesage}
+                    setErrorMesage={setErrorMesage}
+                  />
+                }
+              />
+            </>
+          )}
+
           <Route
             path="/profile"
-            element={<Profile handleloggedOutClick={handleloggedOutClick} />}
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Profile handleloggedOutClick={handleloggedOutClick} />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/guide" element={<Guide />} />
-          <Route path="/error" element={<ErrorPage />} />
-          <Route path="*" element={<Navigate to="/error" replace />} />
+          <Route
+            path="/guide"
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Guide />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </section>
     </CurrentUserContext.Provider>
