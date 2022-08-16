@@ -35,7 +35,7 @@
   transition: 1s cubic-bezier(0.36, 0, 0.36, 1) 0s;
 }
 
-@mixin background($url, $background-size) {
+@mixin background($url, $background-size: cover) {
   background-image: url($url);
   background-size: $background-size;
   background-repeat: no-repeat;

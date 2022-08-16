@@ -1,11 +1,12 @@
 import { FC } from "react";
 import "./Reference.scss";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 
 export enum LinkVariant {
   toRegister = "/signup",
   toLogin = "/signin",
-  toFeedback = "/",
+  toFeedback = "/#about",
 }
 
 interface ReferenceProps {
