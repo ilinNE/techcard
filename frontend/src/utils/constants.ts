@@ -14,4 +14,4 @@ export const pathWithHeader: string[] = [
 export const whiteHeader: string[] = ["/", "/signup", "/signin"];
 export const logoHeader: string[] = ["/signup", "/signin"];
 
-export const regExp = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA_Z]{2,63}$";
+export const regExp = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA_Z]{2,63}$";
