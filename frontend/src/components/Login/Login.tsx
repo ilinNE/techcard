@@ -14,7 +14,11 @@ interface LoginProps {
 
 const Login: FC<LoginProps> = ({ handleAuthorize, errorMesage, setErrorMesage }) => {
   const closePopup = (evt: any) => {
-    if (evt.currentTarget === evt.target || evt.target.classList.contains("popup__close-button")) {
+    if (
+      evt.currentTarget === evt.target ||
+      evt.target.classList.contains("popup__close-button") ||
+      evt.key === "Escape"
+    ) {
       setErrorMesage("");
     }
   };
