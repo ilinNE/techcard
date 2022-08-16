@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { FC } from "react";
+import { regExp } from "../../../../utils/constants";
 import { Validation } from "../../../../utils/Validation";
 import "./FeedbackForm.scss";
 
@@ -43,6 +44,7 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
               maxLength={30}
               placeholder="Email"
               className={`feedback__input ${errors.return_address && "feedback__input_error"}`}
+              pattern={regExp}
               required
               onChange={handleChange}
             />
