@@ -32,7 +32,7 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
               required
               onChange={handleChange}
             />
-            <span className="feedback__input-error">{errors.title}</span>
+            <span className="feedback__input-error">{errors.title && "Это обязательное поле."}</span>
           </div>
 
           <div className="feedback__input-container">
@@ -48,7 +48,7 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
               required
               onChange={handleChange}
             />
-            <span className="feedback__input-error">{errors.return_address}</span>
+            <span className="feedback__input-error">{errors.return_address && "Недопустимый адрес."}</span>
           </div>
         </div>
 
@@ -68,13 +68,12 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
           minLength={1}
           maxLength={150}
           placeholder="Текст..."
-          className={`feedback__input feedback__input_text ${
-            errors.message && "feedback__input_text-error"
-          }`}
+          className={`feedback__input feedback__input_text ${errors.message && "feedback__input_text-error"
+            }`}
           required
           onChange={handleChange}
         ></textarea>
-        <span className="feedback__input-error">{errors.message}</span>
+        <span className="feedback__input-error">{errors.message && "Это обязательное поле."}</span>
       </div>
     </form>
   );
