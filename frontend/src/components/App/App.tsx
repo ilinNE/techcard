@@ -59,7 +59,7 @@ function App() {
       .catch(() => setErrorMesage(errorMessages.BadEmailOrPassword));
   };
 
-  const feedback = (values: any) => {
+  const feedback = (values: Api.FeedbackParams) => {
     Api.feedback(values)
       .then(() => setErrorMesage(errorMessages.SuccessFeedback))
       .catch(() => setErrorMesage(errorMessages.BadFeedback));

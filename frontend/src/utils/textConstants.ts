@@ -52,7 +52,7 @@ export const errorMessages = {
   BadEmailOrPassword: "Неправильные почта или пароль",
   BadFeedback: "Ой, что-то пошло не так",
   SuccessFeedback: "Спасибо за обратную связь",
-  InvalidEmail: "Недопустимый адрес",
+  InvalidEmail: "Недопустимый формат email адреса",
   RequeredField: "Это обязательное поле",
   FeedbackMaxLength: "Не более 30 знаков",
   FeedbackMinLength: "Не менее 1 знака",

@@ -1,14 +1,13 @@
 import { FC } from "react";
 import { useForm } from "react-hook-form";
+import { FeedbackParams } from "../../../../utils/Api";
 import { regExp } from "../../../../utils/constants";
-// import { Validation } from "../../../../utils/Validation";
 import { errorMessages } from "../../../../utils/textConstants";
-
 import "./FeedbackForm.scss";
 
 interface FormProps {
   buttonText: string;
-  handleFeedback: (values: any) => void;
+  handleFeedback: (values: FeedbackParams) => void;
 }
 
 type FormInputs = {
@@ -18,12 +17,6 @@ type FormInputs = {
 };
 
 const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
-  // const { values, handleChange, errors, isValid } = Validation();
-  // function handleSubmit(evt: any) {
-  //   evt.preventDefault();
-  //   handleFeedback(values);
-  // }
-
   const {
     register,
     formState: {
@@ -34,16 +27,12 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
 
 
   const onSubmit = (data: FormInputs) => {
-    const feedback = JSON.stringify({
+    handleFeedback({
       title: data.feedbackTitle,
       return_address: data.feedbackEmail,
       message: data.feedbackMessage
-    });
-    handleFeedback(feedback)
-    console.log(feedback)
+    })
   }
-
-  console.log(errors)
 
   return (
     <form className="feedback" onSubmit={handleSubmit(onSubmit)}>
@@ -65,7 +54,7 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
               }
               )}
               autoComplete="off"
-              placeholder="Имя"
+              placeholder="Тема сообщения"
               className={`feedback__input ${errors?.feedbackTitle && "feedback__input_error"}`}
             />
             {errors?.feedbackTitle && <span className="feedback__input-error">{errors?.feedbackTitle?.message || "Error!"}</span>}
@@ -84,7 +73,10 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
                   value: 1,
                   message: `${errorMessages.FeedbackMinLength}`
                 },
-                pattern: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA_Z]{2,63}$/, //${regExp}
+                pattern: {
+                  value: new RegExp(regExp),
+                  message: `${errorMessages.InvalidEmail}`
+                },
               }
               )}
               className={`feedback__input ${errors?.feedbackEmail && "feedback__input_error"}`}
