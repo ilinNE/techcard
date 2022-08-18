@@ -2,7 +2,7 @@
 
 .feedback {
   @include flex(flex-start, flex-start, column);
-  @include font();
+  @include font(14px, 300, 16px, initial);
   max-width: 600px;
   height: 300px;
   margin: 15px auto;

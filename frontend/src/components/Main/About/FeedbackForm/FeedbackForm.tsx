@@ -1,61 +1,95 @@
 import { FC } from "react";
+import { useForm } from "react-hook-form";
+import { FeedbackParams } from "../../../../utils/Api";
 import { regExp } from "../../../../utils/constants";
-import { Validation } from "../../../../utils/Validation";
+import { errorMessages } from "../../../../utils/textConstants";
 import "./FeedbackForm.scss";
 
 interface FormProps {
   buttonText: string;
-  handleFeedback: (values: any) => void;
+  handleFeedback: (values: FeedbackParams) => void;
 }
 
-const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
-  const { values, handleChange, errors, isValid } = Validation();
+type FormInputs = {
+  feedbackTitle: string;
+  feedbackEmail: string;
+  feedbackMessage: string;
+};
 
-  function handleSubmit(evt: any) {
-    evt.preventDefault();
-    handleFeedback(values);
+const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
+  const {
+    register,
+    formState: {
+      errors,
+    },
+    handleSubmit,
+  } = useForm<FormInputs>();
+
+
+  const onSubmit = (data: FormInputs) => {
+    handleFeedback({
+      title: data.feedbackTitle,
+      return_address: data.feedbackEmail,
+      message: data.feedbackMessage
+    })
   }
 
   return (
-    <form className="feedback" onSubmit={handleSubmit}>
+    <form className="feedback" onSubmit={handleSubmit(onSubmit)}>
       <div className="feedback__header-container">
         <div className="feedback__user-info">
           <div className="feedback__input-container">
             <input
               type="text"
-              name="title"
+              {...register("feedbackTitle", {
+                required: `${errorMessages.RequeredField}`,
+                maxLength: {
+                  value: 150,
+                  message: `${errorMessages.FeedbackMaxLength}`
+                },
+                minLength: {
+                  value: 1,
+                  message: `${errorMessages.FeedbackMinLength}`
+                },
+              }
+              )}
               autoComplete="off"
-              minLength={1}
-              maxLength={150}
-              placeholder="Имя"
-              className={`feedback__input ${errors.title && "feedback__input_error"}`}
-              required
-              onChange={handleChange}
+              placeholder="Тема сообщения"
+              className={`feedback__input ${errors?.feedbackTitle && "feedback__input_error"}`}
             />
-            <span className="feedback__input-error">{errors.title}</span>
+            {errors?.feedbackTitle && <span className="feedback__input-error">{errors?.feedbackTitle?.message || "Error!"}</span>}
           </div>
 
           <div className="feedback__input-container">
             <input
               type="email"
-              name="return_address"
+              {...register("feedbackEmail", {
+                required: `${errorMessages.RequeredField}`,
+                maxLength: {
+                  value: 30,
+                  message: `${errorMessages.FeedbackMaxLength}`
+                },
+                minLength: {
+                  value: 1,
+                  message: `${errorMessages.FeedbackMinLength}`
+                },
+                pattern: {
+                  value: new RegExp(regExp),
+                  message: `${errorMessages.InvalidEmail}`
+                },
+              }
+              )}
+              className={`feedback__input ${errors?.feedbackEmail && "feedback__input_error"}`}
               autoComplete="off"
-              minLength={1}
-              maxLength={30}
               placeholder="Email"
-              className={`feedback__input ${errors.return_address && "feedback__input_error"}`}
-              pattern={regExp}
-              required
-              onChange={handleChange}
             />
-            <span className="feedback__input-error">{errors.return_address}</span>
+            {errors?.feedbackEmail && <span className="feedback__input-error">{errors?.feedbackEmail?.message || "Error!"}</span>}
           </div>
         </div>
 
         <button
           type="submit"
-          className={`feedback__submit-button ${isValid && "feedback__submit-button_enabled"}`}
-          disabled={!isValid}
+          className={`feedback__submit-button ${!errors && "feedback__submit-button_enabled"}`}
         >
           {buttonText}
         </button>
@@ -63,18 +97,23 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
 
       <div className="feedback__input-container feedback__input-container_text">
         <textarea
-          name="message"
+          {...register("feedbackMessage", {
+            required: `${errorMessages.RequeredField}`,
+            maxLength: {
+              value: 150,
+              message: `${errorMessages.FeedbackMaxLength}`
+            },
+            minLength: {
+              value: 1,
+              message: `${errorMessages.FeedbackMinLength}`
+            },
+          }
+          )}
           autoComplete="off"
-          minLength={1}
-          maxLength={150}
           placeholder="Текст..."
-          className={`feedback__input feedback__input_text ${
-            errors.message && "feedback__input_text-error"
-          }`}
-          required
-          onChange={handleChange}
+          className={`feedback__input feedback__input_text ${errors?.feedbackMessage && "feedback__input_text-error"}`}
         ></textarea>
-        <span className="feedback__input-error">{errors.message}</span>
+        {errors?.feedbackMessage && <span className="feedback__input-error">{errors?.feedbackMessage?.message || "Error!"}</span>}
       </div>
     </form>
   );

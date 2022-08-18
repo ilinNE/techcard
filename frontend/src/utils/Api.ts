@@ -39,7 +39,13 @@ export const authorize = async (data: string) => {
     });
 };
 
-export const feedback = async (data: string) => {
+export type FeedbackParams = {
+  title: string;
+  return_address: string;
+  message: string;
+};
+
+export const feedback = async (data: FeedbackParams) => {
   return await axios
     .post("/api/send_mail/", data, {
       headers: {
