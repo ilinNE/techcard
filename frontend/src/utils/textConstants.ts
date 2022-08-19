@@ -54,8 +54,10 @@ export const errorMessages = {
   SuccessFeedback: "Спасибо за обратную связь",
   InvalidEmail: "Недопустимый формат email адреса",
   RequeredField: "Это обязательное поле",
-  FeedbackMaxLength: "Не более 30 знаков",
-  FeedbackMinLength: "Не менее 1 знака",
+  FeedbackTitleMaxLength: "Не более 150 символов",
+  FeedbackTitleMinLength: "Не менее 2 символов",
+  FeedbackMessageMaxLength: "Не более 5000 символов",
+  FeedbackMessageMinLength: "Не менее 20 символов",
 };
 
 export const questions = {
