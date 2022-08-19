@@ -21,9 +21,11 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
     register,
     formState: {
       errors,
+      isValid
     },
     handleSubmit,
-  } = useForm<FormInputs>();
+    reset
+  } = useForm<FormInputs>({ mode: "onChange" });
 
 
   const onSubmit = (data: FormInputs) => {
@@ -32,10 +34,11 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
       return_address: data.feedbackEmail,
       message: data.feedbackMessage
     })
+    reset();
   }
 
   return (
-    <form className="feedback" onSubmit={handleSubmit(onSubmit)}>
+    <form className="feedback" onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className="feedback__header-container">
         <div className="feedback__user-info">
           <div className="feedback__input-container">
@@ -45,11 +48,11 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
                 required: `${errorMessages.RequeredField}`,
                 maxLength: {
                   value: 150,
-                  message: `${errorMessages.FeedbackMaxLength}`
+                  message: `${errorMessages.FeedbackTitleMaxLength}`
                 },
                 minLength: {
-                  value: 1,
-                  message: `${errorMessages.FeedbackMinLength}`
+                  value: 2,
+                  message: `${errorMessages.FeedbackTitleMinLength}`
                 },
               }
               )}
@@ -65,14 +68,6 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
               type="email"
               {...register("feedbackEmail", {
                 required: `${errorMessages.RequeredField}`,
-                maxLength: {
-                  value: 30,
-                  message: `${errorMessages.FeedbackMaxLength}`
-                },
-                minLength: {
-                  value: 1,
-                  message: `${errorMessages.FeedbackMinLength}`
-                },
                 pattern: {
                   value: new RegExp(regExp),
                   message: `${errorMessages.InvalidEmail}`
@@ -83,13 +78,16 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
               autoComplete="off"
               placeholder="Email"
             />
-            {errors?.feedbackEmail && <span className="feedback__input-error">{errors?.feedbackEmail?.message || "Error!"}</span>}
+            {errors?.feedbackEmail && <span className="feedback__input-error">
+              {errors?.feedbackEmail?.message || "Error!"}</span>}
           </div>
         </div>
 
         <button
           type="submit"
-          className={`feedback__submit-button ${!errors && "feedback__submit-button_enabled"}`}
+          className={`feedback__submit-button ${(!(errors?.feedbackTitle || errors?.feedbackEmail || errors?.feedbackMessage) && isValid)
+            && "feedback__submit-button_enabled"}`}
+          disabled={!isValid}
         >
           {buttonText}
         </button>
@@ -100,12 +98,12 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
           {...register("feedbackMessage", {
             required: `${errorMessages.RequeredField}`,
             maxLength: {
-              value: 150,
-              message: `${errorMessages.FeedbackMaxLength}`
+              value: 5000,
+              message: `${errorMessages.FeedbackMessageMaxLength}`
             },
             minLength: {
-              value: 1,
-              message: `${errorMessages.FeedbackMinLength}`
+              value: 20,
+              message: `${errorMessages.FeedbackMessageMinLength}`
             },
           }
           )}
