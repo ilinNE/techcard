@@ -106,7 +106,7 @@ const Form: FC<FormProps> = ({ buttonText, handleSubmitForm }) => {
       <button
         type="submit"
         className={`form__submit-button ${
-          !(errors?.login || errors?.email || errors?.password) &&
+          !(errors.login || errors.email || errors.password) &&
           isValid &&
           "form__submit-button_enabled"
         }`}
