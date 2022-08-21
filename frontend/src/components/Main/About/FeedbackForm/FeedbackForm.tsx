@@ -19,23 +19,19 @@ type FormInputs = {
 const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
   const {
     register,
-    formState: {
-      errors,
-      isValid
-    },
+    formState: { errors, isValid },
     handleSubmit,
-    reset
+    reset,
   } = useForm<FormInputs>({ mode: "onChange" });
-
 
   const onSubmit = (data: FormInputs) => {
     handleFeedback({
       title: data.feedbackTitle,
       return_address: data.feedbackEmail,
-      message: data.feedbackMessage
-    })
+      message: data.feedbackMessage,
+    });
     reset();
-  }
+  };
 
   return (
     <form className="feedback" onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -48,19 +44,22 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
                 required: `${errorMessages.RequeredField}`,
                 maxLength: {
                   value: 150,
-                  message: `${errorMessages.FeedbackTitleMaxLength}`
+                  message: `${errorMessages.FeedbackTitleMaxLength}`,
                 },
                 minLength: {
                   value: 2,
-                  message: `${errorMessages.FeedbackTitleMinLength}`
+                  message: `${errorMessages.FeedbackTitleMinLength}`,
                 },
-              }
-              )}
+              })}
               autoComplete="off"
               placeholder="Тема сообщения"
               className={`feedback__input ${errors?.feedbackTitle && "feedback__input_error"}`}
             />
-            {errors?.feedbackTitle && <span className="feedback__input-error">{errors?.feedbackTitle?.message || "Error!"}</span>}
+            {errors?.feedbackTitle && (
+              <span className="feedback__input-error">
+                {errors?.feedbackTitle?.message || "Error!"}
+              </span>
+            )}
           </div>
 
           <div className="feedback__input-container">
@@ -70,23 +69,28 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
                 required: `${errorMessages.RequeredField}`,
                 pattern: {
                   value: new RegExp(regExp),
-                  message: `${errorMessages.InvalidEmail}`
+                  message: `${errorMessages.InvalidEmail}`,
                 },
-              }
-              )}
+              })}
               className={`feedback__input ${errors?.feedbackEmail && "feedback__input_error"}`}
               autoComplete="off"
               placeholder="Email"
             />
-            {errors?.feedbackEmail && <span className="feedback__input-error">
-              {errors?.feedbackEmail?.message || "Error!"}</span>}
+            {errors?.feedbackEmail && (
+              <span className="feedback__input-error">
+                {errors?.feedbackEmail?.message || "Error!"}
+              </span>
+            )}
           </div>
         </div>
 
         <button
           type="submit"
-          className={`feedback__submit-button ${(!(errors?.feedbackTitle || errors?.feedbackEmail || errors?.feedbackMessage) && isValid)
-            && "feedback__submit-button_enabled"}`}
+          className={`feedback__submit-button ${
+            !(errors?.feedbackTitle || errors?.feedbackEmail || errors?.feedbackMessage) &&
+            isValid &&
+            "feedback__submit-button_enabled"
+          }`}
           disabled={!isValid}
         >
           {buttonText}
@@ -99,19 +103,24 @@ const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
             required: `${errorMessages.RequeredField}`,
             maxLength: {
               value: 5000,
-              message: `${errorMessages.FeedbackMessageMaxLength}`
+              message: `${errorMessages.FeedbackMessageMaxLength}`,
             },
             minLength: {
               value: 20,
-              message: `${errorMessages.FeedbackMessageMinLength}`
+              message: `${errorMessages.FeedbackMessageMinLength}`,
             },
-          }
-          )}
+          })}
           autoComplete="off"
           placeholder="Текст..."
-          className={`feedback__input feedback__input_text ${errors?.feedbackMessage && "feedback__input_text-error"}`}
+          className={`feedback__input feedback__input_text ${
+            errors?.feedbackMessage && "feedback__input_text-error"
+          }`}
         ></textarea>
-        {errors?.feedbackMessage && <span className="feedback__input-error">{errors?.feedbackMessage?.message || "Error!"}</span>}
+        {errors?.feedbackMessage && (
+          <span className="feedback__input-error">
+            {errors?.feedbackMessage?.message || "Error!"}
+          </span>
+        )}
       </div>
     </form>
   );
