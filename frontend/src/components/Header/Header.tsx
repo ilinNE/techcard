@@ -9,12 +9,9 @@ import Logo from "./Logo/Logo";
 import AuthNav from "./AuthNav/AuthNav";
 import MainNav from "./MainNav/MainNav";
 import BurgerButton from "./BurgerButton/BurgerButton";
+import { IHeaderProps } from "./IHeader";
 
-interface HeaderProps {
-  loggedIn: boolean;
-}
-
-const Header: FC<HeaderProps> = ({ loggedIn }) => {
+const Header: FC<IHeaderProps> = ({ loggedIn }) => {
   const [isBurgerOpen, setIsBurgerOpen] = useState<boolean>(false);
   const { pathname } = useLocation();
 

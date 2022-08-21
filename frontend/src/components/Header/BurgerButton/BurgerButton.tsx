@@ -1,13 +1,8 @@
 import { FC } from "react";
 import "./BurgerButton.scss";
+import { IBurgerButtonProps } from "./IBurgerButton";
 
-interface BurgerButtonProps {
-  handleOpenBurgerMenu: () => void;
-  handleCloseBurgerMenu: () => void;
-  isBurgerOpen: boolean;
-}
-
-const BurgerButton: FC<BurgerButtonProps> = ({
+const BurgerButton: FC<IBurgerButtonProps> = ({
   handleOpenBurgerMenu,
   handleCloseBurgerMenu,
   isBurgerOpen,

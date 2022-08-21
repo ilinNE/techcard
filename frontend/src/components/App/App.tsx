@@ -12,7 +12,8 @@ import Guide from "../Guide/Guide";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Header from "../Header/Header";
 import { pathWithHeader } from "../../utils/constants";
-import * as Api from "../../utils/Api";
+import * as Api from "../../utils/Api/Api";
+import * as ApiTypes from "../../utils/Api/ApiTypes";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { errorMessages } from "../../utils/textConstants";
 import { ProtectedRoute } from "../HOC/ProtectedRoute";
@@ -59,7 +60,7 @@ function App() {
       .catch(() => setErrorMesage(errorMessages.BadEmailOrPassword));
   };
 
-  const feedback = (values: Api.FeedbackParams) => {
+  const feedback = (values: ApiTypes.FeedbackParams) => {
     Api.feedback(values)
       .then(() => setErrorMesage(errorMessages.SuccessFeedback))
       .catch(() => setErrorMesage(errorMessages.BadFeedback));

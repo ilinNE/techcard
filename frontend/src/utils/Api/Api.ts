@@ -1,4 +1,5 @@
 import axios from "axios";
+import { FeedbackParams } from "./ApiTypes";
 
 export const getUserInfo = async () => {
   return await axios
@@ -37,18 +38,6 @@ export const authorize = async (data: string) => {
     .then((res) => {
       return res.data;
     });
-};
-
-export type FeedbackParams = {
-  title: string;
-  return_address: string;
-  message: string;
-};
-
-export type FormParams = {
-  username: string;
-  email: string;
-  password: string;
 };
 
 export const feedback = async (data: FeedbackParams) => {

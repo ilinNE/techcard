@@ -1,22 +1,11 @@
 import { FC } from "react";
 import { useForm } from "react-hook-form";
-import { FeedbackParams } from "../../../../utils/Api";
 import { regExp } from "../../../../utils/constants";
 import { errorMessages } from "../../../../utils/textConstants";
 import "./FeedbackForm.scss";
+import { FormInputs, IFormProps } from "./IFeedbackForm";
 
-interface FormProps {
-  buttonText: string;
-  handleFeedback: (values: FeedbackParams) => void;
-}
-
-type FormInputs = {
-  feedbackTitle: string;
-  feedbackEmail: string;
-  feedbackMessage: string;
-};
-
-const FeedbackForm: FC<FormProps> = ({ buttonText, handleFeedback }) => {
+const FeedbackForm: FC<IFormProps> = ({ buttonText, handleFeedback }) => {
   const {
     register,
     formState: { errors, isValid },
