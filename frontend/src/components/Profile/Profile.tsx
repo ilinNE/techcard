@@ -1,12 +1,9 @@
 import { FC, useContext } from "react";
 import "./Profile.scss";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
+import { IProfileProps } from "./IProfile";
 
-interface ProfileProps {
-  handleloggedOutClick: () => void;
-}
-
-const Profile: FC<ProfileProps> = ({ handleloggedOutClick }) => {
+const Profile: FC<IProfileProps> = ({ handleloggedOutClick }) => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   return (

@@ -1,23 +1,12 @@
 import { FC } from "react";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { FormParams } from "../../utils/Api";
 import { regExp } from "../../utils/constants";
 import { errorMessages } from "../../utils/textConstants";
 import "./Form.scss";
+import { FormInputs, IFormProps } from "./IForm";
 
-interface FormProps {
-  buttonText: string;
-  handleSubmitForm: (values: FormParams) => void;
-}
-
-type FormInputs = {
-  login: string;
-  email: string;
-  password: string;
-};
-
-const Form: FC<FormProps> = ({ buttonText, handleSubmitForm }) => {
+const Form: FC<IFormProps> = ({ buttonText, handleSubmitForm }) => {
   const {
     register,
     formState: { errors, isValid },

@@ -1,12 +1,8 @@
 import { FC, useEffect } from "react";
+import { IPopupProps } from "./IPopup";
 import "./Popup.scss";
 
-interface PopupProps {
-  text: string;
-  closePopup: (evt: any) => void;
-}
-
-const Popup: FC<PopupProps> = ({ text, closePopup }) => {
+const Popup: FC<IPopupProps> = ({ text, closePopup }) => {
   useEffect(() => {
     const closeByEscape = (evt: any) => {
       closePopup(evt);

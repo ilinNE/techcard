@@ -2,14 +2,9 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import "./Greeting.scss";
 import kitchen from "../../../images/first-page-image.png";
+import { IGreetingProps } from "./IGreeting";
 
-interface GreetingProps {
-  greetingTitle: string;
-  greetingSubtitle: string;
-  buttonTitle: string;
-}
-
-const Greeting: FC<GreetingProps> = ({ greetingTitle, greetingSubtitle, buttonTitle }) => {
+const Greeting: FC<IGreetingProps> = ({ greetingTitle, greetingSubtitle, buttonTitle }) => {
   return (
     <section className="greeting">
       <h1 className="greeting__title">{greetingTitle}</h1>

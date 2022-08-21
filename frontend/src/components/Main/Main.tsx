@@ -1,16 +1,11 @@
-import { FC, SetStateAction } from "react";
+import { FC } from "react";
 import "./Main.scss";
 import Greeting from "./Greeting/Greeting";
 import About from "./About/About";
 import { greeting, about } from "../../utils/textConstants";
+import { IMainProps } from "./IMain";
 
-interface MainProps {
-  handleFeedback: (values: any) => void;
-  errorMesage: string;
-  setErrorMesage: React.Dispatch<SetStateAction<string>>;
-}
-
-const Main: FC<MainProps> = ({ handleFeedback, errorMesage, setErrorMesage }) => {
+const Main: FC<IMainProps> = ({ handleFeedback, errorMesage, setErrorMesage }) => {
   return (
     <section>
       <Greeting

@@ -2,13 +2,9 @@ import { FC } from "react";
 import Avatar from "../../Avatar/Avatar";
 import Nav from "../Nav/Nav";
 import "./BurgerMenu.scss";
+import { IBurgerMenuProps } from "./IBurgerMenu";
 
-interface BurgerMenuProps {
-  handleCloseBurgerMenu: () => void;
-  isBurgerOpen: boolean;
-}
-
-const BurgerMenu: FC<BurgerMenuProps> = ({ handleCloseBurgerMenu, isBurgerOpen }) => {
+const BurgerMenu: FC<IBurgerMenuProps> = ({ handleCloseBurgerMenu, isBurgerOpen }) => {
   return (
     <section className={`burgerMenu ${isBurgerOpen && "burgerMenu__backdrop"}`}>
       <div className={`burgerMenu__menu  ${isBurgerOpen && "burgerMenu__menu_opened"}`}>

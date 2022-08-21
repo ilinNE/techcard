@@ -3,24 +3,15 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import { questions } from "../../utils/textConstants";
 import "./Guide.scss";
 import arrow from "../../images/arrow-big.svg";
-import Reference, { LinkVariant } from "../Reference/Reference";
-
-interface Icon {
-  className: string;
-  src: string;
-  alt: string;
-}
-
-interface Details {
-  text: string[];
-  icons: Icon[];
-}
+import Reference from "../Reference/Reference";
+import { IDetails, IIcon } from "./IGuide";
+import { LinkVariant } from "../Reference/IReference";
 
 const Guide: FC = () => {
-  function getImage(icon: Icon) {
+  function getImage(icon: IIcon) {
     return <img className={`accordion__${icon.className}`} src={icon.src} alt={icon.alt} />;
   }
-  function getDetails(details: Details, index: number) {
+  function getDetails(details: IDetails, index: number) {
     return (
       <p key={index} className="accordion__paragraph">
         {details.text.map((value, index) => {

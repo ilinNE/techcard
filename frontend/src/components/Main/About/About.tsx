@@ -1,19 +1,11 @@
-import { FC, SetStateAction } from "react";
+import { FC } from "react";
 import FeedbackForm from "./FeedbackForm/FeedbackForm";
 import { about } from "../../../utils/textConstants";
 import "./About.scss";
 import Popup from "../../Popup/Popup";
+import { IAboutProps } from "./IAbout";
 
-interface AboutProps {
-  aboutTitle: string;
-  aboutParagraphOne: string;
-  aboutParagraphTwo: string;
-  handleFeedback: (values: any) => void;
-  errorMesage: string;
-  setErrorMesage: React.Dispatch<SetStateAction<string>>;
-}
-
-const About: FC<AboutProps> = ({
+const About: FC<IAboutProps> = ({
   aboutTitle,
   aboutParagraphOne,
   aboutParagraphTwo,
