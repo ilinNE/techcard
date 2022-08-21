@@ -58,6 +58,10 @@ export const errorMessages = {
   FeedbackTitleMinLength: "Не менее 2 символов",
   FeedbackMessageMaxLength: "Не более 5000 символов",
   FeedbackMessageMinLength: "Не менее 20 символов",
+  loginMinLength: "Не менее 6 символов",
+  loginMaxLength: "Не более 30 символов",
+  passwordMinLength: "Не менее 8 символов",
+  passwordMaxLength: "Не более 30 символов",
 };
 
 export const questions = {

@@ -1,76 +1,115 @@
 import { FC } from "react";
 import { useLocation } from "react-router-dom";
-import { Validation } from "../../utils/Validation";
-import "./Form.scss";
+import { useForm } from "react-hook-form";
+import { FormParams } from "../../utils/Api";
 import { regExp } from "../../utils/constants";
+import { errorMessages } from "../../utils/textConstants";
+import "./Form.scss";
 
 interface FormProps {
   buttonText: string;
-  handleSubmitForm: ({}) => void;
+  handleSubmitForm: (values: FormParams) => void;
 }
 
+type FormInputs = {
+  login: string;
+  email: string;
+  password: string;
+};
+
 const Form: FC<FormProps> = ({ buttonText, handleSubmitForm }) => {
-  const { values, handleChange, errors, isValid } = Validation();
+  const {
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+  } = useForm<FormInputs>({ mode: "onChange" });
+
   const { pathname } = useLocation();
 
-  function handleSubmit(evt: any) {
-    evt.preventDefault();
-    handleSubmitForm(values);
+  function onSubmit(data: FormInputs) {
+    handleSubmitForm({
+      username: data.login,
+      email: data.email,
+      password: data.password,
+    });
   }
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
+    <form className="form" onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className="form__input-container">
         <input
           type="text"
-          name="username"
+          {...register("login", {
+            required: `${errorMessages.RequeredField}`,
+            maxLength: {
+              value: 30,
+              message: `${errorMessages.loginMaxLength}`,
+            },
+            minLength: {
+              value: 6,
+              message: `${errorMessages.loginMinLength}`,
+            },
+          })}
           autoComplete="off"
-          minLength={2}
-          maxLength={150}
           placeholder="Логин"
-          className={`form__input ${errors.username && "form__input_error"}`}
-          required
-          onChange={handleChange}
+          className={`form__input ${errors.login && "form__input_error"}`}
         />
-        <span className="form__input-error">{errors.username}</span>
+        {errors.login && (
+          <span className="form__input-error">{errors.login.message || "Error!"}</span>
+        )}
       </div>
 
       {pathname === "/signup" && (
         <div className="form__input-container">
           <input
             type="email"
-            name="email"
+            {...register("email", {
+              required: `${errorMessages.RequeredField}`,
+              pattern: {
+                value: new RegExp(regExp),
+                message: `${errorMessages.InvalidEmail}`,
+              },
+            })}
             autoComplete="off"
-            minLength={2}
-            maxLength={30}
             placeholder="Email"
             className={`form__input ${errors.email && "form__input_error"}`}
-            pattern={regExp}
-            required
-            onChange={handleChange}
           />
-          <span className="form__input-error">{errors.email}</span>
+          {errors.email && (
+            <span className="form__input-error">{errors.email.message || "Error!"}</span>
+          )}
         </div>
       )}
 
       <div className="form__input-container">
         <input
           type="password"
-          name="password"
+          {...register("password", {
+            required: `${errorMessages.RequeredField}`,
+            maxLength: {
+              value: 30,
+              message: `${errorMessages.passwordMaxLength}`,
+            },
+            minLength: {
+              value: 8,
+              message: `${errorMessages.passwordMinLength}`,
+            },
+          })}
           autoComplete="off"
-          minLength={2}
-          maxLength={30}
           placeholder="Пароль"
           className={`form__input ${errors.password && "form__input_error"}`}
-          required
-          onChange={handleChange}
         />
-        <span className="form__input-error">{errors.password}</span>
+        {errors.password && (
+          <span className="form__input-error">{errors.password.message || "Error!"}</span>
+        )}
       </div>
 
       <button
         type="submit"
-        className={`form__submit-button ${isValid && "form__submit-button_enabled"}`}
+        className={`form__submit-button ${
+          !(errors.login || errors.email || errors.password) &&
+          isValid &&
+          "form__submit-button_enabled"
+        }`}
         disabled={!isValid}
       >
         {buttonText}

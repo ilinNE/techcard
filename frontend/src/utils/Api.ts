@@ -45,6 +45,12 @@ export type FeedbackParams = {
   message: string;
 };
 
+export type FormParams = {
+  username: string;
+  email: string;
+  password: string;
+};
+
 export const feedback = async (data: FeedbackParams) => {
   return await axios
     .post("/api/send_mail/", data, {
