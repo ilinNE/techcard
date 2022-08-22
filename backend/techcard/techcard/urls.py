@@ -1,46 +1,21 @@
-from django.urls import re_path
 from django.contrib import admin
 from django.urls import include, path
-from drf_yasg import openapi
-from drf_yasg.views import get_schema_view
-from rest_framework import permissions
-
-from cards.views import index
-
-schema_view = get_schema_view(
-    openapi.Info(
-        title="Techcard API",
-        default_version="v1",
-        description="Документация для приложения проекта Techcards",
-    ),
-    public=True,
-    permission_classes=(permissions.AllowAny,),
-)
+from drf_spectacular.views import (SpectacularAPIView, SpectacularRedocView,
+                                   SpectacularSwaggerView)
 
 urlpatterns = [
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "swagger/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    path(
+        "redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"
+    ),
     path("api/", include("api.urls")),
     path("auth/", include("users.urls")),
-    path("cards/", include("cards.urls")),
     path("admin/", admin.site.urls),
     path("auth/", include("django.contrib.auth.urls")),
     path("about/", include("about.urls")),
-    path("", index, name="index"),
-]
-
-urlpatterns += [
-    re_path(
-        r"^swagger(?P<format>\.json|\.yaml)$",
-        schema_view.without_ui(cache_timeout=0),
-        name="schema-json",
-    ),
-    re_path(
-        r"^swagger/$",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="schema-swagger-ui",
-    ),
-    re_path(
-        r"^redoc/$",
-        schema_view.with_ui("redoc", cache_timeout=0),
-        name="schema-redoc",
-    ),
 ]

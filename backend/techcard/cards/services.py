@@ -1,14 +1,14 @@
 from django.db.models import DecimalField, ExpressionWrapper, F, Sum
 
-from cards.models import Ingridient, TechCard
+from cards.models import Ingredient, TechCard
 
 
 def calculate_semifabricate(semifabricate):
     """Подсчитывает себестоимость полуфабриката на 1 кг веса.
     Также рекурсивно пересчитывает себестоимости всех полуфабрикатов
-    для которых данный полуфабрикат является ингридиентом.
+    для которых данный полуфабрикат является ингредиентом.
     """
-    result = semifabricate.techcard.ingridients.aggregate(
+    result = semifabricate.techcard.ingredients.aggregate(
         price=Sum(F("ammount") * F("product__price"))
         / Sum(
             ExpressionWrapper(
@@ -21,27 +21,27 @@ def calculate_semifabricate(semifabricate):
     )
     semifabricate.price = round(result["price"], 2)
     semifabricate.save()
-    ingridients_with_semifabricate = Ingridient.objects.filter(
+    ingredients_with_semifabricate = Ingredient.objects.filter(
         product=semifabricate, techcard__is_semifabricate=True
     )
-    for ingridient in ingridients_with_semifabricate:
-        calculate_semifabricate(ingridient.techcard.semifabricate)
+    for ingredient in ingredients_with_semifabricate:
+        calculate_semifabricate(ingredient.techcard.semifabricate)
 
 
 def calculate_for_product(product):
     """Пересчитывает все полуфабрикаты для
     которых данный продукт является ингридиентом.
     """
-    ingridients_with_semifabricate = Ingridient.objects.filter(
+    ingredients_with_semifabricate = Ingredient.objects.filter(
         product=product, techcard__is_semifabricate=True
     )
-    for ingridient in ingridients_with_semifabricate:
-        calculate_semifabricate(ingridient.techcard.semifabricate)
+    for ingredient in ingredients_with_semifabricate:
+        calculate_semifabricate(ingredient.techcard.semifabricate)
 
 
 def techcard_to_dict(techcard_id):
     techcard: TechCard = TechCard.objects.prefetch_related(
-        "ingridients__product"
+        "ingredients__product"
     ).get(id=techcard_id)
     total_weight = 0
     total_price = 0
@@ -50,21 +50,21 @@ def techcard_to_dict(techcard_id):
         "name": techcard.name,
         "date": techcard.create_date,
         "description": techcard.description,
-        "ingridients": [],
+        "ingredients": [],
     }
-    for ingridient in techcard.ingridients.all():
-        price = ingridient.ammount * ingridient.product.price
-        gross_weight = ingridient.ammount * ingridient.product.unit_weight
-        net_weight = gross_weight * (100 - ingridient.cold_waste) / 100
-        final_weight = net_weight * (100 - ingridient.hot_waste) / 100
-        tc_dict["ingridients"].append(
+    for ingredient in techcard.ingredients.all():
+        price = ingredient.ammount * ingredient.product.price
+        gross_weight = ingredient.ammount * ingredient.product.unit_weight
+        net_weight = gross_weight * (100 - ingredient.cold_waste) / 100
+        final_weight = net_weight * (100 - ingredient.hot_waste) / 100
+        tc_dict["ingredients"].append(
             (
-                ingridient.product.name,
-                ingridient.product.unit,
+                ingredient.product.name,
+                ingredient.product.unit,
                 gross_weight,
                 net_weight,
                 final_weight,
-                ingridient.product.price,
+                ingredient.product.price,
                 price,
             )
         )
@@ -128,13 +128,13 @@ def make_xlsx(workbook, id):
     )
     worksheet.write_row(3, 0, headers, small_format)
     row = 4
-    ingridients = techcard_dict["ingridients"]
+    ingredients = techcard_dict["ingredients"]
     worksheet.write_column(
-        row, 0, range(1, len(ingridients) + 1), small_format
+        row, 0, range(1, len(ingredients) + 1), small_format
     )
-    for ingridient in ingridients:
-        worksheet.write(row, 1, ingridient[0], medium_header_format)
-        worksheet.write_row(row, 2, ingridient[1:], data_field_format)
+    for ingredient in ingredients:
+        worksheet.write(row, 1, ingredient[0], medium_header_format)
+        worksheet.write_row(row, 2, ingredient[1:], data_field_format)
         row += 1
     row += 1
     worksheet.merge_range(

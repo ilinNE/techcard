@@ -27,10 +27,12 @@ INSTALLED_APPS = [
     "about.apps.AboutConfig",
     "core.apps.CoreConfig",
     "api.apps.ApiConfig",
+    "django_filters",
     "rest_framework",
     "djoser",
     "rest_framework_simplejwt.token_blacklist",
-    "drf_yasg",
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
 ]
 
 MIDDLEWARE = [
@@ -72,11 +74,11 @@ DATABASES = {
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": os.getenv("DB_PORT"),
-        'TEST': {
-            'NAME': 'mytestdatabase',
-        }
+        "TEST": {
+            "NAME": "mytestdatabase",
+        },
     },
-    }
+}
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -117,7 +119,7 @@ LOGIN_URL = "users:login"
 LOGIN_REDIRECT_URL = "index"
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "core", "static"),)
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
@@ -126,6 +128,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
@@ -134,3 +137,21 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
 }
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Your Project API",
+    "DESCRIPTION": "Your project description",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_DIST": "SIDECAR",
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
+}
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
