@@ -11,7 +11,7 @@
 
 <ul>
   <li>Бэкенд - <b>Python</b>, <b>Django</b>, <b>Django REST Framefork</b> </li>
-  <li>Фронтенд - <b>TypeScript</b>, <b>React</b>, <b>CSS</b>, <b>HTML</b></li>
+  <li>Фронтенд - <b>TypeScript</b>, <b>React</b>, <b>Redux</b>, <b>SASS</b></li>
   <li>База данных - <b>PostgreSQL</b></li>
   <li>Инфраструктура  - <b>Nginx</b>, <b>Docker</b></li>
 </ul>
