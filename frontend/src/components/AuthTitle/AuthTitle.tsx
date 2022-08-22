@@ -1,11 +1,8 @@
 import { FC } from "react";
 import "./AuthTitle.scss";
+import { IAuthTitleProps } from "./IAuthTitle";
 
-interface AuthTitleProps {
-  titleText: string;
-}
-
-const AuthTitle: FC<AuthTitleProps> = ({ titleText }) => {
+const AuthTitle: FC<IAuthTitleProps> = ({ titleText }) => {
   return <h1 className="authTitle">{titleText}</h1>;
 };
 

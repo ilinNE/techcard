@@ -1,15 +1,15 @@
 import { FC } from "react";
 import "./Avatar.scss";
 import avatar from "../../images/avatar.svg";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { IAvatarProps } from "./IAvatar";
 
-const Avatar: FC = () => {
-  const navigate = useNavigate();
-
+const Avatar: FC<IAvatarProps> = ({ handleCloseBurgerMenu, isBurgerOpen }) => {
   return (
-    <section>
-      <img onClick={() => navigate("/profile")} className="avatar link-opacity" src={avatar} alt="Аватар"></img>
-    </section>
+    <NavLink className="avatar" onClick={handleCloseBurgerMenu} to="/profile">
+      <img className="avatar-image" src={avatar} alt="Аватар" />
+      {isBurgerOpen && <p className="avatar__name">Имя пользователя</p>}
+    </NavLink>
   );
 };
 

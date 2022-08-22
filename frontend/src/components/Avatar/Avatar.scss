@@ -1,6 +1,22 @@
+@import "../Modules/mixins", "../Modules/variables";
+
 .avatar {
-  display: flex;
-  width: 50px;
-  height: 50px;
+  //перестал работать justify-self
+  justify-self: end;
   border-radius: 50%;
+  cursor: pointer;
+  @include flex(center, center, column);
+  @include interactive;
+  text-decoration: none;
+
+  .avatar-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .avatar__name {
+    margin: 5px 0 0;
+    @include font(12px, 300, 1.2);
+    color: $cacao;
+  }
 }

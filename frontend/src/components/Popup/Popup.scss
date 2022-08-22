@@ -1,0 +1,48 @@
+@import "../Modules/variables", "../Modules/mixins";
+.popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  @include flex(center, center);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+
+  &__container {
+    position: relative;
+    @include flex(center, center, column);
+    flex-basis: 350px;
+    width: 300px;
+    margin: 0 10px;
+    min-height: 180px;
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+
+    .popup__close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 25px;
+      height: 25px;
+      padding: 0;
+      background-image: url(../../images/circle-close.svg);
+      background-size: cover;
+      background-color: transparent;
+      background-repeat: no-repeat;
+      border: none;
+      @include interactive();
+    }
+
+    .popup__text {
+      justify-self: center;
+      margin: 0;
+      padding: 40px 30px 30px;
+      color: $cacao;
+      @include font(18px, 500, 2);
+    }
+  }
+}

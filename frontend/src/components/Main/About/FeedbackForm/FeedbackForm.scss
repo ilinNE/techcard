@@ -1,0 +1,123 @@
+@import "../../../Modules/mixins", "../../../Modules/variables";
+
+.feedback {
+  @include flex(flex-start, flex-start, column);
+  @include font(14px, 300, 16px, initial);
+  max-width: 600px;
+  height: 300px;
+  margin: 15px auto;
+  border: 1px solid #ffd983;
+  box-sizing: border-box;
+  border-radius: 10px;
+
+  &__header-container {
+    @include flex(space-between, center);
+    width: calc(100% - 120px);
+    padding: 13px 60px;
+    background-color: #ffd983;
+    border-radius: 8px 8px 0 0;
+  }
+
+  &__input-container {
+    width: 200px;
+
+    &:first-child {
+      margin-bottom: 5px;
+    }
+
+    &_text {
+      width: 598px;
+      height: 100%;
+    }
+  }
+
+  &__input {
+    width: calc(100% - 32px);
+    padding: 5px 15px;
+    border: none;
+    border-radius: 10px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &_error {
+      box-shadow: 0 0 8px $litchi;
+      border: 1px $litchi solid;
+    }
+
+    &_text {
+      height: calc(100% - 30px);
+      padding: 15px;
+      resize: none;
+    }
+
+    &_text-error {
+      box-shadow: 0 0 8px $litchi;
+      border: 1px $litchi solid;
+      border-radius: 0 0 8px 8px;
+    }
+
+    &-error {
+      @include font(10px, 300, 1.14);
+    }
+  }
+
+  &__submit-button {
+    @include font(14px, 500, 1.14);
+    padding: 7px 10px;
+    background-color: #fffefd;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    &_enabled {
+      @include interactive();
+      cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 619px) {
+  .feedback {
+    max-width: 500px;
+
+    &__input-container_text {
+      width: 498px;
+    }
+  }
+}
+
+@media screen and (max-width: 519px) {
+  .feedback {
+    @include font(12px, 300, 1);
+    max-width: 300px;
+
+    &__header-container {
+      width: calc(100% - 30px);
+      padding: 13px 15px;
+    }
+
+    &__input-container {
+      width: 150px;
+
+      &_text {
+        width: 298px;
+      }
+    }
+
+    &__input {
+      width: calc(100% - 20px);
+      padding: 6px 10px;
+
+      &_text {
+        height: calc(100% - 12px);
+      }
+    }
+
+    &__submit-button {
+      @include font(8px, 500, 1.25);
+      padding: 5px 10px;
+    }
+  }
+}

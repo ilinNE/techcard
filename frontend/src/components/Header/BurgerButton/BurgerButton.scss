@@ -1,0 +1,65 @@
+@import "../../Modules/variables", "../../Modules/mixins";
+
+.burgerButton {
+  display: none;
+  justify-self: end;
+  grid-column: 3/4;
+  width: 20px;
+  height: 13px;
+  transition: all 0.5s ease-in-out;
+  z-index: 2;
+  @include link-opacity;
+
+  &__line {
+    width: 20px;
+    height: 2px;
+    background: $cacao;
+    border-radius: 2px;
+    transition: all 0.5s ease-in-out;
+  }
+
+  &__line::before,
+  &__line::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background: $cacao;
+    border-radius: 2px;
+    transition: all 0.5s ease-in-out;
+  }
+
+  &__line::before {
+    transform: translateY(-6px);
+  }
+
+  &__line::after {
+    transform: translateY(6px);
+  }
+}
+
+// ANIMATION
+.burgerButton {
+  &_open {
+    position: fixed;
+
+    .burgerButton__line {
+      transform: translateX(-23px);
+      background: transparent;
+    }
+
+    .burgerButton__line::before {
+      transform: rotate(45deg) translate(15px, -15px);
+    }
+
+    .burgerButton__line::after {
+      transform: rotate(-45deg) translate(15px, 15px);
+    }
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .burgerButton {
+    @include flex(center, center);
+  }
+}

@@ -1,34 +1,35 @@
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
 import AuthTitle from "../AuthTitle/AuthTitle";
 import Form from "../Form/Form";
 import "./Register.scss";
-import * as Api from "../../utils/Api";
-import { register } from "../../utils/textСonstants";
+import Popup from "../Popup/Popup";
+import { register } from "../../utils/textConstants";
+import Reference from "../Reference/Reference";
+import { LinkVariant } from "../Reference/IReference";
+import { IRegisterProps } from "./IRegister";
 
-const Register: FC = () => {
-  const navigate = useNavigate();
-
-  const handleRegister = (values: any) => {
-    Api.register(values)
-      .then((data) => {
-        alert("Регистрация пользователя " + data.username + " прошла успешно");
-        navigate("/dishes");
-      })
-      .catch((error) => console.error(error));
+const Register: FC<IRegisterProps> = ({ handleRegister, errorMesage, setErrorMesage }) => {
+  const closePopup = (evt: any) => {
+    if (
+      evt.currentTarget === evt.target ||
+      evt.target.classList.contains("popup__close-button") ||
+      evt.key === "Escape"
+    ) {
+      setErrorMesage("");
+    }
   };
 
   return (
     <section className="register">
       <AuthTitle titleText={register.Welcome} />
-      <Form
-        buttonText={register.Signup}
+      <Form buttonText={register.Signup} handleSubmitForm={handleRegister} />
+      <Reference
         textDescription={register.AlreadyRegistered}
         textLink={register.Login}
-        handleSubmitForm={handleRegister}
+        path={LinkVariant.toLogin}
       />
+      {errorMesage && <Popup text={errorMesage} closePopup={closePopup} />}
     </section>
   );
 };
-
 export default Register;

@@ -13,7 +13,11 @@
       @include font(14px, 500, 1);
       outline: none;
       border: none;
-      border-bottom: 1px $brown solid;
+      border-bottom: 1px $cacao solid;
+    }
+
+    .form__input_error {
+      box-shadow: 0 6px 4px -4px $litchi;
     }
 
     .form__input-error {
@@ -22,7 +26,7 @@
       left: 50%;
       width: 500px;
       @include font(8px, 500, 1);
-      color: $coral;
+      color: $cacao;
       transform: translate(-50%, -50%);
     }
   }
@@ -34,31 +38,21 @@
     margin-top: 10px;
     @include font(14px, 500, 16px);
     background-color: transparent;
-    color: $brown;
-    border: 1px $brown solid;
+    color: $cacao;
+    border: 1px $cacao solid;
     border-radius: 9px;
   }
 
   &__submit-button_enabled {
-    background-color: $green;
+    background-color: $avocado;
     border: none;
     cursor: pointer;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     @include interactive;
   }
 
-  &__subtitle {
-    margin: 10px 0 0;
-    @include font(12px, 500, 1);
-
-    .form__link {
-      color: $green;
-      @include link-opacity;
-    }
-  }
-
   input::placeholder {
     @include font(14px, 300, 1);
-    color: $brown;
+    color: $cacao;
   }
 }

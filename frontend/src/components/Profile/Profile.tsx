@@ -1,22 +1,16 @@
-import { FC, SetStateAction } from "react";
-import { useNavigate } from "react-router-dom";
+import { FC, useContext } from "react";
 import "./Profile.scss";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
+import { IProfileProps } from "./IProfile";
 
-interface DishesProps {
-  setLoggedIn: React.Dispatch<SetStateAction<boolean>>;
-}
-
-const Profile: FC<DishesProps> = ({ setLoggedIn }) => {
-  const navigate = useNavigate();
-  const fastLogout = () => {
-    setLoggedIn(false);
-    navigate("/");
-  };
+const Profile: FC<IProfileProps> = ({ handleloggedOutClick }) => {
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   return (
     <section>
       <h1>Профайл</h1>
-      <button onClick={fastLogout}>Выйти из аккаунта</button>
+      <p>{`Привет, ${currentUser.username}`}</p>
+      <button onClick={handleloggedOutClick}>Выйти из аккаунта</button>
     </section>
   );
 };

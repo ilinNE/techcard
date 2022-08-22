@@ -1,11 +1,11 @@
-@import '../../Modules/variables', '../../Modules/mixins';
+@import "../../Modules/variables", "../../Modules/mixins";
 
 .greeting {
   @include flex(center, center, column);
 
   &__title {
     @include font(40px, 600, 1.05);
-    color: $brown;
+    color: $cacao;
     width: 301px;
     margin: 76px 0 5px;
     padding: 0;
@@ -13,21 +13,21 @@
 
   &__subtitle {
     @include font(10px, 300, 1.05);
-    color: $brown;
-    width: 250px;
-    margin: 0;
+    color: $cacao;
+    width: 210px;
+    margin: 0 auto;
     padding: 0;
   }
 
   &__button {
     @include font(14px, 500, 1.05);
     @include interactive();
-    color: $brown;
+    color: $cacao;
     width: 160px;
     height: 30px;
     margin: 40px 0 50px;
     padding: 0;
-    background-color: $green;
+    background-color: $avocado;
     border-radius: 5px;
     border: none;
     cursor: pointer;
@@ -37,5 +37,27 @@
   &__image {
     width: 608px;
     height: 335px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .greeting {
+    &__title {
+      @include font(24px, 500, 1.2);
+      margin: 72px auto 15px;
+    }
+
+    &__subtitle {
+      min-width: 250px;
+    }
+
+    &__button {
+      margin: 40px 0 53px;
+    }
+
+    &__image {
+      width: 80%;
+      height: 44%;
+    }
   }
 }

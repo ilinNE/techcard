@@ -1,0 +1,161 @@
+@import "../../components/Modules/variables", "../../components/Modules/mixins";
+
+.guide-section {
+  &__title {
+    @include font(20px, 600, 1.2);
+    color: $cacao;
+    text-align: center;
+    margin: 40px 0 20px;
+  }
+
+  .accordion {
+    max-width: 900px;
+    margin: 0 auto 16px;
+    box-shadow: none;
+    outline: 1px solid $blueberry;
+    border-radius: 10px;
+    box-sizing: border-box;
+
+    .accordion__arrow {
+      width: 10px;
+      height: 22px;
+      transform: rotate(90deg);
+    }
+
+    &__summary {
+      @include font(16px, 500, 1);
+      color: $cacao;
+      outline: 3px solid $blueberry;
+      border-radius: 10px;
+      box-sizing: border-box;
+      padding: 0 30px;
+      margin: 0;
+    }
+
+    &__details {
+      @include font(14px, 300, 1.2);
+      color: $cacao;
+      margin: 0;
+      padding: 0 19px 0;
+      box-sizing: border-box;
+      text-align: justify;
+      box-shadow: none;
+    }
+
+    &__paragraph {
+      margin: 0 0 10px;
+
+      &:first-child {
+        margin: 15px 0 10px;
+      }
+
+      &:last-child {
+        margin: 0 0 20px;
+      }
+
+      &:only-child {
+        margin: 15px 0 20px;
+      }
+    }
+
+    &__addIcon {
+      width: 15px;
+      height: 15px;
+      margin: 0 10px;
+    }
+
+    &__doneIcon {
+      width: 14px;
+      height: 14px;
+      margin: 0 10px;
+    }
+
+    &__saveIcon {
+      width: 65px;
+      height: 19px;
+      margin: 0 10px;
+    }
+
+    &__editIcon,
+    &__excelIcon {
+      width: 20px;
+      height: 20px;
+    }
+
+    &::before {
+      background-color: unset;
+    }
+
+    &:nth-last-child(3) {
+      margin-bottom: 0;
+    }
+  }
+
+  &__wave {
+    @include background("../../images/Vector.svg", 100%);
+    padding-top: 18%;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: -1;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .guide-section {
+    &__title {
+      @include font(24px, 500, 1.2);
+      margin: 10px 0;
+    }
+
+    .accordion {
+      margin: 0 10px 16px;
+
+      &__summary {
+        @include font(10px, 500, 1.2);
+        padding: 0 10px;
+      }
+
+      &__details {
+        @include font(10px, 300, 1.2);
+        padding: 0 10px 0;
+        text-align: justify;
+      }
+
+      &__paragraph {
+        margin: 0 0 8px;
+
+        &:first-child {
+          margin: 12px 0 8px;
+        }
+
+        &:last-child {
+          margin: 0 0 15px;
+        }
+
+        &:only-child {
+          margin: 12px 0 15px;
+        }
+      }
+
+      &__addIcon,
+      &__doneIcon {
+        width: 10px;
+        height: 10px;
+        margin: 0 8px;
+      }
+
+      &__saveIcon {
+        width: 50px;
+        height: 12px;
+        margin: 0 8px;
+      }
+
+      &__editIcon,
+      &__excelIcon {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+}
