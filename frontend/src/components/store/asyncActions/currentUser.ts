@@ -1,9 +1,16 @@
 import axios from "axios";
 import { Dispatch } from "redux";
-import { getCurrentUser } from "../reducers/currentUserReducer";
+import { errorMessages } from "../../../utils/textConstants";
+import {
+  getCurrentUser,
+  getCurrentUserError,
+  getCurrentUserSuccess,
+} from "../reducers/currentUserReducer";
+import { addMessage } from "../reducers/popupMessageReducer";
 
 export const getUser: any = () => {
   return async (dispatch: Dispatch) => {
+    dispatch(getCurrentUser());
     await axios
       .get("/api/users/me/", {
         headers: {
@@ -12,7 +19,7 @@ export const getUser: any = () => {
         },
       })
       .then((res) => {
-        dispatch(getCurrentUser(res.data));
+        dispatch(getCurrentUserSuccess(res.data));
       });
   };
 };
