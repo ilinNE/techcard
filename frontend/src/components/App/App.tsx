@@ -16,13 +16,19 @@ import * as Api from "../../utils/Api/Api";
 import * as ApiTypes from "../../utils/Api/ApiTypes";
 import { errorMessages } from "../../utils/textConstants";
 import { ProtectedRoute } from "../HOC/ProtectedRoute";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../store/asyncActions/currentUser";
 import { addMessage } from "../store/reducers/popupMessageReducer";
-import { clearCurrentUser } from "../store/reducers/currentUserReducer";
+import { clearCurrentUser, getCurrentUserError } from "../store/reducers/currentUserReducer";
+
+interface RootState {
+  isLoading: boolean;
+}
 
 function App() {
   const dispatch = useDispatch();
+  const isLoading = useSelector((state: RootState) => state.isLoading);
+
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -32,7 +38,10 @@ function App() {
       .then(() => {
         setLoggedIn(true);
       })
-      .catch(() => setLoggedIn(false));
+      .catch(() => {
+        dispatch(getCurrentUserError());
+        setLoggedIn(false);
+      });
   }, [loggedIn]);
 
   const registration = (values: any) => {
@@ -75,6 +84,10 @@ function App() {
     dispatch(clearCurrentUser({}));
     navigate("/", { replace: false });
   };
+
+  if (isLoading) {
+    return <div>Загрузка данных</div>;
+  }
 
   return (
     <section className="App">
