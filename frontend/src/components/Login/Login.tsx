@@ -7,15 +7,24 @@ import { login } from "../../utils/textConstants";
 import Reference from "../Reference/Reference";
 import { ILoginProps } from "./ILogin";
 import { LinkVariant } from "../Reference/IReference";
+import { useDispatch, useSelector } from "react-redux";
+import { clearMessage } from "../store/reducers/popupMessageReducer";
 
-const Login: FC<ILoginProps> = ({ handleAuthorize, errorMesage, setErrorMesage }) => {
+interface RootState {
+  popupMesage: { message: string };
+}
+
+const Login: FC<ILoginProps> = ({ handleAuthorize }) => {
+  const dispatch = useDispatch();
+  const { message } = useSelector((state: RootState) => state.popupMesage);
+
   const closePopup = (evt: any) => {
     if (
       evt.currentTarget === evt.target ||
       evt.target.classList.contains("popup__close-button") ||
       evt.key === "Escape"
     ) {
-      setErrorMesage("");
+      dispatch(clearMessage(""));
     }
   };
 
@@ -28,7 +37,7 @@ const Login: FC<ILoginProps> = ({ handleAuthorize, errorMesage, setErrorMesage }
         textLink={login.Registration}
         path={LinkVariant.toRegister}
       />
-      {errorMesage && <Popup text={errorMesage} closePopup={closePopup} />}
+      {message && <Popup text={message} closePopup={closePopup} />}
     </section>
   );
 };

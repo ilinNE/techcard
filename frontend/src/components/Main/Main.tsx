@@ -5,7 +5,7 @@ import About from "./About/About";
 import { greeting, about } from "../../utils/textConstants";
 import { IMainProps } from "./IMain";
 
-const Main: FC<IMainProps> = ({ handleFeedback, errorMesage, setErrorMesage }) => {
+const Main: FC<IMainProps> = ({ handleFeedback }) => {
   return (
     <section>
       <Greeting
@@ -18,8 +18,6 @@ const Main: FC<IMainProps> = ({ handleFeedback, errorMesage, setErrorMesage }) =
         aboutParagraphOne={about.ParagraphOne}
         aboutParagraphTwo={about.ParagraphTwo}
         handleFeedback={handleFeedback}
-        errorMesage={errorMesage}
-        setErrorMesage={setErrorMesage}
       />
     </section>
   );

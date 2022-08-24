@@ -1,4 +1,5 @@
 import { FC, useEffect } from "react";
+
 import { IPopupProps } from "./IPopup";
 import "./Popup.scss";
 

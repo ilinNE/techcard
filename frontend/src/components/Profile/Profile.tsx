@@ -1,10 +1,14 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import "./Profile.scss";
-import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { IProfileProps } from "./IProfile";
+import { useSelector } from "react-redux";
+
+interface RootState {
+  currentUser: any;
+}
 
 const Profile: FC<IProfileProps> = ({ handleloggedOutClick }) => {
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const { currentUser } = useSelector((state: RootState) => state.currentUser);
 
   return (
     <section>

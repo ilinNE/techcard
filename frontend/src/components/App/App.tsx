@@ -14,30 +14,25 @@ import Header from "../Header/Header";
 import { pathWithHeader } from "../../utils/constants";
 import * as Api from "../../utils/Api/Api";
 import * as ApiTypes from "../../utils/Api/ApiTypes";
-import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { errorMessages } from "../../utils/textConstants";
 import { ProtectedRoute } from "../HOC/ProtectedRoute";
+import { useDispatch } from "react-redux";
+import { getUser } from "../store/asyncActions/currentUser";
+import { addMessage } from "../store/reducers/popupMessageReducer";
+import { clearCurrentUser } from "../store/reducers/currentUserReducer";
 
 function App() {
+  const dispatch = useDispatch();
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const [currentUser, setCurrentUser] = useState({});
-  const [errorMesage, setErrorMesage] = useState<string>("");
-
-  const contextValue = { currentUser, setCurrentUser };
   const { pathname } = useLocation();
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    Api.getUserInfo()
-      .then((userData) => {
+    dispatch(getUser())
+      .then(() => {
         setLoggedIn(true);
-        setCurrentUser(userData);
       })
-      .catch((err) => {
-        setLoggedIn(false);
-        setCurrentUser({});
-      });
+      .catch(() => setLoggedIn(false));
   }, [loggedIn]);
 
   const registration = (values: any) => {
@@ -45,7 +40,9 @@ function App() {
       .then(() => {
         navigate("/signin");
       })
-      .catch(() => setErrorMesage(errorMessages.DuplicateEmail));
+      .catch(() => {
+        dispatch(addMessage(errorMessages.DuplicateEmail));
+      });
   };
 
   const authorization = (values: any) => {
@@ -57,111 +54,89 @@ function App() {
           navigate("/dishes");
         }
       })
-      .catch(() => setErrorMesage(errorMessages.BadEmailOrPassword));
+      .catch(() => {
+        dispatch(addMessage(errorMessages.BadEmailOrPassword));
+      });
   };
 
   const feedback = (values: ApiTypes.FeedbackParams) => {
     Api.feedback(values)
-      .then(() => setErrorMesage(errorMessages.SuccessFeedback))
-      .catch(() => setErrorMesage(errorMessages.BadFeedback));
+      .then(() => {
+        dispatch(addMessage(errorMessages.SuccessFeedback));
+      })
+      .catch(() => {
+        dispatch(addMessage(errorMessages.BadFeedback));
+      });
   };
 
   const handleloggedOutClick = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
+    dispatch(clearCurrentUser({}));
     navigate("/", { replace: false });
   };
 
   return (
-    <CurrentUserContext.Provider value={contextValue}>
-      <section className="App">
-        {pathWithHeader.includes(pathname) && <Header loggedIn={loggedIn} />}
+    <section className="App">
+      {pathWithHeader.includes(pathname) && <Header loggedIn={loggedIn} />}
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Main
-                handleFeedback={feedback}
-                errorMesage={errorMesage}
-                setErrorMesage={setErrorMesage}
-              />
-            }
-          />
-          <Route
-            path="/dishes"
-            element={
-              <ProtectedRoute loggedIn={loggedIn}>
-                <Dishes />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/semis"
-            element={
-              <ProtectedRoute loggedIn={loggedIn}>
-                <Semis />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/foodstuff"
-            element={
-              <ProtectedRoute loggedIn={loggedIn}>
-                <Foodstuff />
-              </ProtectedRoute>
-            }
-          />
-          {loggedIn ? (
-            <>
-              <Route path="/signup" element={<Navigate replace to="/dishes" />} />
-              <Route path="/signin" element={<Navigate replace to="/dishes" />} />
-            </>
-          ) : (
-            <>
-              <Route
-                path="/signup"
-                element={
-                  <Register
-                    handleRegister={registration}
-                    errorMesage={errorMesage}
-                    setErrorMesage={setErrorMesage}
-                  />
-                }
-              />
-              <Route
-                path="/signin"
-                element={
-                  <Login
-                    handleAuthorize={authorization}
-                    errorMesage={errorMesage}
-                    setErrorMesage={setErrorMesage}
-                  />
-                }
-              />
-            </>
-          )}
+      <Routes>
+        <Route path="/" element={<Main handleFeedback={feedback} />} />
+        <Route
+          path="/dishes"
+          element={
+            <ProtectedRoute loggedIn={loggedIn}>
+              <Dishes />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/semis"
+          element={
+            <ProtectedRoute loggedIn={loggedIn}>
+              <Semis />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/foodstuff"
+          element={
+            <ProtectedRoute loggedIn={loggedIn}>
+              <Foodstuff />
+            </ProtectedRoute>
+          }
+        />
+        {loggedIn ? (
+          <>
+            <Route path="/signup" element={<Navigate replace to="/dishes" />} />
+            <Route path="/signin" element={<Navigate replace to="/dishes" />} />
+          </>
+        ) : (
+          <>
+            <Route path="/signup" element={<Register handleRegister={registration} />} />
+            <Route path="/signin" element={<Login handleAuthorize={authorization} />} />
+          </>
+        )}
 
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute loggedIn={loggedIn}>
-                <Profile handleloggedOutClick={handleloggedOutClick} />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/guide"
-            element={
-              <ProtectedRoute loggedIn={loggedIn}>
-                <Guide />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </section>
-    </CurrentUserContext.Provider>
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute loggedIn={loggedIn}>
+              <Profile handleloggedOutClick={handleloggedOutClick} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/guide"
+          element={
+            <ProtectedRoute loggedIn={loggedIn}>
+              <Guide />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </section>
   );
 }
 

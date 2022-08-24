@@ -4,28 +4,35 @@ import { about } from "../../../utils/textConstants";
 import "./About.scss";
 import Popup from "../../Popup/Popup";
 import { IAboutProps } from "./IAbout";
+import { useDispatch, useSelector } from "react-redux";
+import { clearMessage } from "../../store/reducers/popupMessageReducer";
+
+interface RootState {
+  popupMesage: { message: string };
+}
 
 const About: FC<IAboutProps> = ({
   aboutTitle,
   aboutParagraphOne,
   aboutParagraphTwo,
   handleFeedback,
-  errorMesage,
-  setErrorMesage,
 }) => {
+  const dispatch = useDispatch();
+  const { message } = useSelector((state: RootState) => state.popupMesage);
+
   const closePopup = (evt: any) => {
     if (
       evt.currentTarget === evt.target ||
       evt.target.classList.contains("popup__close-button") ||
       evt.key === "Escape"
     ) {
-      setErrorMesage("");
+      dispatch(clearMessage(""));
     }
   };
 
   return (
     <>
-      {errorMesage && <Popup text={errorMesage} closePopup={closePopup} />}
+      {message && <Popup text={message} closePopup={closePopup} />}
       <section id="about" className="about">
         <div className="about__wave about__wave_blue"></div>
         <h2 className="about__title">{aboutTitle}</h2>
