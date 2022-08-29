@@ -1,5 +1,5 @@
 import pytest
-from cards.models import Tag
+from cards.models import Tag, Product
 
 
 class TestTag:
@@ -54,5 +54,20 @@ class TestTag:
         assert Tag.objects.count() == tag_count + 1, (
             "При валидном запросе, тэг должен быть добавлен в БД"
         )
+
+    @pytest.mark.django_db()
+    def test_tag_1(self,user, user_client, tag_1):
+        assert tag_1.owner == user, "Error"
+    
+    @pytest.mark.django_db()
+    def test_create_product(self,user, user_client, product_1, product_2):
+        assert product_1.tags.all() != "sdfs", "Error"
+        assert product_2.owner == user, "Error"
+
+    @pytest.mark.django_db()
+    def test_techcard(self,user, semifabricate):
+        product_list = Product.objects.all()
+        assert semifabricate.name in product_list, 'error'
+        
 
     
