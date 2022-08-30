@@ -82,3 +82,89 @@ class TestProduct:
             "При запросе с некорректными, продукт не может быть создан"
         )
 
+    @pytest.mark.django_db
+    def test_product_get_list(self, user_client, product_1,
+                              product_2, foreign_product):
+        response = user_client.get(self.url)
+        assert response.status_code == 200, (
+            "Неверный код ответа при запросе списка продуктов"
+        )
+        assert len(response.json()) >= 2, (
+            "Список продуктов не полный"
+        )
+        assert len(response.json()) <= 2, (
+            "Список продуктов содержит лишние обьекты"
+        )
+
+    @pytest.mark.django_db
+    def test_product_get_detail(self, user_client, product_1):
+        url = self.url + str(product_1.id) + "/"
+        response = user_client.get(url)
+        assert response.status_code == 200, (
+            "Неверный код ответа при запросе еденичного продукта"
+        )
+        expected_fields = [
+            "id",
+            "name",
+            "unit",
+            "unit_weight",
+            "price",
+            "tags"
+        ]
+        for field in expected_fields:
+            assert field in response.json(), (
+                f"Поле {field} отсутствует в ответе"
+            )
+        
+    @pytest.mark.django_db
+    def test_product_update(self, user_client, product_1):
+        url = self.url + str(product_1.id) + '/'
+        update_data = { "name": "updated_name", "price": '999.99'}
+        response = user_client.put(url, data=update_data)    
+        assert response.status_code == 200, (
+            "Неверный код ответ при обновлении продукта"
+        )
+        for field, value in update_data.items():
+            assert response.json().get(field) == value, (
+                f"Поле {field} не было обновленно"
+            )
+
+    @pytest.mark.django_db
+    def test_product_delete(self, user_client, product_1):
+        product_count = Product.objects.count()
+        url = self.url + str(product_1.id) + '/'
+        response = user_client.delete(url)
+        assert response.status_code == 204, (
+            "Неверный код ответа при удалении продукта"
+        )
+        assert Product.objects.count() == product_count - 1, (
+            "Продукт не был удален из базы данных"
+        )
+
+    @pytest.mark.django_db
+    def test_another_user_access(self, another_user_client, product_1):
+        product_count = Product.objects.count()
+        url = self.url + str(product_1.id) + '/'
+        response = another_user_client.get(url)
+        assert response.status_code == 404, (
+            "Пользователь не может получить данные о чужом продукте"
+        )
+        update_data = {"name": "updated_name", "price": '999.99'}
+        response = another_user_client.put(url, data=update_data)
+        assert response.status_code == 404, (
+            "Пользователь не может изменить чужой продукт"
+        )
+        response = another_user_client.delete(url)
+        assert response.status_code == 404, (
+            "Пользователь не может удалить чужой продукт"
+        )
+        assert product_count == Product.objects.count(), (
+            "Пользователь не может удалить чужой продукт"
+        )
+
+
+    
+
+             
+
+

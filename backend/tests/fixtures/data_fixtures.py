@@ -33,6 +33,16 @@ def product_2(user):
     )
 
 @pytest.fixture
+def foreign_product(another_user):
+    return Product.objects.create(
+        owner=another_user,
+        name="foreign_product",
+        unit='Шт',
+        unit_weight=0.050,
+        price=7.00
+    )
+
+@pytest.fixture
 def semifabricate(user, product_1, product_2):
     semifabricate = TechCard.objects.create(
         owner=user,
