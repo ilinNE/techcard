@@ -78,11 +78,9 @@ class TagSerializer(serializers.ModelSerializer):
 )
 class ProductSerializer(serializers.ModelSerializer):
     price = serializers.DecimalField(
-        min_value=0,
-        max_digits=10,
-        decimal_places=2
+        min_value=0, max_digits=10, decimal_places=2
     )
-    
+
     class Meta:
         model = Product
         fields = ("id", "name", "unit", "unit_weight", "price", "tags")
