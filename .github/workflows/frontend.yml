@@ -36,10 +36,10 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
+          port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            cd infra/
             sudo docker-compose stop
             sudo docker container rm infra_frontend_1
             sudo docker image rm ilinne/techcard_front
