@@ -41,6 +41,6 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             sudo docker-compose stop
-            sudo docker container rm infra_web_1
+            sudo docker container rm nikita_web_1
             sudo docker image rm ilinne/techcard
             sudo docker-compose up -d
