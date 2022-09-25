@@ -1,0 +1,92 @@
+@import "../../../Modules/_mixins.scss", "../../../Modules/variables";
+
+.tariff {
+  border: 2px solid;
+  border-radius: 10px;
+  width: 250px;
+  height: 350px;
+  background-color: transparent;
+  @include flex($align: center, $direction: column);
+  color: $cacao;
+  position: relative;
+
+  &_blue {
+    border-color: $blueberry;
+  }
+
+  &_yellow {
+    border-color: $orange;
+  }
+
+  &_green {
+    border-color: $avocado;
+  }
+
+  &__background {
+    width: 200px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: 15px 0 45px;
+
+    &_blue {
+      background-image: url(../../../../images/plan-plumb-base.svg);
+    }
+
+    &_green {
+      background-image: url(../../../../images/plan-plumb-opti.svg);
+    }
+
+    &_yellow {
+      background-image: url(../../../../images/plan-plumb-pro.svg);
+    }
+  }
+  &__title {
+    @include font(1.25rem, 500, 1.4);
+  }
+  &__button {
+    position: relative;
+    z-index: 2;
+    width: 160px;
+    height: 30px;
+    border-radius: 5px;
+    margin-top: 86px;
+    border: none;
+    @include font();
+    &_blue {
+      border-color: $blueberry;
+      background-color: $blueberry;
+    }
+
+    &_yellow {
+      border-color: $orange;
+      background-color: $orange;
+    }
+
+    &_green {
+      border-color: $avocado;
+      background-color: $avocado;
+    }
+
+    &:disabled {
+      filter: grayscale(0.5);
+    }
+  }
+
+  &__tape {
+    position: absolute;
+    z-index: 3;
+    box-sizing: border-box;
+    background-position: center;
+    background-size: cover;
+    top: 160px;
+    width: 254px;
+    height: 170px;
+    &_red {
+      background-image: url(../../../../images/tape-red.svg);
+    }
+    &_grey {
+      background-image: url(../../../../images/tape-grey.svg);
+    }
+  }
+}
