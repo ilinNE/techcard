@@ -1,0 +1,49 @@
+@import "../Modules/_mixins.scss", "../Modules/variables";
+
+.footer {
+  height: 150px;
+  background-color: $blueberry;
+  @include flex(center, center, column);
+  color: $cacao;
+
+  &__title {
+    @include font(1rem, 500, 1.25);
+    margin: 20px 0 10px;
+  }
+
+  &__list {
+    padding: 0;
+    margin: 0;
+    @include flex(center, center, column);
+  }
+
+  &__list-item {
+    list-style: none;
+    @include font($font-weight: 500);
+  }
+
+  &__author-link {
+    text-decoration: none;
+    color: $cacao;
+    transition: 0.5s ease-in-out;
+  }
+}
+
+@media (any-hover: hover) {
+  .footer__author-link:hover {
+    color: $litchi;
+    transition: 0.1s ease-in-out;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .footer {
+    &__title {
+      font-size: .875rem;
+    }
+
+    &__list-item {
+      font-size: 0.625rem;
+    }
+  }
+}

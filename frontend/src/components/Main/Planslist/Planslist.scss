@@ -1,0 +1,95 @@
+@import "../../Modules/_mixins.scss", "../../Modules/variables";
+
+.tariffs {
+  @include flex($direction: column);
+  color: $cacao;
+
+  &__title {
+    @include font(2rem, 500, 1);
+    margin: -9% auto 8%;
+  }
+
+  &__wave {
+    padding-top: 15%;
+    &_green {
+      @include background("../../../images/firstpage-wave-3.svg", 100%);
+    }
+
+    &_blue {
+      @include background("../../../images/firstpage-wave-4.svg", 100%);
+      padding-top: 12%; 
+    }
+  }
+
+  &__list {
+    @include flex(center, center, row);
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__list-item {
+    list-style: none;
+    margin: 0 115px 20px 0;
+    filter: drop-shadow(8px 8px 4px);
+    transition: all 0.5s ease-in-out;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__child-list {
+    padding: 0;
+  }
+
+  &__offer {
+    margin-bottom: 10px;
+    @include font(0.875rem, 500, 1.14, start);
+
+    &_bold {
+      font-weight: 600;
+    }
+
+    &_unlimited {
+      font-size: 1.25rem;
+      text-align: center;
+      max-width: 160px;
+    }
+  }
+}
+
+@media (any-hover: hover) {
+  .tariffs__list-item:hover {
+    transform: scale(4px);    
+    filter: drop-shadow(12px 12px 5px);
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+@media screen and (max-width: 821px) {
+  .tariffs {
+    &__list-item {
+      &:nth-child(2) {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 661px) {
+  .tariffs {
+    
+    &__title {
+      @include font(20px, 500, 1.6);
+      margin: 15px auto;
+    }
+
+    &__list {
+      flex-direction: column;
+    }
+
+    &__list-item {
+      margin-right: 0;
+    }
+  }
+}
