@@ -15,7 +15,7 @@ const Nav: FC<INavProps> = ({ handleCloseBurgerMenu, isBurgerOpen }) => {
         </NavLink>
       )}
 
-      <NavLink onClick={handleCloseBurgerMenu} className={setActive} to="/dishes">
+      <NavLink onClick={handleCloseBurgerMenu} className={setActive} to="/techcards">
         {header.MyTechCards}
       </NavLink>
       <NavLink onClick={handleCloseBurgerMenu} className={setActive} to="/guide">

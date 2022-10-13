@@ -1,0 +1,277 @@
+@import "../Modules/variables", "../Modules/mixins";
+
+.content {
+  @include flex($direction: column, $align: center);
+  margin: 0 auto;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+  width: calc(100vw - 34px);
+  max-width: 1400px;
+  color: $cacao;
+  position: relative;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #4e3536;
+    border-radius: 5px;
+  }
+
+  &_full {
+    width: calc(100vw - 300px);
+  }
+
+  &__btn-back {
+    position: absolute;
+    @include flex($align: center);
+    top: 10px;
+    left: 60px;
+    text-decoration: none;
+    cursor: pointer;
+    @include interactive();
+  }
+
+  &__btn-back-img {
+    height: 20px;
+    width: 40px;
+    background-image: url(../../images/arrow-back.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-right: 10px;
+  }
+
+  &__btn-back-text {
+    @include font($font-size: 1.2rem, $font-weight: 500, $line-height: 1.1);
+    color: $cacao;
+  }
+
+  &__header {
+    @include flex($align: center, $justify: space-between);
+    width: calc(100% - 120px);
+    margin: 60px 60px 20px;
+  }
+
+  &__extra-info {
+    @include flex($direction: column-reverse, $align: flex-start);
+  }
+
+  &__text-info {
+    @include font($font-size: 1rem, $font-weight: 300, $line-height: 1);
+    margin: 0;
+
+    &_start {
+      text-align: start;
+    }
+  }
+
+  &__text-bold {
+    font-weight: 500;
+    margin-right: 5px;
+  }
+
+  &__title-box {
+    @include flex($direction: column, $align: center);
+  }
+
+  &__title {
+    @include font($font-size: 1.5rem, $font-weight: 500, $line-height: 1.1);
+    margin: 0 0 10px;
+  }
+
+  &__subtitle {
+    @include font($font-size: 1rem, $font-weight: 500, $line-height: 1.1);
+    color: $avocado;
+    margin: 0;
+  }
+
+  &__btn-box {
+    @include flex($align: center, $justify: space-between);
+  }
+
+  &__btn {
+    border: none;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    @include interactive();
+
+    &_edit {
+      background: url(../../images/button-edit.svg);
+      margin-right: 5px;
+      background-color: transparent;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+    &_save {
+      background: url(../../images/excel.svg);
+      background-color: transparent;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+  }
+
+  &__extra-box {
+    width: calc(100% - 120px);
+    margin: 0 60px;
+  }
+
+  &__table-box {
+    width: 100%;
+    overflow: auto;
+    max-height: 500px;
+    &:hover {
+      &::-webkit-scrollbar {
+        height: 5px;
+      }
+    }
+
+    &::-webkit-scrollbar {
+      height: 1px;
+      width: 1px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $cacao;
+      border-radius: 6px;
+    }
+  }
+
+  &__table {
+    width: 100%;
+    min-width: 800px;
+  }
+
+  &__th {
+    padding: 5px 15px;
+    @include font($font-size: 1.2rem, $font-weight: 500, $line-height: 1);
+
+    &_start {
+      text-align: start;
+    }
+  }
+
+  &__td {
+    padding: 5px 15px;
+    @include font($font-size: 1rem, $font-weight: 300, $line-height: 1);
+
+    &_end {
+      text-align: end;
+    }
+
+    &_start {
+      text-align: start;
+    }
+
+    &_bold {
+      font-weight: 500;
+    }
+  }
+
+  &__text-block {
+    width: calc(100% - 120px);
+    margin: 40px 60px;
+  }
+
+  &__text {
+    @include font($font-size: 1rem, $font-weight: 300, $line-height: 1);
+    margin: 0;
+    text-align: start;
+  }
+}
+
+.border {
+  border-top: 1px solid $cacao;
+}
+
+@media screen and (max-width: 1280px) {
+  .content {
+    &__th {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    &__title {
+      font-size: 1.2rem;
+    }
+
+    &__subtitle {
+      font-size: 0.9rem;
+    }
+
+    &__th {
+      font-size: 1rem;
+    }
+    &__td {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    width: 100vw;
+
+    &__header {
+      flex-direction: column;
+      width: calc(100% - 60px);
+      margin: 40px 10px 20px 50px;
+    }
+
+    &__extra-info {
+      align-items: center;
+    }
+
+    &__text-info {
+      font-size: 0.8rem;
+      margin: 0;
+    }
+
+    &__title-box {
+      margin: 10px 0;
+    }
+
+    &__title {
+      margin-bottom: 5px;
+    }
+
+    &__extra-box {
+      width: calc(100% - 60px);
+      margin: 0 10px 0 50px;
+    }
+
+    &__text-block {
+      width: calc(100% - 60px);
+      margin: 40px 10px 40px 50px;
+    }
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .content {
+    &__btn-back {
+      top: 0;
+      left: 40px;
+    }
+  
+    &__btn-back-img {
+      height: 20px;
+      width: 30px;
+    }
+  
+    &__btn-back-text {
+      font-size: 1rem;
+    }
+  }
+}
+

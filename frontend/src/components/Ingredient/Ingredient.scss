@@ -1,0 +1,117 @@
+@import "../Modules/variables", "../Modules/mixins";
+
+.ingredient {
+  display: flex;
+  border: 1px solid $litchi;
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding: 2px 20px;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.4s;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+
+  &__info {
+    margin: 0;
+    @include font($font-size: 1rem, $font-weight: 500, $line-height: 1.1);
+  }
+
+  &__btn-box {
+    display: flex;
+  }
+
+  &__btn {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    @include interactive();
+
+    &_edit {
+      background: url(../../images/button-edit.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      margin-right: 10px;
+    }
+
+    &_delete {
+      fill: $cacao;
+
+      &:hover {
+        fill: $litchi;
+      }
+    }
+  }
+}
+
+@media (any-hover: hover) {
+  .ingredient:hover {
+    transform: scale(1.03);
+    transition: transform 0.4s;
+    cursor: pointer;
+  }
+
+  .ingredient__btn_delete:hover {
+    fill: $litchi;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .ingredient {
+    &__info {
+      &_title {
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ingredient {
+    &__info {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .ingredient {
+    padding: 2px 10px;
+    &__info {
+      &_title {
+        max-width: 100px;
+      }
+
+      &_measure {
+        display: none;
+      }
+
+      &_type {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .ingredient {
+    padding: 5px 10px;
+    &__info {
+      font-size: 0.7rem;
+
+      &_title {
+        max-width: 70px;
+      }
+    }
+
+    &__btn {
+      width: 15px;
+      height: 15px;
+    }
+  }
+}

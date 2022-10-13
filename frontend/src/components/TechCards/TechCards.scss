@@ -1,0 +1,284 @@
+@import "../Modules/variables", "../Modules/mixins";
+
+.techcards {
+  @include flex($direction: column, $align: center);
+  margin: 0;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+  width: calc(100vw - 34px);
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #4e3536;
+    border-radius: 5px;
+  }
+
+  &_full {
+    width: calc(100vw - 300px);
+  }
+
+  &__centring {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 60px;
+    width: calc(100% - 120px);
+  }
+
+  &__menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  &__upside {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__viewlist {
+    padding: 0;
+    display: flex;
+    margin: 0;
+
+    &_invisible {
+      visibility: hidden;
+    }
+  }
+
+  &__viewlist-item {
+    list-style: none;
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__viewlist-btn {
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    cursor: pointer;
+    @include interactive();
+
+    &_grid {
+      background-image: url(../../images/grid-button.svg);
+    }
+
+    &_list {
+      background-image: url(../../images/list-button.svg);
+    }
+
+    &_active {
+      filter: drop-shadow(3px 3px 3px $blueberry);
+      transform: scale(1.1);
+    }
+  }
+
+  &__box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__name {
+    @include font($font-size: 3rem, $font-weight: 500);
+    color: $cacao;
+    text-transform: uppercase;
+    margin: 0 10px 0 0;
+  }
+
+  &__add-card {
+    background-color: transparent;
+    border: none;
+    width: 25px;
+    height: 25px;
+    background-image: url(../../images/button-add.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    @include interactive();
+  }
+
+  // &__form {
+  // }
+
+  &__label {
+    color: $cacao;
+    @include font($font-weight: 500);
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  &__select {
+    border: 1px solid $blueberry;
+    border-radius: 5px;
+    height: 24px;
+    color: $cacao;
+    @include font($font-size: 12px);
+    width: 130px;
+    cursor: pointer;
+    @include interactive();
+
+    &:focus {
+      transform: scale(1.1);
+      outline: 1px solid $litchi;
+    }
+  }
+
+  &__option {
+    color: $cacao;
+    @include font($font-size: 12px);
+  }
+
+  &__scrollbar {
+    max-width: 500px;
+    margin: 14px auto 0;
+    box-sizing: border-box;
+    padding: 0 10px;
+    overflow-x: auto;
+    touch-action: pan-x;
+    cursor: grab;
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      rgba(0, 0, 0, 0.25) 8px,
+      #000 18px,
+      #000 calc(100% - 16px),
+      rgba(0, 0, 0, 0.25) calc(100% - 8px),
+      transparent
+    );
+
+    &:hover {
+      &::-webkit-scrollbar {
+        height: 5px;
+      }
+    }
+
+    &::-webkit-scrollbar {
+      height: 1px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $blueberry;
+      border-radius: 6px;
+    }
+  }
+
+  &__taglist {
+    display: flex;
+    margin: 0 0 10px;
+    flex-wrap: nowrap;
+    padding: 0;
+    align-items: center;
+  }
+
+  &__tag {
+    list-style: none;
+    margin-right: 20px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__tag-btn {
+    border: 1px solid $avocado;
+    border-radius: 12px;
+    box-sizing: border-box;
+    width: max-content;
+    height: min-content;
+    padding: 3px 10px;
+    background-color: transparent;
+    color: $avocado;
+    @include interactive();
+    @include font($font-size: 10px, $font-weight: 300, $line-height: 1);
+  }
+
+  &__usual-btn {
+    @include greenbtn();
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .techcards {
+    &__centring {
+      width: calc(100% - 40px);
+      margin: 20px;
+    }
+
+    &__menu {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__name {
+      font-size: 2rem;
+    }
+
+    &__scrollbar {
+      max-width: 400px;
+      margin: 10px auto 0;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .techcards {
+    width: 100vw;
+    &__centring {
+      margin-left: 54px;
+      width: calc(100% - 74px);
+    }
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .techcards {
+    &__upside {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__viewlist {
+      display: none;
+    }
+
+    &__box {
+      margin-bottom: 10px;
+    }
+
+    &__name {
+      font-size: 1.5rem;
+    }
+
+    &__scrollbar {
+      max-width: 300px;
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .techcards {
+    &__name {
+      font-size: 1.2rem;
+    }
+
+    &__scrollbar {
+      max-width: 260px;
+    }
+  }
+}
