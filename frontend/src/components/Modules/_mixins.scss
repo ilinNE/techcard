@@ -1,3 +1,5 @@
+@import "../Modules/variables";
+
 @mixin flex($justify: flex-start, $align: stretch, $direction: row) {
   display: flex;
   justify-content: $justify;
@@ -5,7 +7,7 @@
   flex-direction: $direction;
 }
 
-@mixin font($font-size: 14px, $font-weight: 300, $line-height: 16px, $text-align: center) {
+@mixin font($font-size: 14px, $font-weight: 300, $line-height: 1.14, $text-align: center) {
   font-size: $font-size;
   font-weight: $font-weight;
   line-height: $line-height;
@@ -39,4 +41,59 @@
   background-image: url($url);
   background-size: $background-size;
   background-repeat: no-repeat;
+}
+
+@mixin greenbtn($padding: 0.5em 1.14em) {
+  background-color: $avocado;
+  border: none;
+  border-radius: 0.36em;
+  width: fit-content;
+  box-shadow: 0 4px 4px rgba($color: #000000, $alpha: 0.25);
+  padding: $padding;
+  color: $cacao;
+  @include font($font-weight: 500);
+  @include interactive();
+}
+
+@mixin transparentbtn($padding: 0.1em 1em) {
+  background-color: transparent;
+  border: 1px $cacao solid;
+  border-radius: 1em;
+  width: fit-content;
+  padding: $padding;
+  color: $cacao;
+  @include font($font-weight: 500);
+  @include interactive();
+}
+
+@mixin colorInput($width: 30px, $height: 30px) {
+  width: $width;
+  height: $height;
+  cursor: pointer;
+  border: none;
+  background: #fff;
+  border: none;
+  padding: 0;  
+  @include interactive();
+  
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  &::-webkit-color-swatch {
+    border: none;
+    border-radius: 5px;
+  }
+
+  /* firefox */
+  &::-moz-focus-inner {
+    border: none;
+    padding: 0;
+    border-radius: 5px;
+  }
+
+  &::-moz-color-swatch {
+    border: none;
+    border-radius: 5px;
+  }
 }

@@ -1,0 +1,131 @@
+@import "../Modules/variables", "../Modules/mixins";
+
+.profile-popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  @include flex(center, center);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  visibility: hidden;
+  transition: all .6s ease-in;
+
+  &_active {
+    visibility: visible;
+    transition: all .6s ease-in;
+  }
+
+  &__container {
+    position: relative;
+    @include flex(center, center, column);
+    height: 300px;
+    width: 350px;
+    min-height: 180px;
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+  }
+
+  &__close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    background-image: url(../../images/circle-close.svg);
+    background-size: cover;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    @include interactive();
+  }
+
+  &__avatar {
+    width: 100px;
+    height: 100px;
+    margin: 15px 0;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__input-file-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__input-file {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    display: block;
+    width: 0;
+    height: 0;
+  }
+
+  &__input-file-btn {
+    position: relative;
+    display: block;
+    @include transparentbtn(0.5em 1.2em);
+    margin: 0;
+    transition: background-color 0.2s;
+  }
+
+  &__info-text {
+    padding: 0 10px;
+    margin: 5px 0 0;
+    @include font($font-size: 0.7rem);
+  }
+
+  &__text {
+    @include font($font-size: 0.9rem, $font-weight: 500);
+    margin: 10px 0;
+  }
+
+  &__input {
+    position: relative;
+    margin: 0 0 10px;
+    width: 250px;
+    @include font(1rem, 500, 1);
+    border: none;
+    border-bottom: 1px $cacao solid;
+    background-color: transparent;
+    color: $cacao;
+
+    &:focus {
+      outline-color: $avocado;
+    }
+
+    &::placeholder {
+      @include font(14px, 300, 1);
+      color: $cacao;
+    }
+  }
+
+  &__save-button {
+    @include transparentbtn(0.3em 1em);
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .profile-popup {
+    &__container {
+      width: 300px;
+    }
+
+    &__avatar {
+      width: 80px;
+      height: 80px;
+    }
+  }
+}

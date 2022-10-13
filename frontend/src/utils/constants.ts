@@ -3,9 +3,11 @@ export const LARGE_SCREEN: number = 1279;
 export const MEDIUM_SCREEN: number = 767;
 export const pathWithHeader: string[] = [
   "/",
-  "/dishes",
-  "/semis",
-  "/foodstuff",
+  "/techcards",
+  "/techcards/dishes",
+  "/techcards/dishes/1",
+  "/techcards/semis",
+  "/techcards/foodstuff",
   "/signup",
   "/signin",
   "/profile",

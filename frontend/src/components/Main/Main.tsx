@@ -4,6 +4,7 @@ import Greeting from "./Greeting/Greeting";
 import About from "./About/About";
 import { greeting, about } from "../../utils/textConstants";
 import { IMainProps } from "./IMain";
+import { Planslist } from "./Planslist/Planslist";
 
 const Main: FC<IMainProps> = ({ handleFeedback }) => {
   return (
@@ -19,6 +20,7 @@ const Main: FC<IMainProps> = ({ handleFeedback }) => {
         aboutParagraphTwo={about.ParagraphTwo}
         handleFeedback={handleFeedback}
       />
+      <Planslist />
     </section>
   );
 };

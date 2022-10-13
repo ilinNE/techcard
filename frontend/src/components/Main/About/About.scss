@@ -24,6 +24,7 @@
 
     &_green {
       @include background("../../../images/firstpage-wave-2.svg", 100%);
+      padding-top: 14%;
     }
   }
 }
@@ -62,6 +63,7 @@
 
       &_green {
         background-image: url("../../../images/mobile-wave-2.svg");
+        padding-top: 20%;
       }
     }
   }

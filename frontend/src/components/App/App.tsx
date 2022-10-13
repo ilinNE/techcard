@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.scss";
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import Dishes from "../Dishes/Dishes";
+import TechCards from "../TechCards/TechCards";
 import Main from "../Main/Main";
-import Semis from "../Semis/Semis";
-import Foodstuff from "../Foodstuff/Foodstuff";
 import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Guide from "../Guide/Guide";
-import ErrorPage from "../ErrorPage/ErrorPage";
+import { ErrorPage } from "../ErrorPage/ErrorPage";
 import Header from "../Header/Header";
 import { pathWithHeader } from "../../utils/constants";
 import * as Api from "../../utils/Api/Api";
@@ -20,12 +18,16 @@ import { useDispatch } from "react-redux";
 import { getUser } from "../store/asyncActions/currentUser";
 import { addMessage } from "../store/reducers/popupMessageReducer";
 import { clearCurrentUser } from "../store/reducers/currentUserReducer";
+import WorkPlace from "../WorkPlace/WorkPlace";
+import Footer from "../Footer/Footer";
+import { TechCardContent } from "../TechCardContent/TechCardContent";
 
 function App() {
   const dispatch = useDispatch();
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [isOpenSideMenu, setIsOpenSideMenu] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(getUser())
@@ -83,33 +85,29 @@ function App() {
       <Routes>
         <Route path="/" element={<Main handleFeedback={feedback} />} />
         <Route
-          path="/dishes"
+          path="/techcards/"
           element={
-            <ProtectedRoute loggedIn={loggedIn}>
-              <Dishes />
-            </ProtectedRoute>
+            // <ProtectedRoute loggedIn={loggedIn}>
+            <WorkPlace setIsOpenSideMenu={setIsOpenSideMenu} isOpenSideMenu={isOpenSideMenu} />
+            // </ProtectedRoute>
           }
-        />
-        <Route
-          path="/semis"
-          element={
-            <ProtectedRoute loggedIn={loggedIn}>
-              <Semis />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/foodstuff"
-          element={
-            <ProtectedRoute loggedIn={loggedIn}>
-              <Foodstuff />
-            </ProtectedRoute>
-          }
-        />
+        >
+          <Route
+            path="dishes"
+            element={<TechCards isOpenSideMenu={isOpenSideMenu} title={"Блюда"} />}
+          />
+          <Route path="dishes/:id" element={<TechCardContent isOpenSideMenu={isOpenSideMenu} />} />
+          <Route
+            path="semis"
+            element={<TechCards isOpenSideMenu={isOpenSideMenu} title={"Полуфабрикаты"} />}
+          />
+          <Route path="semis/:id" element={<TechCardContent isOpenSideMenu={isOpenSideMenu} />} />
+          <Route path="foodstuff" element={<TechCards isOpenSideMenu={isOpenSideMenu} title={"Продукты"} />} />
+        </Route>
         {loggedIn ? (
           <>
-            <Route path="/signup" element={<Navigate replace to="/dishes" />} />
-            <Route path="/signin" element={<Navigate replace to="/dishes" />} />
+            <Route path="/signup" element={<Navigate replace to="/techcards" />} />
+            <Route path="/signin" element={<Navigate replace to="/techcards" />} />
           </>
         ) : (
           <>
@@ -121,9 +119,7 @@ function App() {
         <Route
           path="/profile"
           element={
-            <ProtectedRoute loggedIn={loggedIn}>
               <Profile handleloggedOutClick={handleloggedOutClick} />
-            </ProtectedRoute>
           }
         />
         <Route
@@ -136,6 +132,7 @@ function App() {
         />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
+      {pathname === "/" && <Footer />}
     </section>
   );
 }

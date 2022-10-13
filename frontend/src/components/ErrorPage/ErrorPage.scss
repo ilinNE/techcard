@@ -6,13 +6,13 @@
   height: 100vh;
 
   &__header {
-    @include font(48px, 600, 1);
+    @include font(80px, 600, 1);
     margin: 0;
   }
 
   &__img {
-    height: 200px;
-    width: 320px;
+    height: 400px;
+    width: 640px;
     background-size: cover;
     background-repeat: no-repeat;
     margin: 20px auto 15px;
@@ -28,5 +28,24 @@
     padding: 0.31em 0.94em;
     border: 1px solid black;
     border-radius: 10px;
+    text-decoration: none;
+    color: black;
+  }
+}
+
+@media screen and (max-width: 1439px) {
+  .error-page {
+    &__header {
+      @include font(64px, 600, 1);
+      margin: 0;
+    }
+  
+    &__img {
+      height: 200px;
+      width: 320px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin: 20px auto 15px;
+    }
   }
 }

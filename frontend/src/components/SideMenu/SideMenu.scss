@@ -1,0 +1,44 @@
+@import "../Modules/variables", "../Modules/mixins";
+
+.sidemenu {
+  width: 300px;
+  height: calc(100vh - 70px);
+  background-color: $melon;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+
+  &_close {
+    width: 34px;
+  }
+
+  &__close-btn {
+    @include background("../../images/arrow-big.svg", 100%);
+    background-color: transparent;
+    border: none;
+    height: 22px;
+    width: 10px;
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+
+    &_open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__navigation {
+    padding: 0;
+    margin: 42px 0 0 5px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sidemenu {
+    position: absolute;
+    z-index: 2;
+  }
+}
