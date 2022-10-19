@@ -7,7 +7,9 @@ const TechCard: FC<ITechCard> = (props) => {
   return (
     <li className={`techcard ${props.isListStyle ? "techcard_list" : ""}`}>
       <Link className={`techcard__link ${props.isListStyle ? "techcard__link_list" : ""}`} to="1">
-        <button className={`techcard__delete-btn ${props.isListStyle ? "techcard__delete-btn_list" : ""}`}>
+        <button
+          className={`techcard__delete-btn ${props.isListStyle ? "techcard__delete-btn_list" : ""}`}
+        >
           <svg
             className="techcard__delete-btn-bg"
             viewBox="0 0 20 20"
@@ -17,8 +19,12 @@ const TechCard: FC<ITechCard> = (props) => {
           </svg>
         </button>
         <div className={`techcard__text-box ${props.isListStyle ? "techcard__text-box_list" : ""}`}>
-          <p className={`techcard__title ${props.isListStyle ? "techcard__title_list" : ""}`}>Конина по-бешкески</p>
-          <p className={`techcard__subtitle ${props.isListStyle ? "techcard__subtitle_list" : ""}`}>второе блюдо</p>
+          <p className={`techcard__title ${props.isListStyle ? "techcard__title_list" : ""}`}>
+            {props.name}
+          </p>
+          <p className={`techcard__subtitle ${props.isListStyle ? "techcard__subtitle_list" : ""}`}>
+            {props.tags}
+          </p>
         </div>
       </Link>
     </li>

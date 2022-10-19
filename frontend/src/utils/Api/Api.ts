@@ -39,3 +39,17 @@ export const feedback = async (data: FeedbackParams) => {
       return res.data;
     });
 };
+
+export const getTechcards = async () => {
+  return await axios
+    .get("/api/techcards/", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
+};

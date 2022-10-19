@@ -1,3 +1,5 @@
 export interface ITechCard {
-    isListStyle: boolean;
-  }
+  name: string;
+  tags: number[];
+  isListStyle: boolean;
+}
