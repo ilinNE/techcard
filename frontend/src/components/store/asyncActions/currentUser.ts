@@ -7,7 +7,7 @@ export const getUser: any = () => {
     await axios
       .get("/api/users/me/", {
         headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
       })
