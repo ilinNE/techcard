@@ -20,10 +20,10 @@ const TechCard: FC<ITechCard> = (props) => {
         </button>
         <div className={`techcard__text-box ${props.isListStyle ? "techcard__text-box_list" : ""}`}>
           <p className={`techcard__title ${props.isListStyle ? "techcard__title_list" : ""}`}>
-            {props.name}
+            {props.techcard.name}
           </p>
           <p className={`techcard__subtitle ${props.isListStyle ? "techcard__subtitle_list" : ""}`}>
-            {props.tags}
+            {props.techcard.tags}
           </p>
         </div>
       </Link>

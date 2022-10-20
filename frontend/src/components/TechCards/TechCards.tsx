@@ -1,14 +1,22 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Foodstuff from "../Foodstuff/Foodstuff";
 // import { TechCard } from "../TechCard/TechCard";
 import TechCardList from "../TechCardList/TechCardList";
 import { ITechCardsProps } from "./ITechCardsProps";
+import { getTechcards } from "../../utils/Api/Api";
+import { TechcardParams } from "../../utils/Api/ApiTypes";
+import { EmptyContent } from "../EmptyContent/EmptyContent";
 import "./TechCards.scss";
 
 const TechCards: FC<ITechCardsProps> = (props) => {
   const [isListStyle, setIsListStyle] = useState<boolean>(false);
-
+  const [techcards, setTechcards] = useState<TechcardParams[]>([]);
+  useEffect(() => {
+    getTechcards().then((data) => {
+      setTechcards(data);
+    });
+  }, []);
   const location = useLocation();
 
   return (
@@ -82,8 +90,10 @@ const TechCards: FC<ITechCardsProps> = (props) => {
         </div>
         {location.pathname === "/techcards/foodstuff" ? (
           <Foodstuff />
+        ) : techcards.length !== 0 ? (
+          <TechCardList techcards={techcards} isListStyle={isListStyle} />
         ) : (
-          <TechCardList isListStyle={isListStyle} />
+          <EmptyContent />
         )}
         <button className="techcards__usual-btn">Еще</button>
       </div>

@@ -1,3 +1,6 @@
+import { TechcardParams } from "../../utils/Api/ApiTypes";
+
 export interface ITechCardList {
-    isListStyle: boolean;
-  }
+  techcards: TechcardParams[];
+  isListStyle: boolean;
+}
