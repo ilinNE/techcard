@@ -53,3 +53,17 @@ export const getTechcards = async () => {
       return res.data;
     });
 };
+
+export const getProducts = async () => {
+  return await axios
+    .get("/api/products/", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
+};

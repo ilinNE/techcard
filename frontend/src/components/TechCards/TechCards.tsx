@@ -4,17 +4,22 @@ import Foodstuff from "../Foodstuff/Foodstuff";
 // import { TechCard } from "../TechCard/TechCard";
 import TechCardList from "../TechCardList/TechCardList";
 import { ITechCardsProps } from "./ITechCardsProps";
-import { getTechcards } from "../../utils/Api/Api";
-import { TechcardParams } from "../../utils/Api/ApiTypes";
+import { getTechcards, getProducts } from "../../utils/Api/Api";
+import { TechcardParams, ProductParams } from "../../utils/Api/ApiTypes";
 import { EmptyContent } from "../EmptyContent/EmptyContent";
 import "./TechCards.scss";
 
 const TechCards: FC<ITechCardsProps> = (props) => {
   const [isListStyle, setIsListStyle] = useState<boolean>(false);
   const [techcards, setTechcards] = useState<TechcardParams[]>([]);
+  const [products, setProducts] = useState<ProductParams[]>([]);
+
   useEffect(() => {
     getTechcards().then((data) => {
       setTechcards(data);
+    });
+    getProducts().then((data) => {
+      setProducts(data);
     });
   }, []);
   const location = useLocation();
@@ -89,13 +94,22 @@ const TechCards: FC<ITechCardsProps> = (props) => {
           </div>
         </div>
         {location.pathname === "/techcards/foodstuff" ? (
-          <Foodstuff />
+          products.length !== 0 ? (
+            <>
+              <Foodstuff />
+              <button className="techcards__usual-btn">Еще</button>
+            </>
+          ) : (
+            <EmptyContent />
+          )
         ) : techcards.length !== 0 ? (
-          <TechCardList techcards={techcards} isListStyle={isListStyle} />
+          <>
+            <TechCardList techcards={techcards} isListStyle={isListStyle} />
+            <button className="techcards__usual-btn">Еще</button>
+          </>
         ) : (
           <EmptyContent />
         )}
-        <button className="techcards__usual-btn">Еще</button>
       </div>
     </section>
   );
