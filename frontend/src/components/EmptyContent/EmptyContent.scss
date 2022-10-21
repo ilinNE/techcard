@@ -1,0 +1,13 @@
+@import "../Modules/mixins";
+@import url("../../fonts/Karla/Karla.scss");
+
+.empty-title {
+  @include font(32px, 300, 1.2);
+  font-family: Karla, Arial, Helvetica, sans-serif;
+  color: rgba(78, 53, 54, 0.5);
+  margin: 224px auto 20px;
+}
+
+.add-button {
+  @include greenbtn();
+}

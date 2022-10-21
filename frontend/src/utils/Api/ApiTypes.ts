@@ -30,3 +30,12 @@ export type TechcardParams = {
   semifabricate: boolean;
   tags: Array<number>;
 };
+
+export type ProductParams = {
+  id: number;
+  name: string;
+  unit: string;
+  unit_weight: string;
+  price: string;
+  tags: Array<number>;
+};

@@ -1,5 +1,6 @@
+import { TechcardParams } from "../../utils/Api/ApiTypes";
+
 export interface ITechCard {
-  name: string;
-  tags: number[];
+  techcard: TechcardParams;
   isListStyle: boolean;
 }
