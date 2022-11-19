@@ -28,57 +28,6 @@
     }
   }
 
-  &__form {
-    display: flex;
-    width: 100%;
-    color: $cacao;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 10px;
-    min-width: 900px;
-  }
-
-  &__input-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 60px;
-    align-items: center;
-  }
-
-  &__label {
-    @include font($font-size: 16px, $font-weight: 600, $line-height: 1);
-    cursor: pointer;
-  }
-
-  &__input-text {
-    border: none;
-    border-bottom: 1px $cacao solid;
-    @include font($font-size: 14px, $font-weight: 300, $line-height: 1);
-
-    &:focus {
-      outline-color: $avocado;
-    }
-  }
-
-  &__input-color {
-    @include colorInput();
-  }
-
-  &__approve-btn {
-    border: none;
-    background-color: transparent;
-    background-image: url(../../images/button-done.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    margin-bottom: 5px;
-    @include interactive();
-  }
-
   &__list {
     list-style: none;
     display: flex;
@@ -86,30 +35,5 @@
     width: 100%;
     padding: 0;
     gap: 5px;
-  }
-}
-
-@media screen and (max-width: 1200px) {
-  .foodstuff {
-    &__input-box {
-      width: 120px;
-    }
-
-    &__label {
-      font-size: 14px;
-      width: 100%;
-    }
-
-    &__input-text {
-      width: 100%;
-    }
-  }
-}
-
-@media screen and (max-width: 820px) {
-  .foodstuff {
-    &__form {
-      padding: 0 10px;
-    }
   }
 }

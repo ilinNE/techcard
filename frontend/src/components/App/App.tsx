@@ -28,6 +28,7 @@ function App() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [isOpenSideMenu, setIsOpenSideMenu] = useState<boolean>(false);
+  const [isNewCardPopupOpen, setIsNewCardPopupOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(getUser())
@@ -94,12 +95,12 @@ function App() {
         >
           <Route
             path="dishes"
-            element={<TechCards isOpenSideMenu={isOpenSideMenu} title={"Блюда"} />}
+            element={<TechCards isOpenSideMenu={isOpenSideMenu} title={"Блюда"} setIsNewCardPopupOpen={setIsNewCardPopupOpen} isNewCardPopupOpen={isNewCardPopupOpen} />}
           />
           <Route path="dishes/:id" element={<TechCardContent isOpenSideMenu={isOpenSideMenu} />} />
           <Route
             path="semis"
-            element={<TechCards isOpenSideMenu={isOpenSideMenu} title={"Полуфабрикаты"} />}
+            element={<TechCards isOpenSideMenu={isOpenSideMenu} title={"Полуфабрикаты"} setIsNewCardPopupOpen={setIsNewCardPopupOpen} isNewCardPopupOpen={isNewCardPopupOpen} />}
           />
           <Route path="semis/:id" element={<TechCardContent isOpenSideMenu={isOpenSideMenu} />} />
           <Route path="foodstuff" element={<TechCards isOpenSideMenu={isOpenSideMenu} title={"Продукты"} />} />
