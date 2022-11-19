@@ -1,0 +1,54 @@
+@import "../../../Modules/variables", "../../../Modules/mixins";
+
+.ingredients-table-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+
+  &__minus-btn {
+    background-image: url(../../../../images/delete-minus.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    margin-right: 5px;
+    width: 15px;
+    height: 15px;
+  }
+
+  &__row-list {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    list-style: none;
+    padding: 0;
+  }
+
+  &__row-list-item {
+    width: 100px;
+
+    &:first-child {
+      width: 200px;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid $cacao;
+    max-height: fit-content;
+    font-size: 0.8rem;
+
+    &:focus {
+      outline: none;
+      border-color: $orange;
+    }
+  }
+}

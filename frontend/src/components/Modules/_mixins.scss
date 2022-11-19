@@ -97,3 +97,16 @@
     border-radius: 5px;
   }
 }
+
+@mixin close-btn($width: 25px, $height: 25px) {  
+  width: $width;
+  height: $height;
+  padding: 0;
+  background-image: url(../../images/circle-close.svg);
+  background-size: cover;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  @include interactive();
+}
+

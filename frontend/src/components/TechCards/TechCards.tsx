@@ -7,6 +7,7 @@ import { ITechCardsProps } from "./ITechCardsProps";
 import { getTechcards, getProducts } from "../../utils/Api/Api";
 import { TechcardParams, ProductParams } from "../../utils/Api/ApiTypes";
 import { EmptyContent } from "../EmptyContent/EmptyContent";
+import NewCardPopup from "../NewCardPopup/NewCardPopup";
 import "./TechCards.scss";
 
 const TechCards: FC<ITechCardsProps> = (props) => {
@@ -30,7 +31,7 @@ const TechCards: FC<ITechCardsProps> = (props) => {
         <div className="techcards__menu">
           <div className="techcards__box">
             <h1 className="techcards__name">{props.title}</h1>
-            <button className="techcards__add-card"></button>
+            <button className="techcards__add-card" onClick={() => props.setIsNewCardPopupOpen(true)}></button>
           </div>
           <div className="techcards__upside">
             <ul
@@ -108,9 +109,10 @@ const TechCards: FC<ITechCardsProps> = (props) => {
             <button className="techcards__usual-btn">Еще</button>
           </>
         ) : (
-          <EmptyContent />
+          <EmptyContent setIsNewCardPopupOpen={props.setIsNewCardPopupOpen}/>
         )}
       </div>
+      <NewCardPopup isNewCardPopupOpen={props.isNewCardPopupOpen} setIsNewCardPopupOpen={props.setIsNewCardPopupOpen} />
     </section>
   );
 };

@@ -1,4 +1,4 @@
-@import "../Modules/variables", "../Modules/mixins";
+@import "../../Modules/variables", "../../Modules/mixins";
 
 .ingredient {
   display: flex;
@@ -29,7 +29,7 @@
     @include interactive();
 
     &_edit {
-      background: url(../../images/button-edit.svg);
+      background: url(../../../images/button-edit.svg);
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;
@@ -50,7 +50,6 @@
   .ingredient:hover {
     transform: scale(1.03);
     transition: transform 0.4s;
-    cursor: pointer;
   }
 
   .ingredient__btn_delete:hover {
